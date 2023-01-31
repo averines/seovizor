@@ -104,7 +104,8 @@
             </table>
         </div>
         <div class="tabpanel" role="tabpanel" id="tabpanel2" aria-labelledby="search" aria-hidden="true">
-            <p>Поиск</p>
+            <button id="action-test">Test action</button>
+            <button id="go-to-options">Go to options</button>
         </div>
         <div class="tabpanel" role="tabpanel" id="tabpanel3" aria-labelledby="page" aria-hidden="true">
             <p>Страница</p>
@@ -119,9 +120,100 @@
             <p>Микроразметка</p>
         </div>
         <div class="tabpanel" role="tabpanel" id="tabpanel7" aria-labelledby="tools" aria-hidden="true">
-            <p>Инструменты</p>
-            <button id="action-test">Test action</button>
-            <button id="go-to-options">Go to options</button>
+            <div class="cols mt-3">
+                <div class="col-6">
+                    <div class="tools">
+                        <a class="tool" href="https://pagespeed.web.dev/report?&url=https://123.ru/">
+                            <div class="tool__icon">
+                                <div class="tool-icon tool-icon--1"></div>
+                            </div>
+                            <div class="tool__content">
+                                <div class="tool__title">pagespeed.web.dev</div>
+                                <div class="tool__subtitle">Скорость загрузки страницы</div>
+                            </div>
+                            <div class="tool__open"></div>
+                        </a>
+                        <a class="tool" href="https://pagespeed.web.dev/report?&url=https://123.ru/">
+                            <div class="tool__icon">
+                                <div class="tool-icon tool-icon--2"></div>
+                            </div>
+                            <div class="tool__content">
+                                <div class="tool__title">search.google.com</div>
+                                <div class="tool__subtitle">Проверка отимизации для мобильных</div>
+                            </div>
+                            <div class="tool__open"></div>
+                        </a>
+                        <a class="tool" href="">
+                            <div class="tool__icon">
+                                <div class="tool-icon tool-icon--3"></div>
+                            </div>
+                            <div class="tool__content">
+                                <div class="tool__title">web.archive.org</div>
+                                <div class="tool__subtitle">Снимки страницы в веб-архиве</div>
+                            </div>
+                            <div class="tool__open"></div>
+                        </a>
+                        <a class="tool" href="">
+                            <div class="tool__icon"></div>
+                            <div class="tool__content">
+                                <div class="tool__title">sslshopper.com</div>
+                                <div class="tool__subtitle">Проверка ssl-сертификата</div>
+                            </div>
+                            <div class="tool__open"></div>
+                        </a>
+                        <a class="tool" href="">
+                            <div class="tool__icon"></div>
+                            <div class="tool__content">
+                                <div class="tool__title">webnames.ru</div>
+                                <div class="tool__subtitle">Whois</div>
+                            </div>
+                            <div class="tool__open"></div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="tools">
+                        <a class="tool" href="">
+                            <div class="tool__icon">
+                                <div class="tool-icon tool-icon--4"></div>
+                            </div>
+                            <div class="tool__content">
+                                <div class="tool__title">be1.ru</div>
+                                <div class="tool__subtitle">Узнать CMS сайта</div>
+                            </div>
+                            <div class="tool__open"></div>
+                        </a>
+                        <a class="tool" href="">
+                            <div class="tool__icon">
+                                <div class="tool-icon tool-icon--5"></div>
+                            </div>
+                            <div class="tool__content">
+                                <div class="tool__title">bertal.ru</div>
+                                <div class="tool__subtitle">Проверка ответа сервера</div>
+                            </div>
+                            <div class="tool__open"></div>
+                        </a>
+                        <a class="tool" href="">
+                            <div class="tool__icon">
+                                <div class="tool-icon tool-icon--6"></div>
+                            </div>
+                            <div class="tool__content">
+                                <div class="tool__title">be1.ru</div>
+                                <div class="tool__subtitle">Проверка дублей страниц</div>
+                            </div>
+                            <div class="tool__open"></div>
+                        </a>
+                        <a class="tool" href="">
+                            <div class="tool__icon"></div>
+                            <div class="tool__content">
+                                <div class="tool__title">checktrust.ru</div>
+                                <div class="tool__subtitle">Узнать траст и спам сайта</div>
+                            </div>
+                            <div class="tool__open"></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="popup.js"></script>

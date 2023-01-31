@@ -2,7 +2,6 @@
 @import "tabs";
 @import "fields";
 
-
 .table {
     font-size: 13px;
 
@@ -62,5 +61,100 @@
 
     &--bad {
         background: url(/images/bad.svg) no-repeat center/87%;
+    }
+}
+
+.tools {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: $br;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid $line;
+}
+
+.tool {
+    text-decoration: none;
+    display: flex;
+    column-gap: 10px;
+    padding: 11px 7px 11px 15px;
+    position: relative;
+    border-bottom: 1px solid $line;
+    transition: $t;
+    font-size: 13px;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:hover {
+        background-color: lighten($bg-l, 1);
+    }
+
+    &__icon {
+        width: 20px;
+        align-self: center;
+    }
+
+    &__content {
+        padding-left: 10px;
+    }
+
+    &__title {
+        color: $text;
+    }
+
+    &__subtitle {
+        padding-top: 2px;
+        color: $text-l;
+        line-height: 1.2;
+    }
+
+    &__open {
+        width: 30px;
+        margin-left: auto;
+        align-self: stretch;
+        background: url(/images/open.svg) no-repeat center/17px;
+    }
+}
+
+.cols {
+    display: flex;
+    column-gap: 24px;
+}
+
+.col-6 {
+    width: 50%;
+}
+
+.tool-icon {
+    width: 30px;
+    height: 30px;
+
+    &--1 {
+        background: url(/images/tools/award-line.svg) no-repeat center/20px;
+    }
+
+    &--2 {
+        background: url(/images/tools/iphone-old-apps-line.svg) no-repeat center/20px;
+    }
+
+    &--3 {
+        background: url(/images/tools/save-line.svg) no-repeat center/20px;
+    }
+
+    &--4 {
+        opacity: 0.6;
+        background: url(/images/tools/incognito.svg) no-repeat center/20px;
+    }
+
+    &--5 {
+        opacity: 0.6;
+        background: url(/images/tools/paper-fold-text.svg) no-repeat center/20px;
+    }
+
+    &--6 {
+        opacity: 0.6;
+        background: url(/images/tools/calculator.svg) no-repeat center/20px;
     }
 }
