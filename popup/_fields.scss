@@ -1,0 +1,77 @@
+.fields {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+
+.field {
+    border-radius: $br;
+    position: relative;
+    padding-right: 150px;
+    background: linear-gradient(270deg, $bg-l 0%, rgba(246, 248, 249, 0) 30%);
+    min-height: 30px;
+
+    &__header {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        display: flex;
+        align-items: flex-start;
+        column-gap: 4px;
+        pointer-events: none;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    &__title {
+        text-transform: uppercase;
+        color: $text-l;
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        line-height: 1.5;
+    }
+
+    &__counter {
+        color: #fff;
+        background-color: #7f99c1;
+        font-size: 9.5px;
+        line-height: 1;
+        padding: 2px 3px;
+        border-radius: $br-sm;
+        letter-spacing: 0.1em;
+    }
+
+    &__content {
+        font-size: 14px;
+        line-height: 1.45;
+        padding: 10px 0;
+    }
+
+    &:nth-child(2) {
+        background: linear-gradient(270deg, $bg-l 0%, transparent 40%);
+    }
+
+    &:nth-child(3) {
+        background: linear-gradient(270deg, $bg-l 0%, transparent 50%);
+    }
+
+    &:nth-child(4) {
+        background: linear-gradient(270deg, $bg-l 0%, transparent 60%);
+    }
+
+    &:nth-child(5) {
+        background: linear-gradient(270deg, $bg-l 0%, transparent 70%);
+    }
+
+    &:nth-child(6) {
+        background: linear-gradient(270deg, $bg-l 0%, transparent 80%);
+    }
+
+    &:nth-child(6) {
+        background: linear-gradient(270deg, $bg-l 0%, transparent 90%);
+    }
+}

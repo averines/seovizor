@@ -1,0 +1,22 @@
+{
+    "name": "SeoVizor",
+    "description": "Free quick metadata report and basic SEO information for website analysis. 12 free SEO tools. No registration required.",
+    "version": "1.0",
+    "manifest_version": 3,
+    "icons": {
+        "16": "images/icons/16.png",
+        "32": "images/icons/32.png",
+        "48": "images/icons/48.png",
+        "128": "images/icons/128.png"
+    },
+    "action": {
+        "default_popup": "popup/popup.html",
+        "default_title": "Click to see SEO-report"
+    },
+    "options_page": "options/options.html",
+    "permissions": [
+        "scripting",
+        "activeTab"
+    ],
+    "background": {}
+}

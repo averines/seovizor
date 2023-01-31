@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeoVizor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <div>
+        <div class="tablist" role="tablist" aria-label="Главное меню">
+            <button class="tab" role="tab" aria-selected="true" aria-controls="tabpanel1" id="main">Основное</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel2" id="search">Поиск</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel3" id="page">Страница</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel4" id="text">Текст</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel5" id="pics">Изображения</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel6" id="scheme">Микроразметка</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel7" id="tools">Инструменты</button>
+        </div>
+
+        <div class="tabpanel" role="tabpanel" id="tabpanel1" aria-labelledby="main" aria-hidden="false">
+            <div class="fields">
+                <div class="field">
+                    <div class="field__content">
+                        Женские серьги и каффы (бижутерия) — купить по цене от 129 ₽ в интернет-магазине OptMoyo.Ru | Дешёвые c фильтрами
+                    </div>
+                    <div class="field__header">
+                        <div class="field__title">Title</div>
+                        <div class="field__counter">113</div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="field__content">
+                        Недорогие женские серьги и каффы (бижутерия) по оптовым ценам. В каталоге более 100 товаров. Новинки и лидеры продаж 2023 года | Дешёвые c фильтрами в интернет-магазине Optmoyo.ru </div>
+                    <div class="field__header">
+                        <div class="field__title">Description</div>
+                        <div class="field__counter">178</div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="field__content" id="h1">
+                        Женские серьги и каффы (бижутерия) </div>
+                    <div class="field__header">
+                        <div class="field__title">H1</div>
+                        <div class="field__counter" id="h1counter">93</div>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table mt-3">
+                <tr>
+                    <td class="row-title">Url</td>
+                    <td class="row-content">
+                        <div class="row-icon"></div>
+                        <a id="url" target="_blank" href="#"></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="row-title">Canonical</td>
+                    <td class="row-content">
+                        <div class="row-icon">
+                            <div class="icon icon--warning"></div>
+                        </div>
+                        <a id="canonical" target="_blank" href="#"></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="row-title">Meta Robots</td>
+                    <td class="row-content">
+                        <div class="row-icon">
+                            <div class="icon icon--good"></div>
+                        </div>
+                        <span class="text-muted">—</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="row-title"><a href="#">Robots.txt</a></td>
+                    <td class="row-content">
+                        <div class="row-icon">
+                            <div class="icon icon--bad"></div>
+                        </div>
+                        User-agent: yandex
+                    </td>
+                </tr>
+                <tr>
+                    <td class="row-title"><a href="#">Sitemap.xml</a></td>
+                    <td class="row-content">
+                        <div class="row-icon">
+
+                        </div>
+                        <ul>
+                            <li><a href="#">https://optmoyo.ru/sitemap0</a></li>
+                            <li><a href="#">https://optmoyo.ru/sitemap1</a></li>
+                            <li><a href="#">https://optmoyo.ru/sitemap2</a></li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="tabpanel" role="tabpanel" id="tabpanel2" aria-labelledby="search" aria-hidden="true">
+            <p>Поиск</p>
+        </div>
+        <div class="tabpanel" role="tabpanel" id="tabpanel3" aria-labelledby="page" aria-hidden="true">
+            <p>Страница</p>
+        </div>
+        <div class="tabpanel" role="tabpanel" id="tabpanel4" aria-labelledby="text" aria-hidden="true">
+            <p>Текст</p>
+        </div>
+        <div class="tabpanel" role="tabpanel" id="tabpanel5" aria-labelledby="pics" aria-hidden="true">
+            <p>Изображения</p>
+        </div>
+        <div class="tabpanel" role="tabpanel" id="tabpanel6" aria-labelledby="scheme" aria-hidden="true">
+            <p>Микроразметка</p>
+        </div>
+        <div class="tabpanel" role="tabpanel" id="tabpanel7" aria-labelledby="tools" aria-hidden="true">
+            <p>Инструменты</p>
+            <button id="action-test">Test action</button>
+            <button id="go-to-options">Go to options</button>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>

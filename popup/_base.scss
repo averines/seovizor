@@ -1,0 +1,149 @@
+$main: #4a86e7;
+$main-l: #ddeaff;
+$main-d: #0658db;
+
+$warning: #ffc188;
+$bad: #ff7c64;
+$good: #61d5a7;
+
+$text: #2d384b;
+$text-l: #8e95a0;
+$text-ll: #b4b8be;
+
+$bg-d: #f4f7fa;
+$bg-l: #f6f8f9;
+
+$line: #ebeff0;
+
+$br: 5px;
+$br-sm: 3px;
+$t: all 0.1s ease-in-out;
+
+*,
+*::after,
+*::before {
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+::selection {
+    background: $main;
+    color: #fff;
+}
+
+body {
+    margin: 15px 15px;
+    width: 680px;
+    height: 550px;
+    font-family: "Rubik", Arial, sans-serif;
+    font-size: 14px;
+    color: $text;
+    line-height: 1.5;
+}
+
+input,
+button,
+textarea {
+    font-family: inherit;
+}
+
+a {
+    color: $main;
+    transition: $t;
+
+    &:hover {
+        color: $main-d;
+    }
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        margin: 0.25em 0;
+    }
+}
+
+hr {
+    height: 0;
+    border: none;
+    background-color: transparent;
+    border-bottom: 1px solid $line;
+
+    &.dotted {
+        border-bottom: 1px dotted $line;
+    }
+}
+
+.text-muted {
+    color: $text-ll;
+}
+
+.text-nowrap {
+    white-space: nowrap;
+}
+
+.text-main {
+    color: $main;
+}
+
+.text-good {
+    color: $good;
+}
+
+.text-bad {
+    color: $bad;
+}
+
+.text-warning {
+    color: $warning;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-hidden {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+}
+
+@for $i from 0 through 4 {
+    .mt-#{$i},
+    .my-#{$i} {
+        margin-top: 10px * $i;
+    }
+}
+
+@for $i from 0 through 4 {
+    .mb-#{$i},
+    .my-#{$i} {
+        margin-bottom: 10px * $i;
+    }
+}
+
+@for $i from 0 through 4 {
+    .mx-#{$i},
+    .ml-#{$i} {
+        margin-left: 10px * $i;
+    }
+}
+
+@for $i from 0 through 4 {
+    .mx-#{$i},
+    .mr-#{$i} {
+        margin-right: 10px * $i;
+    }
+}
