@@ -1,6 +1,6 @@
-$main: #4a86e7;
+$main: #2785e1;
 $main-l: #ddeaff;
-$main-d: #0658db;
+$main-d: #0b70e8;
 
 $warning: #ffc188;
 $bad: #ff7c64;
@@ -13,7 +13,8 @@ $text-ll: #b4b8be;
 $bg-d: #f4f7fa;
 $bg-l: #f6f8f9;
 
-$line: #ebeff0;
+$line: #dee7ec;
+$line-l: lighten($line, 3);
 
 $br: 5px;
 $br-sm: 3px;
@@ -34,14 +35,39 @@ html {
     color: #fff;
 }
 
+::-webkit-scrollbar {
+    height: 18px;
+    width: 18px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background-color: $line-l;
+    border-radius: 10px;
+    border: 5px solid #fff;
+    transition: $t;
+
+    &:hover {
+        background-color: $line;
+    }
+}
+
 body {
-    margin: 15px 15px;
-    width: 680px;
+    // border: 2px solid red;
+    margin: 0;
+    width: 650px;
     height: 550px;
     font-family: "Rubik", Arial, sans-serif;
     font-size: 14px;
     color: $text;
     line-height: 1.5;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 input,
@@ -145,5 +171,51 @@ hr {
     .mx-#{$i},
     .mr-#{$i} {
         margin-right: 10px * $i;
+    }
+}
+
+.ml-a {
+    margin-left: auto;
+}
+
+.cols {
+    display: flex;
+    column-gap: 24px;
+}
+
+.col-6 {
+    width: 50%;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.f-align-center {
+    align-items: center;
+}
+
+.f-justify-between {
+    justify-content: space-between;
+}
+
+.yandex-x {
+    // background: #DADADA;
+    // padding: 4px 5px;
+    // border-radius: 5px;
+    // opacity: 0.6;
+    position: relative;
+    overflow: hidden;
+    width: 50px;
+    height: 20px;
+
+    > img {
+        position: absolute;
+        right: -5px;
+        top: -2px;
+        filter: contrast(1.5);
+        display: block;
+        width: 80px;
+        height: auto;
     }
 }

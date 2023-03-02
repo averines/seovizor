@@ -1,0 +1,16 @@
+.icon {
+    width: 20px;
+    height: 20px;
+
+    &--warning {
+        background: url(/images/warning.svg) no-repeat center/85%;
+    }
+
+    &--good {
+        background: url(/images/good.svg) no-repeat center/85%;
+    }
+
+    &--bad {
+        background: url(/images/bad.svg) no-repeat center/87%;
+    }
+}

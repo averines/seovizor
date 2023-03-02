@@ -1,0 +1,24 @@
+.data-counters {
+    display: flex;
+    column-gap: 25px;
+
+    &--sm {
+        column-gap: 12px;
+    }
+}
+
+.data-counter {
+    &__title {
+        display: flex;
+        align-items: center;
+        text-transform: uppercase;
+        color: $text-l;
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        line-height: 1;
+    }
+
+    &__content--inactive {
+        opacity: 0.2;
+    }
+}

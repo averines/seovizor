@@ -9,12 +9,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="css/popup.css">
 </head>
 
 <body>
-    <div>
-        <div class="tablist" role="tablist" aria-label="Главное меню">
+    <div class="wrapper">
+        <header class="tablist" role="tablist" aria-label="Главное меню">
             <button class="tab" role="tab" aria-selected="true" aria-controls="tabpanel1" id="main">Основное</button>
             <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel2" id="search">Поиск</button>
             <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel3" id="page">Страница</button>
@@ -22,199 +22,281 @@
             <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel5" id="pics">Изображения</button>
             <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel6" id="scheme">Микроразметка</button>
             <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel7" id="tools">Инструменты</button>
-        </div>
+        </header>
 
-        <div class="tabpanel" role="tabpanel" id="tabpanel1" aria-labelledby="main" aria-hidden="false">
-            <div class="fields">
-                <div class="field">
-                    <div class="field__content">
-                        Женские серьги и каффы (бижутерия) — купить по цене от 129 ₽ в интернет-магазине OptMoyo.Ru | Дешёвые c фильтрами
+        <div class="tabpanels">
+            <div class="tabpanel" role="tabpanel" id="tabpanel1" aria-labelledby="main" aria-hidden="false">
+                <div class="tabpanel__content">
+                    <div class="fields">
+                        <div class="field">
+                            <div class="field__content">
+                                Женские серьги и каффы (бижутерия) — купить по цене от 129 ₽ в интернет-магазине OptMoyo.Ru | Дешёвые c фильтрами
+                            </div>
+                            <div class="field__header">
+                                <div class="field__title">Title</div>
+                                <div class="field__counter">113</div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="field__content">
+                                Недорогие женские серьги и каффы (бижутерия) по оптовым ценам. В каталоге более 100 товаров. Новинки и лидеры продаж 2023 года | Дешёвые c фильтрами в интернет-магазине Optmoyo.ru </div>
+                            <div class="field__header">
+                                <div class="field__title">Descr.</div>
+                                <div class="field__counter">178</div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="field__content" id="h1">
+                                Женские серьги и каффы (бижутерия) </div>
+                            <div class="field__header">
+                                <div class="field__title">H1</div>
+                                <div class="field__counter" id="h1counter">93</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="field__header">
-                        <div class="field__title">Title</div>
-                        <div class="field__counter">113</div>
-                    </div>
+
+                    <table class="table mt-3">
+                        <tr>
+                            <td class="row-title">Url</td>
+                            <td class="row-content">
+                                <div class="row-icon"></div>
+                                <a id="url" target="_blank" href="#"></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="row-title">Canonical</td>
+                            <td class="row-content">
+                                <div class="row-icon">
+                                    <div class="icon icon--warning"></div>
+                                </div>
+                                <a id="canonical" target="_blank" href="#"></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="row-title">Meta Robots</td>
+                            <td class="row-content">
+                                <div class="row-icon">
+                                    <div class="icon icon--good"></div>
+                                </div>
+                                <span class="text-muted">—</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="row-title"><a href="#">Robots.txt</a></td>
+                            <td class="row-content">
+                                <div class="row-icon">
+                                    <div class="icon icon--bad"></div>
+                                </div>
+                                User-agent: yandex
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="row-title"><a href="#">Sitemap.xml</a></td>
+                            <td class="row-content">
+                                <div class="row-icon">
+
+                                </div>
+                                <ul>
+                                    <li><a href="#">https://optmoyo.ru/sitemap0</a></li>
+                                    <li><a href="#">https://optmoyo.ru/sitemap1</a></li>
+                                    <li><a href="#">https://optmoyo.ru/sitemap2</a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-                <div class="field">
-                    <div class="field__content">
-                        Недорогие женские серьги и каффы (бижутерия) по оптовым ценам. В каталоге более 100 товаров. Новинки и лидеры продаж 2023 года | Дешёвые c фильтрами в интернет-магазине Optmoyo.ru </div>
-                    <div class="field__header">
-                        <div class="field__title">Description</div>
-                        <div class="field__counter">178</div>
+
+                <div class="tabpanel__footer tabpanel__footer--main">
+                    <div class="data-counters">
+                        <div class="data-counter">
+                            <div class="data-counter__title">Lang</div>
+                            <div class="data-counter__content">ru</div>
+                        </div>
+                        <div class="data-counter">
+                            <div class="data-counter__title">Links</div>
+                            <div class="data-counter__content">294</div>
+                        </div>
+                        <div class="data-counter">
+                            <div class="data-counter__title">Images</div>
+                            <div class="data-counter__content">76</div>
+                        </div>
                     </div>
-                </div>
-                <div class="field">
-                    <div class="field__content" id="h1">
-                        Женские серьги и каффы (бижутерия) </div>
-                    <div class="field__header">
-                        <div class="field__title">H1</div>
-                        <div class="field__counter" id="h1counter">93</div>
+
+                    <div class="data-counters data-counters--sm">
+                        <div class="data-counter">
+                            <div class="data-counter__title">H1</div>
+                            <div class="data-counter__content">1</div>
+                        </div>
+                        <div class="data-counter">
+                            <div class="data-counter__title">H2</div>
+                            <div class="data-counter__content data-counter__content--inactive">—</div>
+                        </div>
+                        <div class="data-counter">
+                            <div class="data-counter__title">H3</div>
+                            <div class="data-counter__content data-counter__content--inactive">—</div>
+                        </div>
+                        <div class="data-counter">
+                            <div class="data-counter__title">H4</div>
+                            <div class="data-counter__content data-counter__content--inactive">—</div>
+                        </div>
+                        <div class="data-counter">
+                            <div class="data-counter__title">H5</div>
+                            <div class="data-counter__content data-counter__content--inactive">—</div>
+                        </div>
+                        <div class="data-counter">
+                            <div class="data-counter__title">H6</div>
+                            <div class="data-counter__content data-counter__content--inactive">—</div>
+                        </div>
+                        <div class="data-counter">
+                            <div class="data-counter__title">H1-H6</div>
+                            <div class="data-counter__content">1</div>
+                        </div>
+                    </div>
+
+                    <div class="data-counters">
+                        <div class="data-counter">
+                            <div class="data-counter__title">
+                                <img class="ml-a" src="/images/yandex.svg" alt="Я" width="10" height="10">
+                                ИКС
+                            </div>
+                            <div class="data-counter__content">
+                                <div class="yandex-x">
+                                    <img src="https://webmaster.yandex.ru/sqicounter?theme=light&amp;host=optmoyo.ru">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <table class="table mt-3">
-                <tr>
-                    <td class="row-title">Url</td>
-                    <td class="row-content">
-                        <div class="row-icon"></div>
-                        <a id="url" target="_blank" href="#"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="row-title">Canonical</td>
-                    <td class="row-content">
-                        <div class="row-icon">
-                            <div class="icon icon--warning"></div>
-                        </div>
-                        <a id="canonical" target="_blank" href="#"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="row-title">Meta Robots</td>
-                    <td class="row-content">
-                        <div class="row-icon">
-                            <div class="icon icon--good"></div>
-                        </div>
-                        <span class="text-muted">—</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="row-title"><a href="#">Robots.txt</a></td>
-                    <td class="row-content">
-                        <div class="row-icon">
-                            <div class="icon icon--bad"></div>
-                        </div>
-                        User-agent: yandex
-                    </td>
-                </tr>
-                <tr>
-                    <td class="row-title"><a href="#">Sitemap.xml</a></td>
-                    <td class="row-content">
-                        <div class="row-icon">
-
-                        </div>
-                        <ul>
-                            <li><a href="#">https://optmoyo.ru/sitemap0</a></li>
-                            <li><a href="#">https://optmoyo.ru/sitemap1</a></li>
-                            <li><a href="#">https://optmoyo.ru/sitemap2</a></li>
-                        </ul>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="tabpanel" role="tabpanel" id="tabpanel2" aria-labelledby="search" aria-hidden="true">
-            <button id="action-test">Test action</button>
-            <button id="go-to-options">Go to options</button>
-        </div>
-        <div class="tabpanel" role="tabpanel" id="tabpanel3" aria-labelledby="page" aria-hidden="true">
-            <p>Страница</p>
-        </div>
-        <div class="tabpanel" role="tabpanel" id="tabpanel4" aria-labelledby="text" aria-hidden="true">
-            <p>Текст</p>
-        </div>
-        <div class="tabpanel" role="tabpanel" id="tabpanel5" aria-labelledby="pics" aria-hidden="true">
-            <p>Изображения</p>
-        </div>
-        <div class="tabpanel" role="tabpanel" id="tabpanel6" aria-labelledby="scheme" aria-hidden="true">
-            <p>Микроразметка</p>
-        </div>
-        <div class="tabpanel" role="tabpanel" id="tabpanel7" aria-labelledby="tools" aria-hidden="true">
-            <div class="cols mt-3">
-                <div class="col-6">
-                    <div class="tools">
-                        <a class="tool" href="https://pagespeed.web.dev/report?&url=https://123.ru/">
-                            <div class="tool__icon">
-                                <div class="tool-icon tool-icon--1"></div>
-                            </div>
-                            <div class="tool__content">
-                                <div class="tool__title">pagespeed.web.dev</div>
-                                <div class="tool__subtitle">Скорость загрузки страницы</div>
-                            </div>
-                            <div class="tool__open"></div>
-                        </a>
-                        <a class="tool" href="https://pagespeed.web.dev/report?&url=https://123.ru/">
-                            <div class="tool__icon">
-                                <div class="tool-icon tool-icon--2"></div>
-                            </div>
-                            <div class="tool__content">
-                                <div class="tool__title">search.google.com</div>
-                                <div class="tool__subtitle">Проверка отимизации для мобильных</div>
-                            </div>
-                            <div class="tool__open"></div>
-                        </a>
-                        <a class="tool" href="">
-                            <div class="tool__icon">
-                                <div class="tool-icon tool-icon--3"></div>
-                            </div>
-                            <div class="tool__content">
-                                <div class="tool__title">web.archive.org</div>
-                                <div class="tool__subtitle">Снимки страницы в веб-архиве</div>
-                            </div>
-                            <div class="tool__open"></div>
-                        </a>
-                        <a class="tool" href="">
-                            <div class="tool__icon"></div>
-                            <div class="tool__content">
-                                <div class="tool__title">sslshopper.com</div>
-                                <div class="tool__subtitle">Проверка ssl-сертификата</div>
-                            </div>
-                            <div class="tool__open"></div>
-                        </a>
-                        <a class="tool" href="">
-                            <div class="tool__icon"></div>
-                            <div class="tool__content">
-                                <div class="tool__title">webnames.ru</div>
-                                <div class="tool__subtitle">Whois</div>
-                            </div>
-                            <div class="tool__open"></div>
-                        </a>
-                    </div>
+            <div class="tabpanel" role="tabpanel" id="tabpanel2" aria-labelledby="search" aria-hidden="true">
+                <div class="tabpanel__content">
+                    <button id="action-test">Test action</button>
+                    <button id="go-to-options">Go to options</button>
                 </div>
-                <div class="col-6">
-                    <div class="tools">
-                        <a class="tool" href="">
-                            <div class="tool__icon">
-                                <div class="tool-icon tool-icon--4"></div>
+            </div>
+            <div class="tabpanel" role="tabpanel" id="tabpanel3" aria-labelledby="page" aria-hidden="true">
+                <div class="tabpanel__content">
+                    <p>Страница</p>
+                </div>
+            </div>
+            <div class="tabpanel" role="tabpanel" id="tabpanel4" aria-labelledby="text" aria-hidden="true">
+                <div class="tabpanel__content">
+                    <p>Текст</p>
+                </div>
+            </div>
+            <div class="tabpanel" role="tabpanel" id="tabpanel5" aria-labelledby="pics" aria-hidden="true">
+                <div class="tabpanel__content">
+                    <p>Изображения</p>
+                </div>
+            </div>
+            <div class="tabpanel" role="tabpanel" id="tabpanel6" aria-labelledby="scheme" aria-hidden="true">
+                <div class="tabpanel__content">
+                    <p>Микроразметка</p>
+                </div>
+            </div>
+            <div class="tabpanel" role="tabpanel" id="tabpanel7" aria-labelledby="tools" aria-hidden="true">
+                <div class="tabpanel__content">
+                    <div class="cols mt-3">
+                        <div class="col-6">
+                            <div class="tools">
+                                <a class="tool" href="https://pagespeed.web.dev/report?&url=https://123.ru/">
+                                    <div class="tool__icon">
+                                        <div class="tool-icon tool-icon--1"></div>
+                                    </div>
+                                    <div class="tool__content">
+                                        <div class="tool__title">pagespeed.web.dev</div>
+                                        <div class="tool__subtitle">Скорость загрузки страницы</div>
+                                    </div>
+                                    <div class="tool__open"></div>
+                                </a>
+                                <a class="tool" href="https://pagespeed.web.dev/report?&url=https://123.ru/">
+                                    <div class="tool__icon">
+                                        <div class="tool-icon tool-icon--2"></div>
+                                    </div>
+                                    <div class="tool__content">
+                                        <div class="tool__title">search.google.com</div>
+                                        <div class="tool__subtitle">Проверка отимизации для мобильных</div>
+                                    </div>
+                                    <div class="tool__open"></div>
+                                </a>
+                                <a class="tool" href="">
+                                    <div class="tool__icon">
+                                        <div class="tool-icon tool-icon--3"></div>
+                                    </div>
+                                    <div class="tool__content">
+                                        <div class="tool__title">web.archive.org</div>
+                                        <div class="tool__subtitle">Снимки страницы в веб-архиве</div>
+                                    </div>
+                                    <div class="tool__open"></div>
+                                </a>
+                                <a class="tool" href="">
+                                    <div class="tool__icon"></div>
+                                    <div class="tool__content">
+                                        <div class="tool__title">sslshopper.com</div>
+                                        <div class="tool__subtitle">Проверка ssl-сертификата</div>
+                                    </div>
+                                    <div class="tool__open"></div>
+                                </a>
+                                <a class="tool" href="">
+                                    <div class="tool__icon"></div>
+                                    <div class="tool__content">
+                                        <div class="tool__title">webnames.ru</div>
+                                        <div class="tool__subtitle">Whois</div>
+                                    </div>
+                                    <div class="tool__open"></div>
+                                </a>
                             </div>
-                            <div class="tool__content">
-                                <div class="tool__title">be1.ru</div>
-                                <div class="tool__subtitle">Узнать CMS сайта</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="tools">
+                                <a class="tool" href="">
+                                    <div class="tool__icon">
+                                        <div class="tool-icon tool-icon--4"></div>
+                                    </div>
+                                    <div class="tool__content">
+                                        <div class="tool__title">be1.ru</div>
+                                        <div class="tool__subtitle">Узнать CMS сайта</div>
+                                    </div>
+                                    <div class="tool__open"></div>
+                                </a>
+                                <a class="tool" href="">
+                                    <div class="tool__icon">
+                                        <div class="tool-icon tool-icon--5"></div>
+                                    </div>
+                                    <div class="tool__content">
+                                        <div class="tool__title">bertal.ru</div>
+                                        <div class="tool__subtitle">Проверка ответа сервера</div>
+                                    </div>
+                                    <div class="tool__open"></div>
+                                </a>
+                                <a class="tool" href="">
+                                    <div class="tool__icon">
+                                        <div class="tool-icon tool-icon--6"></div>
+                                    </div>
+                                    <div class="tool__content">
+                                        <div class="tool__title">be1.ru</div>
+                                        <div class="tool__subtitle">Проверка дублей страниц</div>
+                                    </div>
+                                    <div class="tool__open"></div>
+                                </a>
+                                <a class="tool" href="">
+                                    <div class="tool__icon"></div>
+                                    <div class="tool__content">
+                                        <div class="tool__title">checktrust.ru</div>
+                                        <div class="tool__subtitle">Узнать траст и спам сайта</div>
+                                    </div>
+                                    <div class="tool__open"></div>
+                                </a>
                             </div>
-                            <div class="tool__open"></div>
-                        </a>
-                        <a class="tool" href="">
-                            <div class="tool__icon">
-                                <div class="tool-icon tool-icon--5"></div>
-                            </div>
-                            <div class="tool__content">
-                                <div class="tool__title">bertal.ru</div>
-                                <div class="tool__subtitle">Проверка ответа сервера</div>
-                            </div>
-                            <div class="tool__open"></div>
-                        </a>
-                        <a class="tool" href="">
-                            <div class="tool__icon">
-                                <div class="tool-icon tool-icon--6"></div>
-                            </div>
-                            <div class="tool__content">
-                                <div class="tool__title">be1.ru</div>
-                                <div class="tool__subtitle">Проверка дублей страниц</div>
-                            </div>
-                            <div class="tool__open"></div>
-                        </a>
-                        <a class="tool" href="">
-                            <div class="tool__icon"></div>
-                            <div class="tool__content">
-                                <div class="tool__title">checktrust.ru</div>
-                                <div class="tool__subtitle">Узнать траст и спам сайта</div>
-                            </div>
-                            <div class="tool__open"></div>
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <footer class="footer">
+            <p class="footer__author">Сделано в <a href="#">Абракадабра</a></p>
+        </footer>
     </div>
     <script src="popup.js"></script>
 </body>

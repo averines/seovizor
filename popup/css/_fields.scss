@@ -1,0 +1,50 @@
+.fields {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+
+.field {
+    border-radius: $br;
+    position: relative;
+    min-height: 30px;
+    background: linear-gradient(90deg, lighten($bg-l, 1) 0%, $bg-l 100%);
+
+    &__header {
+        background-color: $bg-l;
+        padding: 4px 7px 5px 25px;
+        position: absolute;
+        top: -5px;
+        right: 0;
+        border-radius: 20px 4px 0 0;
+        pointer-events: none;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    &__title {
+        text-transform: uppercase;
+        color: $text-l;
+        font-size: 10px;
+        letter-spacing: 0.04em;
+        line-height: 1.5;
+    }
+
+    &__counter {
+        color: $text-l;
+        font-size: 10px;
+        line-height: 1;
+        letter-spacing: 0.1em;
+        text-align: right;
+    }
+
+    &__content {
+        font-size: 14px;
+        line-height: 1.4;
+        padding: 12px 150px 12px 15px;
+    }
+}

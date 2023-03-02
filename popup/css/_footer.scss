@@ -1,0 +1,16 @@
+.footer {
+    background-color: $main-d;
+    font-size: 12px;
+    padding: 3px 30px;
+    height: 25px;
+
+    &__author {
+        margin: 0;
+        text-align: right;
+        opacity: 0.5;
+        color: #fff;
+        a {
+            color: #fff;
+        }
+    }
+}
