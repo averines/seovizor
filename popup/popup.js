@@ -54,6 +54,10 @@ const h1counterEl = document.getElementById("h1counter");
 // url.pathname;  // "/asdf/asdf/sadf.aspx"
 // url.search;    // "?blah"
 
+// вкладка Main
+const dataYandexXGEl = document.getElementById("data-yandex-x");
+
+
 // вкладка Search
 const toolSearchGEl = document.getElementById("tool-search-g");
 const toolSearchYEl = document.getElementById("tool-search-y");
@@ -64,6 +68,7 @@ const toolSiteYEl = document.getElementById("tool-site-y");
 const toolHostYEl = document.getElementById("tool-host-y");
 const toolOrgGEl = document.getElementById("tool-org-g");
 const toolOrgYEl = document.getElementById("tool-org-y");
+const toolCopyResultsEl = document.getElementById("tool-copy-results");
 
 
 // вкладка Tools
@@ -78,7 +83,7 @@ const toolDuplicateEl = document.getElementById("tool-duplicate");
 const toolTrustEl = document.getElementById("tool-trust");
 
 function getData() {
-    // TODO: возвращат не массив с текстом заголовка, а объект со всеми нужными полями
+    // TODO: возвращать не массив с текстом заголовка, а объект со всеми нужными полями
     return Array.from(document.querySelectorAll("h1")).map(h => h.innerText);
 };
 
@@ -99,6 +104,9 @@ document.addEventListener('DOMContentLoaded', () => {
             urlEl.innerText = url.href;
             urlEl.href = url.href;
 
+            // вкладка Main
+            dataYandexXGEl.src = `https://webmaster.yandex.ru/sqicounter?theme=light&host=${url.hostname}`
+
         
             // вкладка Search
             toolSearchGEl.href = `https://www.google.ru/search?q=site:${url.href}`;
@@ -109,9 +117,12 @@ document.addEventListener('DOMContentLoaded', () => {
             toolSiteGEl.href = `https://www.google.ru/search?q=site:${url.hostname}`;
             toolSiteYEl.href = `https://yandex.ru/search/?text=site:${url.hostname}`;
             toolHostYEl.href = `https://yandex.ru/search/?text=host:${url.hostname}`;
-
             toolOrgGEl.href = `https://www.google.com/maps/search/${url.hostname}`;
             toolOrgYEl.href = `https://yandex.ru/maps/?mode=search&text=${url.hostname}`;
+
+            if (url.hostname.includes("yandex.") || url.hostname.includes("google.")) {
+                toolCopyResultsEl.disabled = false;
+            }
 
             
 

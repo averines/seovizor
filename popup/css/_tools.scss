@@ -38,6 +38,12 @@
         background-color: lighten($bg-l, 1);
     }
 
+    &:disabled {
+        // background-color: red;
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
     &__icon {
         width: 20px;
         align-self: center;
@@ -126,7 +132,7 @@
 }
 
 .tools-title {
-    font-size: 13px;
+    font-size: 13.5px;
     line-height: 1.3;
     margin-bottom: 15px;
 }
