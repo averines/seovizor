@@ -105,7 +105,6 @@
                         </tr>
                     </table>
                 </div>
-
                 <div class="tabpanel__footer tabpanel__footer--main">
                     <div class="data-counters">
                         <div class="data-counter">
@@ -170,8 +169,73 @@
             </div>
             <div class="tabpanel" role="tabpanel" id="tabpanel2" aria-labelledby="search" aria-hidden="true">
                 <div class="tabpanel__content">
-                    <button id="action-test">Test action</button>
-                    <button id="go-to-options">Go to options</button>
+                    <div class="tools-title mt-1">Проверить по оператору запроса</div>
+                    <div class="tools">
+                        <div class="tool tool--sm">
+                            <div class="tool__content tool__content--inline">
+                                <div class="tool__title">url:url</div>
+                                <div class="tool__subtitle">Поиск этой страницы в поисковой выдаче</div>
+                            </div>
+                            <div class="tool__links">
+                                <a class="tool-link" href="" target="_blank" id="tool-search-g">Google</a>
+                                <a class="tool-link" href="" target="_blank" id="tool-search-y">Яндекс</a>
+                            </div>
+                        </div>
+                        <div class="tool tool--sm">
+                            <div class="tool__content tool__content--inline">
+                                <div class="tool__title">title:(title)</div>
+                                <div class="tool__subtitle">Поиск дубликатов в поисковой выдаче</div>
+                            </div>
+                            <div class="tool__links">
+                                <a class="tool-link" href="" target="_blank" id="tool-duplicate-y">Яндекс</a>
+                            </div>
+                        </div>
+                        <div class="tool tool--sm">
+                            <div class="tool__content tool__content--inline">
+                                <div class="tool__title">url:www.domain</div>
+                            </div>
+                            <div class="tool__links">
+                                <a class="tool-link" href="" target="_blank" id="tool-domain-y">Яндекс</a>
+                            </div>
+                        </div>
+                        <div class="tool tool--sm">
+                            <div class="tool__content tool__content--inline">
+                                <div class="tool__title">site:domain</div>
+                            </div>
+                            <div class="tool__links">
+                                <a class="tool-link" href="" target="_blank" id="tool-site-g">Google</a>
+                                <a class="tool-link" href="" target="_blank" id="tool-site-y">Яндекс</a>
+                            </div>
+                        </div>
+                        <div class="tool tool--sm">
+                            <div class="tool__content tool__content--inline">
+                                <div class="tool__title">host:domain</div>
+                            </div>
+                            <div class="tool__links">
+                                <a class="tool-link" href="" target="_blank" id="tool-host-y">Яндекс</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tools-title mt-3">Другие операции</div>
+                    <div class="tools">
+                        <button class="tool" href="" target="_blank">
+                            <div class="tool__content">
+                                <div class="tool__title">Скопировать все url из поисковой выдачи</div>
+                                <div class="tool__subtitle">Работает только на странице с результатами поиска</div>
+                            </div>
+                            <div class="tool__copy"></div>
+                        </button>
+                        <div class="tool tool--sm">
+                            <div class="tool__content tool__content--inline">
+                                <div class="tool__title">Поиск организации на картах</div>
+                            </div>
+                            <div class="tool__links">
+                                <a class="tool-link" href="" target="_blank" id="tool-org-g">Google</a>
+                                <a class="tool-link" href="" target="_blank" id="tool-org-y">Яндекс</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="tabpanel" role="tabpanel" id="tabpanel3" aria-labelledby="page" aria-hidden="true">
@@ -192,6 +256,8 @@
             <div class="tabpanel" role="tabpanel" id="tabpanel6" aria-labelledby="scheme" aria-hidden="true">
                 <div class="tabpanel__content">
                     <p>Микроразметка</p>
+                    <button id="action-test">Test action</button>
+                    <button id="go-to-options">Go to options</button>
                 </div>
             </div>
             <div class="tabpanel" role="tabpanel" id="tabpanel7" aria-labelledby="tools" aria-hidden="true">

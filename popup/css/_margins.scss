@@ -1,0 +1,31 @@
+@for $i from 0 through 4 {
+    .mt-#{$i},
+    .my-#{$i} {
+        margin-top: 10px * $i;
+    }
+}
+
+@for $i from 0 through 4 {
+    .mb-#{$i},
+    .my-#{$i} {
+        margin-bottom: 10px * $i;
+    }
+}
+
+@for $i from 0 through 4 {
+    .mx-#{$i},
+    .ml-#{$i} {
+        margin-left: 10px * $i;
+    }
+}
+
+@for $i from 0 through 4 {
+    .mx-#{$i},
+    .mr-#{$i} {
+        margin-right: 10px * $i;
+    }
+}
+
+.ml-a {
+    margin-left: auto;
+}

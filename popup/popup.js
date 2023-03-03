@@ -47,6 +47,26 @@ const urlEl = document.getElementById("url");
 const canonicalEl = document.getElementById("canonical");
 const h1El = document.getElementById("h1");
 const h1counterEl = document.getElementById("h1counter");
+
+
+// url.protocol;  // "http:"
+// url.hostname;  // "aaa.bbb.ccc.com"
+// url.pathname;  // "/asdf/asdf/sadf.aspx"
+// url.search;    // "?blah"
+
+// вкладка Search
+const toolSearchGEl = document.getElementById("tool-search-g");
+const toolSearchYEl = document.getElementById("tool-search-y");
+const toolDuplicateYEl = document.getElementById("tool-duplicate-y");
+const toolDomainYEl = document.getElementById("tool-domain-y");
+const toolSiteGEl = document.getElementById("tool-site-g");
+const toolSiteYEl = document.getElementById("tool-site-y");
+const toolHostYEl = document.getElementById("tool-host-y");
+const toolOrgGEl = document.getElementById("tool-org-g");
+const toolOrgYEl = document.getElementById("tool-org-y");
+
+
+// вкладка Tools
 const toolSpeedEl = document.getElementById("tool-speed");
 const toolMobileEl = document.getElementById("tool-mobile");
 const toolArchiveEl = document.getElementById("tool-archive");
@@ -73,8 +93,29 @@ document.addEventListener('DOMContentLoaded', () => {
     chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
         if (tabs) {
             const url = new URL(tabs[0].url);
+            const urlNoProtocol = `${url.hostname}${url.pathname}`;
+            const hostnameNoWww = url.hostname.replace("www.", "");
+            const urlNoWww = `${hostnameNoWww}${url.pathname}`;
             urlEl.innerText = url.href;
             urlEl.href = url.href;
+
+        
+            // вкладка Search
+            toolSearchGEl.href = `https://www.google.ru/search?q=site:${url.href}`;
+            toolSearchYEl.href = `https://yandex.ru/search/?text=url:${urlNoWww} | url:${urlNoProtocol}`;
+            // TODO: получить и внедрить title в этот запрос
+            toolDuplicateYEl.href = `https://yandex.ru/search/?text=title:()+site:${url.hostname}`;
+            toolDomainYEl.href = `https://yandex.ru/search/?text=url:${url.hostname}/* | url:${hostnameNoWww}/* | url:${url.hostname} | url:${hostnameNoWww}`;
+            toolSiteGEl.href = `https://www.google.ru/search?q=site:${url.hostname}`;
+            toolSiteYEl.href = `https://yandex.ru/search/?text=site:${url.hostname}`;
+            toolHostYEl.href = `https://yandex.ru/search/?text=host:${url.hostname}`;
+
+            toolOrgGEl.href = `https://www.google.com/maps/search/${url.hostname}`;
+            toolOrgYEl.href = `https://yandex.ru/maps/?mode=search&text=${url.hostname}`;
+
+            
+
+            // вкладка Tools
             toolSpeedEl.href = `https://pagespeed.web.dev/report?url=${url.href}`;
             toolMobileEl.href = `https://search.google.com/test/mobile-friendly?url=${url.href}`;
             toolArchiveEl.href = `https://web.archive.org/web/*/${url.href}`;

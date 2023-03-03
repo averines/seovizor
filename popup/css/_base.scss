@@ -1,5 +1,6 @@
 $main: #2785e1;
-$main-l: #ddeaff;
+$main-l: #e5eefd;
+$main-ll: #ddeaff;
 $main-d: #0b70e8;
 
 $warning: #ffc188;
@@ -16,8 +17,8 @@ $bg-l: #f6f8f9;
 $line: #dee7ec;
 $line-l: lighten($line, 3);
 
-$br: 5px;
-$br-sm: 3px;
+$br: 8px;
+$br-sm: 6px;
 $t: all 0.1s ease-in-out;
 
 *,
@@ -57,7 +58,7 @@ body {
     // border: 2px solid red;
     margin: 0;
     width: 650px;
-    height: 550px;
+    height: 590px;
     font-family: "Rubik", Arial, sans-serif;
     font-size: 14px;
     color: $text;
@@ -144,38 +145,6 @@ hr {
     width: 1px;
     height: 1px;
     margin: -1px;
-}
-
-@for $i from 0 through 4 {
-    .mt-#{$i},
-    .my-#{$i} {
-        margin-top: 10px * $i;
-    }
-}
-
-@for $i from 0 through 4 {
-    .mb-#{$i},
-    .my-#{$i} {
-        margin-bottom: 10px * $i;
-    }
-}
-
-@for $i from 0 through 4 {
-    .mx-#{$i},
-    .ml-#{$i} {
-        margin-left: 10px * $i;
-    }
-}
-
-@for $i from 0 through 4 {
-    .mx-#{$i},
-    .mr-#{$i} {
-        margin-right: 10px * $i;
-    }
-}
-
-.ml-a {
-    margin-left: auto;
 }
 
 .cols {
