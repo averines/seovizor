@@ -11,11 +11,10 @@
     text-decoration: none;
     display: flex;
     column-gap: 10px;
-    padding: 11px 7px 11px 15px;
+    padding: 15px 15px 15px 15px;
     position: relative;
     border-bottom: 1px solid $line;
     transition: $t;
-    font-size: 13px;
 
     &:last-child {
         border-bottom: none;
@@ -36,12 +35,17 @@
 
     &__title {
         color: $text;
+        font-size: 13px;
+        line-height: 1.1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     &__subtitle {
-        padding-top: 2px;
+        padding-top: 3px;
         color: $text-l;
         line-height: 1.2;
+        font-size: 13px;
     }
 
     &__open {

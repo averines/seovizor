@@ -15,7 +15,7 @@
     }
 
     &__content {
-        padding: 20px 30px 15px 30px;
+        padding: 20px 15px 20px 30px;
         height: 100%;
         overflow-y: scroll;
     }
@@ -30,12 +30,13 @@
             content: "";
             display: block;
             width: 100%;
-            height: 30px;
-            background: linear-gradient(rgba(0, 0, 0, 0), #fff);
+            height: 40px;
+            background: linear-gradient(rgba(0, 0, 0, 0) 0%, #fff 100%);
             position: absolute;
             z-index: 1;
-            top: -31px;
+            top: -41px;
             left: 0;
+            pointer-events: none;
 
         }
 
@@ -43,16 +44,19 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-top: 20px;
-            padding-bottom: 20px;
+            padding-top: 25px;
+            padding-bottom: 25px;
         }
+
+        &--tools {
+            border-top: none;
+        }        
     }
 }
 
 .tablist {
-    padding: 0 30px;
+    padding: 10px 30px 0 30px;
     display: flex;
-    justify-content: space-between;
     border-bottom: 1px solid $line;
 }
 
@@ -62,20 +66,23 @@
     border: none;
     color: $text;
     font-weight: 500;
-    font-size: 12.5px;
+    font-size: 13px;
     background: none;
-    padding: 0 10px;
+    padding: 0 20px;
     line-height: 1;
     border-bottom: 2px solid rgba(0, 0, 0, 0);
-    height: 55px;
+    height: 40px;
     transition: $t;
+    border-radius: 6px 6px 0 0;
 
     &:hover {
-        color: #000;
+        background-color:  lighten($bg-l, 1.2);
+        border-bottom-color: $line;
     }
 
     &[aria-selected="true"] {
         color: $main;
         border-block-color: $main;
+        background-color: #fff;
     }
 }

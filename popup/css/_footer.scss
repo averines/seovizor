@@ -7,10 +7,15 @@
     &__author {
         margin: 0;
         text-align: right;
-        opacity: 0.5;
-        color: #fff;
+        color: lighten($main, 20);
+
         a {
-            color: #fff;
+            color: lighten($main, 20);
+            transition: $t;
+
+            &:hover {
+                color: $main-l;
+            }
         }
     }
 }

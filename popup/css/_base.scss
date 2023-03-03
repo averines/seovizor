@@ -43,7 +43,7 @@ html {
     background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-    background-color: $line-l;
+    background-color: lighten($line-l, 2);
     border-radius: 10px;
     border: 5px solid #fff;
     transition: $t;
@@ -180,7 +180,7 @@ hr {
 
 .cols {
     display: flex;
-    column-gap: 24px;
+    column-gap: 20px;
 }
 
 .col-6 {

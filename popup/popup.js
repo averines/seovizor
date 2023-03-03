@@ -47,6 +47,15 @@ const urlEl = document.getElementById("url");
 const canonicalEl = document.getElementById("canonical");
 const h1El = document.getElementById("h1");
 const h1counterEl = document.getElementById("h1counter");
+const toolSpeedEl = document.getElementById("tool-speed");
+const toolMobileEl = document.getElementById("tool-mobile");
+const toolArchiveEl = document.getElementById("tool-archive");
+const toolSslEl = document.getElementById("tool-ssl");
+const toolWhoisEl = document.getElementById("tool-whois");
+const toolCmsEl = document.getElementById("tool-cms");
+const toolResponseEl = document.getElementById("tool-response");
+const toolDuplicateEl = document.getElementById("tool-duplicate");
+const toolTrustEl = document.getElementById("tool-trust");
 
 function getData() {
     // TODO: возвращат не массив с текстом заголовка, а объект со всеми нужными полями
@@ -66,6 +75,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const url = new URL(tabs[0].url);
             urlEl.innerText = url.href;
             urlEl.href = url.href;
+            toolSpeedEl.href = `https://pagespeed.web.dev/report?url=${url.href}`;
+            toolMobileEl.href = `https://search.google.com/test/mobile-friendly?url=${url.href}`;
+            toolArchiveEl.href = `https://web.archive.org/web/*/${url.href}`;
+            toolSslEl.href = `https://www.sslshopper.com/ssl-checker.html#hostname=${url.hostname}`;
+            toolWhoisEl.href = `https://www.webnames.ru/whois?domname=${url.hostname}`;
+            toolCmsEl.href = `https://be1.ru/cms/?url=${url.hostname}`;
+            toolResponseEl.href = `https://www.bertal.ru/?url=${url.href}`;
+            toolDuplicateEl.href = `https://be1.ru/dubli-stranic/?url=${url.hostname}`;
+            toolTrustEl.href = `https://checktrust.ru/analyze/${url.hostname}`;
+
 
             chrome.scripting.executeScript({ target: { tabId: tabs[0].id, allFrames: false }, func: getData }, getDataResult)
 

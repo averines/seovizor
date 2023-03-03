@@ -15,13 +15,13 @@
 <body>
     <div class="wrapper">
         <header class="tablist" role="tablist" aria-label="Главное меню">
-            <button class="tab" role="tab" aria-selected="true" aria-controls="tabpanel1" id="main">Основное</button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel2" id="search">Поиск</button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel3" id="page">Страница</button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel4" id="text">Текст</button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel5" id="pics">Изображения</button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel6" id="scheme">Микроразметка</button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel7" id="tools">Инструменты</button>
+            <button class="tab" role="tab" aria-selected="true" aria-controls="tabpanel1" id="main">Total</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel2" id="search">Search</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel3" id="page">Page</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel4" id="text">Text</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel5" id="pics">Images</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel6" id="scheme">Scheme</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel7" id="tools">Tools</button>
         </header>
 
         <div class="tabpanels">
@@ -196,52 +196,41 @@
             </div>
             <div class="tabpanel" role="tabpanel" id="tabpanel7" aria-labelledby="tools" aria-hidden="true">
                 <div class="tabpanel__content">
-                    <div class="cols mt-3">
+                    <div class="cols">
                         <div class="col-6">
                             <div class="tools">
-                                <a class="tool" href="https://pagespeed.web.dev/report?&url=https://123.ru/">
-                                    <div class="tool__icon">
-                                        <div class="tool-icon tool-icon--1"></div>
-                                    </div>
+                                <a class="tool" href="" target="_blank" id="tool-speed">
                                     <div class="tool__content">
-                                        <div class="tool__title">pagespeed.web.dev</div>
-                                        <div class="tool__subtitle">Скорость загрузки страницы</div>
+                                        <div class="tool__title">Скорость загрузки страницы</div>
+                                        <div class="tool__subtitle">pagespeed.web.dev</div>
                                     </div>
                                     <div class="tool__open"></div>
                                 </a>
-                                <a class="tool" href="https://pagespeed.web.dev/report?&url=https://123.ru/">
-                                    <div class="tool__icon">
-                                        <div class="tool-icon tool-icon--2"></div>
-                                    </div>
+                                <a class="tool" href="" target="_blank" id="tool-mobile">
                                     <div class="tool__content">
-                                        <div class="tool__title">search.google.com</div>
-                                        <div class="tool__subtitle">Проверка отимизации для мобильных</div>
+                                        <div class="tool__title">Проверить оптимизацию для мобильных</div>
+                                        <div class="tool__subtitle">search.google.com</div>
                                     </div>
                                     <div class="tool__open"></div>
                                 </a>
-                                <a class="tool" href="">
-                                    <div class="tool__icon">
-                                        <div class="tool-icon tool-icon--3"></div>
-                                    </div>
+                                <a class="tool" href="" target="_blank" id="tool-archive">
                                     <div class="tool__content">
-                                        <div class="tool__title">web.archive.org</div>
-                                        <div class="tool__subtitle">Снимки страницы в веб-архиве</div>
+                                        <div class="tool__title">Снимки страницы в веб-архиве</div>
+                                        <div class="tool__subtitle">web.archive.org</div>
                                     </div>
                                     <div class="tool__open"></div>
                                 </a>
-                                <a class="tool" href="">
-                                    <div class="tool__icon"></div>
+                                <a class="tool" href="" target="_blank" id="tool-ssl">
                                     <div class="tool__content">
-                                        <div class="tool__title">sslshopper.com</div>
-                                        <div class="tool__subtitle">Проверка ssl-сертификата</div>
+                                        <div class="tool__title">Проверить ssl-сертификат</div>
+                                        <div class="tool__subtitle">sslshopper.com</div>
                                     </div>
                                     <div class="tool__open"></div>
                                 </a>
-                                <a class="tool" href="">
-                                    <div class="tool__icon"></div>
+                                <a class="tool" href="" target="_blank" id="tool-whois">
                                     <div class="tool__content">
-                                        <div class="tool__title">webnames.ru</div>
-                                        <div class="tool__subtitle">Whois</div>
+                                        <div class="tool__title">Whois?</div>
+                                        <div class="tool__subtitle">webnames.ru</div>
                                     </div>
                                     <div class="tool__open"></div>
                                 </a>
@@ -249,46 +238,45 @@
                         </div>
                         <div class="col-6">
                             <div class="tools">
-                                <a class="tool" href="">
-                                    <div class="tool__icon">
-                                        <div class="tool-icon tool-icon--4"></div>
-                                    </div>
+                                <a class="tool" href="" target="_blank" id="tool-cms">
                                     <div class="tool__content">
-                                        <div class="tool__title">be1.ru</div>
-                                        <div class="tool__subtitle">Узнать CMS сайта</div>
+                                        <div class="tool__title">Узнать CMS сайта</div>
+                                        <div class="tool__subtitle">be1.ru</div>
                                     </div>
                                     <div class="tool__open"></div>
                                 </a>
-                                <a class="tool" href="">
-                                    <div class="tool__icon">
-                                        <div class="tool-icon tool-icon--5"></div>
-                                    </div>
+                                <a class="tool" href="" target="_blank" id="tool-response">
                                     <div class="tool__content">
-                                        <div class="tool__title">bertal.ru</div>
-                                        <div class="tool__subtitle">Проверка ответа сервера</div>
+                                        <div class="tool__title">Проверить ответ сервера</div>
+                                        <div class="tool__subtitle">bertal.ru</div>
                                     </div>
                                     <div class="tool__open"></div>
                                 </a>
-                                <a class="tool" href="">
-                                    <div class="tool__icon">
-                                        <div class="tool-icon tool-icon--6"></div>
-                                    </div>
+                                <a class="tool" href="" target="_blank" id="tool-duplicate">
                                     <div class="tool__content">
-                                        <div class="tool__title">be1.ru</div>
-                                        <div class="tool__subtitle">Проверка дублей страниц</div>
+                                        <div class="tool__title">Проверить дубли страниц</div>
+                                        <div class="tool__subtitle">be1.ru</div>
                                     </div>
                                     <div class="tool__open"></div>
                                 </a>
-                                <a class="tool" href="">
-                                    <div class="tool__icon"></div>
+                                <a class="tool" href="" target="_blank" id="tool-trust">
                                     <div class="tool__content">
-                                        <div class="tool__title">checktrust.ru</div>
-                                        <div class="tool__subtitle">Узнать траст и спам сайта</div>
+                                        <div class="tool__title">Узнать траст и спам сайта</div>
+                                        <div class="tool__subtitle">checktrust.ru</div>
                                     </div>
                                     <div class="tool__open"></div>
                                 </a>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="tabpanel__footer tabpanel__footer--tools">
+                    <div class="version">
+                        <div class="version__avatar">
+                            <img src="/images/avatar-1.png" alt="Аватар" width="39" height="40" title="Penumbra">
+                        </div>
+                        <div class="version__title">v 1.1</div>
+                        <a class="version__link" href="/releases/releases.html" target="_blank">История изменений</a>
                     </div>
                 </div>
             </div>
