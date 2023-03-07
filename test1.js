@@ -4,6 +4,7 @@ import { getString, tabsSwitcher } from './helpers.js';
 import parseUrl from './utils/parseUrl.js';
 import Robots from './script/Robots.js';
 import fetchTextInfo from './services/textInfo.js';
+import exportCSV from './popup/exportCSV.js';
 
 const clipboard = async (value) => {
     if (!navigator.clipboard) {
@@ -12,6 +13,8 @@ const clipboard = async (value) => {
 
     return navigator.clipboard.writeText(value);
 };
+
+
 
 const CANONICAL_STATUS = {
     none: 'none',
@@ -63,41 +66,43 @@ const getCanonicalStatus = (canonicals, url) => {
 
 const getDescriptionByCanonicalStatus = (canonicalStatus, canonicals) => {
     if (canonicalStatus === CANONICAL_STATUS.none) {
-        return '<span class="indexing-item__value">РўРµРі РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚</span><br><p>РРЅРґРµРєСЃРёСЂРѕРІР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹ СЂР°Р·СЂРµС€РµРЅРѕ</p> <i class="fa fa-circle-check ball ball__success"></i>';
+        return '<span class="indexing-item__value">Тег отсутствует</span><br><p>Индексирование страницы разрешено</p> <i class="fa fa-circle-check ball ball__success"></i>';
     }
 
     if (canonicalStatus === CANONICAL_STATUS.eq) {
-        return `<span class="indexing-item__value">${canonicals[0].href}</span><br><p>РўРµРєСѓС‰Р°СЏ СЃС‚СЂР°РЅРёС†Р° СЏРІР»СЏРµС‚СЃСЏ РєР°РЅРѕРЅРёС‡РµСЃРєРѕР№</p> <i class="fa fa-circle-check ball ball__success"></i>`;
+        return `<span class="indexing-item__value">${canonicals[0].href}</span><br><p>Текущая страница является канонической</p> <i class="fa fa-circle-check ball ball__success"></i>`;
     }
 
     if (canonicalStatus === CANONICAL_STATUS.noHref) {
-        return 'РџР°СЂР°РјРµС‚СЂ href РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚<br><p>РЎРѕРґРµСЂР¶РёРјРѕРµ С‚РµРіР° СѓРєР°Р·Р°РЅРѕ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕ, РЅРѕ РёРЅРґРµРєСЃРёСЂРѕРІР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹ РЅРµ Р·Р°РїСЂРµС‰РµРЅРѕ</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>';
+        return 'Параметр href отсутствует<br><p>Содержимое тега указано некорректно, но индексирование страницы не запрещено</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>';
     }
 
     if (canonicalStatus === CANONICAL_STATUS.emptyHref) {
-        return 'РџР°СЂР°РјРµС‚СЂ href РїСѓСЃС‚РѕР№<br><p>РЎРѕРґРµСЂР¶РёРјРѕРµ С‚РµРіР° СѓРєР°Р·Р°РЅРѕ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕ, РЅРѕ РёРЅРґРµРєСЃРёСЂРѕРІР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹ РЅРµ Р·Р°РїСЂРµС‰РµРЅРѕ</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>';
+        return 'Параметр href пустой<br><p>Содержимое тега указано некорректно, но индексирование страницы не запрещено</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>';
     }
 
     if (canonicalStatus === CANONICAL_STATUS.relativeHref) {
-        return `<span class="indexing-item__value">href="${canonicals[0].href}"</span><br><p>РЎРѕРґРµСЂР¶РёРјРѕРµ С‚РµРіР° СѓРєР°Р·Р°РЅРѕ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕ, РЅРѕ РёРЅРґРµРєСЃРёСЂРѕРІР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹ РЅРµ Р·Р°РїСЂРµС‰РµРЅРѕ</p> <i class="ball ball__warning fa-solid fa-circle-exclamation"></i>`;
+        return `<span class="indexing-item__value">href="${canonicals[0].href}"</span><br><p>Содержимое тега указано некорректно, но индексирование страницы не запрещено</p> <i class="ball ball__warning fa-solid fa-circle-exclamation"></i>`;
     }
 
     if (canonicalStatus === CANONICAL_STATUS.notEq) {
-        return `<span class="indexing-item__value">${canonicals[0].href}</span><br><p>РљР°РЅРѕРЅРёС‡РµСЃРєРѕР№ СЏРІР»СЏРµС‚СЃСЏ РґСЂСѓРіР°СЏ СЃС‚СЂР°РЅРёС†Р°</p> <i class="ball ball__error fa-solid fa-circle-xmark"></i>`;
+        return `<span class="indexing-item__value">${canonicals[0].href}</span><br><p>Канонической является другая страница</p> <i class="ball ball__error fa-solid fa-circle-xmark"></i>`;
     }
 
     if (canonicalStatus === CANONICAL_STATUS.many) {
         const canonicalsWithBr = canonicals.map((canonical) => canonical.href).join('<br>');
-        return `<span class="indexing-item__value">${canonicalsWithBr}</span><br><p>РќР° СЃС‚СЂР°РЅРёС†Рµ РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕ СѓРєР°Р·Р°РЅС‹ РЅРµСЃРєРѕР»СЊРєРѕ С‚РµРіРѕРІ - СЌС‚Рѕ РЅРµРґРѕРїСѓСЃС‚РёРјРѕ, РЅРѕ РёРЅРґРµРєСЃРёСЂРѕРІР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹ РЅРµ Р·Р°РїСЂРµС‰РµРЅРѕ</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>`;
+        return `<span class="indexing-item__value">${canonicalsWithBr}</span><br><p>На странице одновременно указаны несколько тегов - это недопустимо, но индексирование страницы не запрещено</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>`;
     }
 };
+
+
 
 const META_ROBOTS = ['robots', 'yandex', 'googlebot'];
 
 const getMetaRobotStatus = (metaTags) => {
     const robots = Object.keys(metaTags).filter((key) => META_ROBOTS.includes(key));
     if (!robots.length) {
-        return '<span class="indexing-item__value empty-value">РњРµС‚Р°С‚РµРі РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚</span><br><p>РРЅРґРµРєСЃРёСЂРѕРІР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹ СЂР°Р·СЂРµС€РµРЅРѕ</p><i class="fa fa-circle-check ball ball__success"></i>';
+        return '<span class="indexing-item__value empty-value">Метатег отсутствует</span><br><p>Индексирование страницы разрешено</p><i class="fa fa-circle-check ball ball__success"></i>';
     }
 
     const isRobots = robots.length === 1 && robots[0] === 'robots';
@@ -106,7 +111,7 @@ const getMetaRobotStatus = (metaTags) => {
         .map((robot) => {
             if (!metaTags[robot].map((rule) => rule.content).filter(Boolean).length) {
                 return `${!isRobots ? `${robot}<br>` : ''
-                    }<p>РќР° СЃС‚СЂР°РЅРёС†Рµ РїСЂРёСЃСѓС‚СЃС‚РІСѓРµС‚ РјРµС‚Р°С‚РµРі ${robot}, РЅРѕ РѕРЅ РїСѓСЃС‚РѕР№</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>`;
+                    }<p>На странице присутствует метатег ${robot}, но он пустой</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>`;
             }
 
             const contents = metaTags[robot].map((rule) => rule.content).join();
@@ -114,48 +119,48 @@ const getMetaRobotStatus = (metaTags) => {
             content = content.trim();
             if (!content) {
                 return `${!isRobots ? `${robot}<br>` : ''
-                    }<p>РќР° СЃС‚СЂР°РЅРёС†Рµ РїСЂРёСЃСѓС‚СЃС‚РІСѓРµС‚ РјРµС‚Р°С‚РµРі ${robot}, РЅРѕ РѕРЅ РїСѓСЃС‚РѕР№</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>`;
+                    }<p>На странице присутствует метатег ${robot}, но он пустой</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>`;
             }
 
             const ruleArr = content.split(',').map((contentArr) => contentArr.trim().toLowerCase());
             if (ruleArr.includes('none') || ruleArr.includes('noindex')) {
                 return `${!isRobots ? `${robot}<br>` : ''
-                    } <span class="indexing-item__value">${content}</span><br><p>РРЅРґРµРєСЃРёСЂРѕРІР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹ Р·Р°РїСЂРµС‰РµРЅРѕ</p><i class="ball ball__error fa-solid fa-circle-xmark"></i>`;
+                    } <span class="indexing-item__value">${content}</span><br><p>Индексирование страницы запрещено</p><i class="ball ball__error fa-solid fa-circle-xmark"></i>`;
             }
 
             return `${!isRobots ? `${robot}<br>` : ''
-                } <span class="indexing-item__value">${content}</span><br><p>РРЅРґРµРєСЃРёСЂРѕРІР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹ СЂР°Р·СЂРµС€РµРЅРѕ</p><i class="ball ball__success fa fa-circle-check"></i>`;
+                } <span class="indexing-item__value">${content}</span><br><p>Индексирование страницы разрешено</p><i class="ball ball__success fa fa-circle-check"></i>`;
         })
         .join('<br>');
 };
 
 const getRobotsMessage = (lines, rule) =>
     rule.isDisallowed
-        ? `<p>РЎРєР°РЅРёСЂРѕРІР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹ Р·Р°РїСЂРµС‰РµРЅРѕ РїСЂР°РІРёР»РѕРј РЅР° СЃС‚СЂРѕРєРµ ${rule.disallowLine}:<br>${lines[
+        ? `<p>Сканирование страницы запрещено правилом на строке ${rule.disallowLine}:<br>${lines[
             rule.disallowLine - 1
         ].join(': ')}</p><i class="ball ball__error fa-solid fa-circle-xmark"></i>`
-        : '<p>РЎРєР°РЅРёСЂРѕРІР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹ СЂР°Р·СЂРµС€РµРЅРѕ</p><i class="ball ball__success fa fa-circle-check"></i>';
+        : '<p>Сканирование страницы разрешено</p><i class="ball ball__success fa fa-circle-check"></i>';
 
 const getRobotsStatus = (statusCode, lines, meta) => {
     if (statusCode === 404) {
-        return '<span class="indexing-item__value">Р¤Р°Р№Р» robots.txt РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚</span><br>РЎРєР°РЅРёСЂРѕРІР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹ СЂР°Р·СЂРµС€РµРЅРѕ</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>';
+        return '<span class="indexing-item__value">Файл robots.txt отсутствует</span><br>Сканирование страницы разрешено</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>';
     }
 
     if (statusCode !== 200) {
-        return '<span class="indexing-item__value">Р¤Р°Р№Р» robots.txt РЅРµРґРѕСЃС‚СѓРїРµРЅ</span><p>РЎРєР°РЅРёСЂРѕРІР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹ СЂР°Р·СЂРµС€РµРЅРѕ</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>';
+        return '<span class="indexing-item__value">Файл robots.txt недоступен</span><p>Сканирование страницы разрешено</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>';
     }
 
     if (!lines.length) {
-        return '<span class="indexing-item__value">Р¤Р°Р№Р» robots.txt РїСѓСЃС‚РѕР№</span><br><p>РЎРєР°РЅРёСЂРѕРІР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹ СЂР°Р·СЂРµС€РµРЅРѕ</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>';
+        return '<span class="indexing-item__value">Файл robots.txt пустой</span><br><p>Сканирование страницы разрешено</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>';
     }
 
     if (!lines.filter(Boolean).length) {
-        return '<span class="indexing-item__value">Р¤Р°Р№Р» robots.txt РЅРµ СЃРѕРґРµСЂР¶РёС‚ РґРёСЂРµРєС‚РёРІ</span><br><p>РЎРєР°РЅРёСЂРѕРІР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹ СЂР°Р·СЂРµС€РµРЅРѕ</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>';
+        return '<span class="indexing-item__value">Файл robots.txt не содержит директив</span><br><p>Сканирование страницы разрешено</p><i class="ball ball__warning fa-solid fa-circle-exclamation"></i>';
     }
 
     const userAGents = Object.keys(meta);
     if (!userAGents.length) {
-        return '<span class="indexing-item__value">Р’ С„Р°Р№Р» robots.txt РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚ User-agent</span><br><p>РЎРєР°РЅРёСЂРѕРІР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹ СЂР°Р·СЂРµС€РµРЅРѕ</p><i class="ball ball__success fa fa-circle-check"></i>';
+        return '<span class="indexing-item__value">В файл robots.txt отсутствует User-agent</span><br><p>Сканирование страницы разрешено</p><i class="ball ball__success fa fa-circle-check"></i>';
     }
 
     return userAGents
@@ -182,6 +187,98 @@ const getJSDetails = (tab) =>
         );
     });
 
+const checkIsExternal = (tag) => tag.isExternal && tag.hrefURL && ['http:', 'https:'].includes(tag.hrefURL.protocol);
+
+const hrefFilter = (href) => (tag) => {
+    if (href === 'external') {
+        return checkIsExternal(tag);
+    }
+
+    return !tag.isExternal;
+};
+
+const protocolFilter = (protocol) => (tag) => {
+    if (protocol === 'other') {
+        return !tag.isAbsolutePath && !['http:', 'https:'].includes(tag.hrefURL.protocol);
+    }
+
+    return tag.href && tag.hrefURL.protocol === `${protocol}:`;
+};
+
+const relFilter = (rel) => (tag) => {
+    if (rel === 'nofollow') {
+        return tag.isNoFollow;
+    }
+
+    if (rel === 'other') {
+        // не пустой и где не только nofollow
+        let relContent = tag.rel;
+        if (!relContent) {
+            return false;
+        }
+
+        relContent = relContent.trim();
+        if (!relContent) {
+            return false;
+        }
+
+        return relContent !== 'nofollow';
+    }
+
+    return !tag.isNoFollow;
+};
+
+const statusCodeFilter = (statusCode) => (tag) => {
+    const statusCodeIsNumber = typeof tag.statusCode === 'number';
+    if (statusCode === '2xx') {
+        return statusCodeIsNumber && tag.statusCode >= 200 && tag.statusCode <= 299;
+    }
+
+    if (statusCode === '3xx') {
+        return statusCodeIsNumber && tag.statusCode >= 300 && tag.statusCode <= 399;
+    }
+
+    if (statusCode === '4xx') {
+        return statusCodeIsNumber && tag.statusCode >= 400 && tag.statusCode <= 499;
+    }
+
+    if (statusCode === '5xx') {
+        return statusCodeIsNumber && tag.statusCode >= 500 && tag.statusCode <= 599;
+    }
+
+    if (statusCode === 'other') {
+        return !tag.isNeedCheck || tag.error || (statusCodeIsNumber && (statusCode < 200 || statusCode > 599));
+    }
+
+    return true;
+};
+
+const $createRedirect = (url) => {
+    const $redirectTo = document.createElement('span');
+    $redirectTo.innerHTML = `<span class="empty-value">� едирект: </span><a href="${url}" target="_blank">${url}</a>`;
+    return $redirectTo;
+};
+
+const $createStatusCode = (statusCode) => {
+    const $statusCode = document.createElement('b');
+    $statusCode.classList.add('status-code');
+    if (statusCode >= 200 && statusCode <= 299) {
+        $statusCode.classList.add('status-code__success');
+    } else if (statusCode >= 300 && statusCode <= 399) {
+        $statusCode.classList.add('status-code__warning');
+    } else {
+        $statusCode.classList.add('status-code__error');
+    }
+
+    $statusCode.setAttribute('data-status-code', statusCode);
+    $statusCode.innerHTML = statusCode;
+    Object.assign($statusCode.style, {
+        float: 'right',
+    });
+
+    return $statusCode;
+};
+
 
 const toggleJS = (tab) =>
     async function () {
@@ -203,7 +300,7 @@ const toggleJS = (tab) =>
                 );
             });
             chrome.tabs.reload(tab.id, { bypassCache: false });
-            // РќСѓР¶РЅРѕ РѕС‡РёСЃС‚РёС‚СЊ С‚.Рє. СЃС‚СЂР°РЅРёС†Р° РѕР±РЅРѕРІРёР»Р°СЃСЊ Рё РІСЃРµ РЅР°С€Р»Рё РЅР°СЃС‚СЂРѕР№РєРё СЃР»РµС‚Р°СЋС‚
+            // Нужно очистить т.к. страница обновилась и все нашли настройки слетают
             const $showHeaderLightingButton = document.getElementById('showHeaderLighting');
             const $showHeaderLightingButtonIcon = $showHeaderLightingButton.querySelector('i');
             $showHeaderLightingButtonIcon.classList.add('fa-check');
@@ -243,7 +340,7 @@ const addDiv = (propClass, id, valueProp, items) => {
     }
 
     if (items.length === 1) {
-        Tools.addDiv(id, valueProp ? items[0][valueProp] : items[0], propClass);
+        Tools.addDiv(id, valueProp ? items[0][valueProp] : items[0], propClass, true);
         return;
     }
 
@@ -299,6 +396,67 @@ const parseRobotsTXT = async (url, checkURL) => {
     return result;
 };
 
+const checkSitemapXML = async (url) => {
+    const response = await fetch(url);
+    return response;
+};
+
+const onCopyElement = ($element, copyText) => async () => {
+    try {
+        await clipboard(copyText);
+        const icon = $element.querySelector('i');
+        const initialClass = icon.className;
+        icon.className = 'fas fa-check';
+
+        const tooltip = $element.querySelector('.copy-tooltip');
+        const text = tooltip.innerHTML;
+        tooltip.innerHTML = 'Скопировано';
+
+        setTimeout(() => {
+            tooltip.innerHTML = text;
+            icon.className = initialClass;
+        }, 1500);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const createOpenDropdown = (title, items, metaTags) => {
+    const $div = document.createElement('div');
+    $div.classList.add('tabs-content__row', 'tabs-content__row_dropdown');
+    $div.innerHTML = `
+      <div class="d-flex alst-column">
+        <div class="tabs-content__row_name">${title}</div>
+      </div>
+      <div class="dropdown active">
+        ${items
+            .map(
+                (name) => `
+        <div class="dropdown__item">
+          <div class="dropdown__item_name">${name}</div>
+          <div class="dropdown__item_result">
+            ${metaTags[name]
+                        .map(({ content }) => {
+                            const $div = document.createElement('div');
+                            $div.innerText = content
+                                ? content
+                                : content
+                                    ? null
+                                    : content == ''
+                                        ? `<span class="empty-value">Пустой</span>`
+                                        : 'Отсутствует';
+                            return `${$div.outerHTML}`;
+                        })
+                        .join('')}
+          </div>
+        </div>
+        `,
+            )
+            .join('')}
+      </div>`;
+    return $div;
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
     const tabs = await chrome.tabs.query({ currentWindow: true, active: true });
     if (!tabs.length) {
@@ -352,12 +510,50 @@ document.addEventListener('DOMContentLoaded', async () => {
         'https://yandex.ru/search/?text=title%3A(%22' + tabs[0].title + '%22)%20site%3A' + url.hostname,
     );
 
-    const initReviewTabResponse = await getPromise((resolve) =>
-        chrome.tabs.sendMessage(tabId, { action: 'init_review_tab' }, resolve),
-    );
+    const initReviewTabResponse = await chrome.tabs.sendMessage(tabId, { action: 'init_review_tab' });
     const { titles, metaTags, canonicals = [], hreflangs = [] } = initReviewTabResponse.head;
     const { description = [], keywords = [] } = metaTags;
     const { headings = [], aTags = [], imgTags = [] } = initReviewTabResponse.body;
+
+    const preparedATags = aTags.map((tag) => ({
+        ...tag,
+        hrefURL: tag.hrefFull ? new URL(tag.hrefFull) : null,
+    }));
+
+    const $microdata = document.getElementById('microdata');
+    const ogMetaTags = Object.keys(metaTags).filter((name) => name.indexOf('og') === 0);
+    if (ogMetaTags.length) {
+        $microdata
+            .querySelector('.tabs-content__col')
+            .append(createOpenDropdown('� азметка open graph', ogMetaTags, metaTags));
+    } else {
+        const $container = document.createElement('div');
+        $container.innerHTML = `<div class="tabs-content__row alst-column">
+    <div class="tabs-content__row_name">� азметка open graph</div>
+    <div class="tabs-content__row_prop empty-value">
+      <div class="result">Отсутствует</div>
+    </div>
+  </div>
+  `;
+        $microdata.querySelector('.tabs-content__col').append($container);
+    }
+
+    const twitterMetaTags = Object.keys(metaTags).filter((name) => name.indexOf('twitter') === 0);
+    if (twitterMetaTags.length) {
+        $microdata
+            .querySelector('.tabs-content__col')
+            .append(createOpenDropdown('� азметка Twitter', twitterMetaTags, metaTags));
+    } else {
+        const $container = document.createElement('div');
+        $container.innerHTML = `<div class="tabs-content__row alst-column">
+    <div class="tabs-content__row_name">� азметка Twitter</div>
+    <div class="tabs-content__row_prop empty-value">
+      <div class="result">Отсутствует</div>
+    </div>
+  </div>
+  `;
+        $microdata.querySelector('.tabs-content__col').append($container);
+    }
 
     const dropdownWrapper = document.createElement('div');
     dropdownWrapper.className = 'dropdown__wrapper';
@@ -367,6 +563,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     Tools.setData('allTitles', headings.length);
 
+    const $allTitlesCopy = document.querySelector('#allTitles .copy-icon');
     const headingCounters = {
         H1: [],
         H2: [],
@@ -376,15 +573,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         H6: [],
     };
 
+    let headingsStr = '';
     const el = document.createElement('div');
     const elContent = document.createElement('div');
-    headings.forEach((heading) => {
+    for (const heading of headings) {
         const $heading = document.createElement('span');
         headingCounters[heading.nodeName].push(heading);
         $heading.className = `dropdown__title heading-${heading.nodeName}`;
-        $heading.innerText = `<${heading.nodeName}> ${heading.innerText}`;
+        const headingStr = `<${heading.nodeName}> ${heading.innerText}`;
+        $heading.innerText = headingStr;
+        const tabs = Array(parseInt(heading.nodeName.at(-1)) - 1)
+            .fill(0)
+            .reduce((acc) => (acc += '\t'), '');
+        headingsStr += `${tabs}${headingStr}\n`;
         elContent.appendChild($heading);
-    });
+    }
+
+    $allTitlesCopy.addEventListener('click', onCopyElement($allTitlesCopy, headingsStr));
 
     addDiv(propClass, 'h1', 'innerText', headingCounters.H1);
 
@@ -448,7 +653,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const $containerProp = document.createElement('div');
         $containerProp.classList.add('tabs-content__row_prop');
-        $containerProp.textContent = `РќР°Р№РґРµРЅРѕ: ${hreflangs.length}`;
+        $containerProp.textContent = `Найдено: ${hreflangs.length}`;
 
         $container.append($containerName, $containerProp, $hreflangsButton);
 
@@ -485,7 +690,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const data = {
-        links: aTags,
         img: imgTags,
     };
 
@@ -504,96 +708,62 @@ document.addEventListener('DOMContentLoaded', async () => {
             let dropdownScrollContainer = document.createElement('div');
             dropdownScrollContainer.className = 'dropdown__scroll_container';
 
-            if (key === 'links') {
-                res = data[key].filter((link) => !!link.href);
-                let links = {
-                    httpLinks: res.filter((link) => link.isHttp),
-                    httpsLinks: res.filter((link) => link.isHttps),
-                    otherLinks: res.filter((link) => !link.isHttp && !link.isHttps),
-                };
-
-                for (let link in links) {
-                    let LinksEl = document.createElement('div'),
-                        LinksElTitle = document.createElement('h4'),
-                        LinksElContent = document.createElement('div');
-                    if (link == 'httpLinks') {
-                        LinksElTitle.innerHTML = `http СЃСЃС‹Р»РєРё (${links[link].length})`;
-                    } else if (link == 'httpsLinks') {
-                        LinksElTitle.innerHTML = `https СЃСЃС‹Р»РєРё (${links[link].length})`;
-                    } else if (link == 'otherLinks') {
-                        LinksElTitle.innerHTML = `РґСЂСѓРіРёРµ СЃСЃС‹Р»РєРё (${links[link].length})`;
-                    }
-
-                    for (let i of links[link]) {
-                        let elem = document.createElement('p');
-                        elem.innerHTML = i.href;
-                        LinksElContent.appendChild(elem);
-                    }
-
-                    LinksEl.appendChild(LinksElTitle);
-                    LinksEl.appendChild(LinksElContent);
-                    dropdownScrollContainer.appendChild(LinksEl);
-                }
-            } else {
-                for (let i of res) {
-                    let elem = document.createElement('p');
-                    elem.innerHTML = i !== '' ? i : null;
-                    dropdownScrollContainer.appendChild(elem);
-                }
+            for (let i of res) {
+                let elem = document.createElement('p');
+                elem.innerHTML = i !== '' ? i : null;
+                dropdownScrollContainer.appendChild(elem);
             }
+
             dropdownWrapper.appendChild(dropdownScrollContainer);
             el.querySelector('.dropdown').appendChild(dropdownWrapper);
         }
 
-        if (key === 'img') {
-            const imagesWithAlt = res.filter((i) => i.alt !== '');
-            const imagesWithoutAlt = res.filter((i) => i.alt == '');
+        const imagesWithAlt = res.filter((i) => i.alt !== '');
+        const imagesWithoutAlt = res.filter((i) => i.alt == '');
 
-            if (res.length && el.id == 'imgLength') {
-                res = data[key];
-
-                for (let i of res) {
-                    const isBase64 = i.src.indexOf('data') === 0;
-                    const isAbsolutePath = i.src.includes('http');
-                    const link = isBase64 || isAbsolutePath ? i.src : `${url.origin}${i.src}`;
-                    let row = document.createElement('div');
-                    row.className = 'tabs-content__row';
-                    const content =
-                        i.src !== ''
-                            ? `<a class="tabs-content__row_prop" href="${link}" target="_blank">${link}</a>`
-                            : 'СЃСЃС‹Р»РєР° РїСѓСЃС‚Р°СЏ РёР»Рё РЅРµ РѕР±РЅР°СЂСѓР¶РµРЅР°';
-                    row.innerHTML = `
+        if (res.length && el.id == 'imgLength') {
+            res = data[key];
+            for (let i of res) {
+                const isBase64 = i.src.indexOf('data') === 0;
+                const isAbsolutePath = i.src.includes('http');
+                const link = isBase64 || isAbsolutePath ? i.src : `${url.origin}${i.src}`;
+                let row = document.createElement('div');
+                row.className = 'tabs-content__row';
+                const content =
+                    i.src !== ''
+                        ? `<a class="tabs-content__row_prop" href="${link}" target="_blank">${link}</a>`
+                        : 'ссылка пустая или не обнаружена';
+                row.innerHTML = `
         					<div class="d-flex alst-column">
         						<div class="tabs-content__row_image">
         							<img src="${link}" crossorigin="anonymous"/>
         						</div>
         						<div>
         							<p class="tabs-content__row_prop ${i.alt === null || !i.alt.trim().length ? 'empty-value' : ''
-                        } "><span class="empty-value">Alt: </span>${i.alt === null ? 'РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚' : i.alt.trim().length ? i.alt : 'РџСѓСЃС‚РѕР№'
-                        }</p>
+                    } "><span class="empty-value">Alt: </span>${i.alt === null ? 'Отсутствует' : i.alt.trim().length ? i.alt : 'Пустой'
+                    }</p>
                       <p>${content}</p>
         							<p class="tabs-content__row_prop ${i.title === null || !i.title.trim().length ? 'empty-value' : ''
-                        } "><span class="empty-value">Title: </span>${i.title === null ? 'РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚' : i.title.trim().length ? i.title : 'РџСѓСЃС‚РѕР№'
-                        }</p>
+                    } "><span class="empty-value">Title: </span>${i.title === null ? 'Отсутствует' : i.title.trim().length ? i.title : 'Пустой'
+                    }</p>
         						</div>
         					</div>
         				`;
-                    document.querySelector('#images .tabs-content__inner> .tabs-content__col').appendChild(row);
-                }
-
-                el.addEventListener('click', function () {
-                    document.querySelector('[data-tab = overview]').classList.remove('active');
-                    document.querySelector('#overview').classList.remove('active');
-
-                    document.querySelector('[data-tab = images]').classList.add('active');
-                    document.querySelector('#images').classList.add('active');
-                });
+                document.querySelector('#images .tabs-content__inner> .tabs-content__col').appendChild(row);
             }
 
-            document.getElementById('imagesTotalLength').querySelector('.counter').innerHTML = res.length;
-            document.getElementById('imagesWithAltLength').querySelector('.counter').innerHTML = imagesWithAlt.length;
-            document.getElementById('imagesWithoutAltLength').querySelector('.counter').innerHTML = imagesWithoutAlt.length;
+            el.addEventListener('click', function () {
+                document.querySelector('[data-tab = overview]').classList.remove('active');
+                document.querySelector('#overview').classList.remove('active');
+
+                document.querySelector('[data-tab = images]').classList.add('active');
+                document.querySelector('#images').classList.add('active');
+            });
         }
+
+        document.getElementById('imagesTotalLength').querySelector('.counter').innerHTML = res.length;
+        document.getElementById('imagesWithAltLength').querySelector('.counter').innerHTML = imagesWithAlt.length;
+        document.getElementById('imagesWithoutAltLength').querySelector('.counter').innerHTML = imagesWithoutAlt.length;
     }
 
     document.addEventListener('click', function (e) {
@@ -644,52 +814,80 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     addDiv(propClass, 'lang', null, [initReviewTabResponse.lang]);
-    addDiv(propClass, 'title', 'innerText', titles);
+    addDiv(
+        propClass,
+        'title',
+        'innerText',
+        titles.filter((title) => title.isFromHead),
+    );
     addDiv(propClass, 'description', 'content', description);
     addDiv(propClass, 'keywords', 'content', keywords);
 
     const urlRobotsTXT = `${url.origin}/robots.txt`;
+
+    let sitemaps = [];
+
     try {
-        const { statusCode: statusCodeRobotsTXT, sitemaps = [], lines, meta } = await parseRobotsTXT(urlRobotsTXT, url);
-        const $sitemapXml = document.getElementById('sitemapXml');
-        const $sitemapXmlProp = $sitemapXml.querySelector('.tabs-content__row_prop');
-        const $sitemapXmlButton = $sitemapXml.querySelector('button');
-        const $sitemapXmlButtonIcon = $sitemapXmlButton.querySelector('i');
-        const $sitemapXmlDropdown = $sitemapXml.querySelector('.dropdown');
-
-        $sitemapXmlButton.addEventListener('click', () => {
-            $sitemapXmlDropdown.classList.toggle('active');
-            $sitemapXmlButtonIcon.classList.toggle('fa-chevron-down');
-            $sitemapXmlButtonIcon.classList.toggle('fa-chevron-up');
-        });
-
-        sitemaps.map((sitemap) => {
-            const $div = document.createElement('div');
-            $div.classList.add('dropdown__item');
-            const $aTag = document.createElement('a');
-            $aTag.setAttribute('href', sitemap);
-            $aTag.setAttribute('target', '_blank');
-            $aTag.style.wordBreak = 'break-all';
-            $aTag.text = sitemap;
-            $div.append($aTag);
-
-            $sitemapXmlDropdown.append($div);
-        });
-        if (sitemaps.length) {
-            $sitemapXmlButton.style.display = 'block';
-            $sitemapXmlProp.innerHTML = `РќР°Р№РґРµРЅРѕ: ${sitemaps.length}`;
-            if (sitemaps.length <= 5) {
-                $sitemapXmlDropdown.classList.add('active');
-                $sitemapXmlButtonIcon.classList.remove('fa-chevron-down');
-                $sitemapXmlButtonIcon.classList.add('fa-chevron-up');
-            }
-        } else {
-            $sitemapXmlProp.classList.add('empty-value');
-            $sitemapXmlProp.innerHTML = 'РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚';
+        const {
+            statusCode: statusCodeRobotsTXT,
+            sitemaps: robotsTextSitemaps = [],
+            lines,
+            meta,
+        } = await parseRobotsTXT(urlRobotsTXT, url);
+        if (robotsTextSitemaps.length) {
+            sitemaps = robotsTextSitemaps;
         }
         addDiv(resultClass, 'indexing-robots', null, [getRobotsStatus(statusCodeRobotsTXT, lines, meta)]);
     } catch (error) {
         console.error(error);
+    }
+
+    const $sitemapXml = document.getElementById('sitemapXml');
+    const $sitemapXmlProp = $sitemapXml.querySelector('.tabs-content__row_prop');
+    const $sitemapXmlButton = $sitemapXml.querySelector('button');
+    const $sitemapXmlButtonIcon = $sitemapXmlButton.querySelector('i');
+    const $sitemapXmlDropdown = $sitemapXml.querySelector('.dropdown');
+
+    $sitemapXmlButton.addEventListener('click', () => {
+        $sitemapXmlDropdown.classList.toggle('active');
+        $sitemapXmlButtonIcon.classList.toggle('fa-chevron-down');
+        $sitemapXmlButtonIcon.classList.toggle('fa-chevron-up');
+    });
+    if (!sitemaps.length) {
+        const sitemapURL = `${url.origin}/sitemap.xml`;
+        try {
+            const response = await checkSitemapXML(sitemapURL);
+            if (response.ok) {
+                sitemaps.push(sitemapURL);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    sitemaps.map((sitemap) => {
+        const $div = document.createElement('div');
+        $div.classList.add('dropdown__item');
+        const $aTag = document.createElement('a');
+        $aTag.setAttribute('href', sitemap);
+        $aTag.setAttribute('target', '_blank');
+        $aTag.style.wordBreak = 'break-all';
+        $aTag.text = sitemap;
+        $div.append($aTag);
+
+        $sitemapXmlDropdown.append($div);
+    });
+    if (sitemaps.length) {
+        $sitemapXmlButton.style.display = 'block';
+        $sitemapXmlProp.innerHTML = `Найдено: ${sitemaps.length}`;
+        if (sitemaps.length <= 5) {
+            $sitemapXmlDropdown.classList.add('active');
+            $sitemapXmlButtonIcon.classList.remove('fa-chevron-down');
+            $sitemapXmlButtonIcon.classList.add('fa-chevron-up');
+        }
+    } else {
+        $sitemapXmlProp.classList.add('empty-value');
+        $sitemapXmlProp.innerHTML = 'Отсутствует';
     }
 
     const canonicalStatus = getCanonicalStatus(canonicals, url);
@@ -1007,60 +1205,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    const $showCountWords = document.getElementById('showCountWords');
-    $showCountWords.addEventListener('click', async () => {
-        try {
-            const $СЃountWords = document.getElementById('СЃountWords');
-            const response = await chrome.tabs.sendMessage(tabId, {
-                action: 'count_words',
-            });
-
-            $showCountWords.remove();
-            $СЃountWords.querySelector('.dropdown').classList.add('active');
-
-            if (response.success) {
-                const $symbolsTotal = document.getElementById('symbolsTotal');
-                const $symbolsTotalResult = $symbolsTotal.querySelector('.dropdown__item_result');
-                $symbolsTotalResult.innerHTML = response.data.symbolsTotal;
-                $symbolsTotalResult.addEventListener('click', () => {
-                    clipboard(response.data.symbolsTotal);
-                });
-
-                const $symbolsWithoutSpaces = document.getElementById('symbolsWithoutSpaces');
-                const $symbolsWithoutSpacesResult = $symbolsWithoutSpaces.querySelector('.dropdown__item_result');
-                $symbolsWithoutSpacesResult.innerHTML = response.data.symbolsWithoutSpaces;
-                $symbolsWithoutSpacesResult.addEventListener('click', () => {
-                    clipboard(response.data.symbolsWithoutSpaces);
-                });
-
-                const $words = document.getElementById('words');
-                const $wordsResult = $words.querySelector('.dropdown__item_result');
-                $wordsResult.innerHTML = response.data.words;
-                $wordsResult.addEventListener('click', () => {
-                    clipboard(response.data.words);
-                });
-                return;
-            }
-
-            let errorMsg = document.createElement('div');
-            errorMsg.className = 'error-msg';
-            errorMsg.innerHTML = response.error;
-            $СЃountWords.classList.add('error', 'shake');
-
-            $СЃountWords.addEventListener('animationend', function () {
-                $СЃountWords.classList.remove('shake');
-            });
-
-            if (!$СЃountWords.querySelector('.error-msg')) {
-                $СЃountWords.querySelector('.dropdown').appendChild(errorMsg);
-            }
-        } catch (e) {
-            this.closest('.tabs-content__row_dropdown').querySelector(
-                '.dropdown',
-            ).innerHTML = `<span class="error-msg">Р§С‚Рѕ-С‚Рѕ РїРѕС€Р»Рѕ РЅРµ С‚Р°Рє. РџРѕР¶Р°Р»СѓР№СЃС‚Р° РїРµСЂРµР·Р°РіСЂСѓР·РёС‚Рµ СЃС‚СЂР°РЅРёС†Сѓ.</span>`;
-        }
-    });
-
     const $textInfo = document.getElementById('textInfo');
     const $showTextInfo = document.getElementById('showTextInfo');
     $showTextInfo.addEventListener('click', async () => {
@@ -1143,7 +1287,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .getElementById('textInfo')
                 .querySelector(
                     '.dropdown',
-                ).innerHTML = `<div class="error-msg">РќРµРІРѕР·РјРѕР¶РЅРѕ РѕС‚РѕР±СЂР°Р·РёС‚СЊ СЃС‚Р°С‚РёСЃС‚РёРєСѓ С‚РµРєСЃС‚Р° СЃС‚СЂР°РЅРёС†С‹.</div>`;
+                ).innerHTML = `<div class="error-msg">Невозможно отобразить статистику текста страницы.</div>`;
         }
     });
 
@@ -1224,6 +1368,310 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
+    const $linksContainer = document.getElementById('links');
+
+    const filteredATags = () => {
+        const href = $linksContainer.querySelector('input[name="links-href-radio"]:checked').value;
+        const protocol = $linksContainer.querySelector('input[name="links-protocol-radio"]:checked').value;
+        const rel = $linksContainer.querySelector('input[name="links-rel-radio"]:checked').value;
+        const statusCode = $linksContainer.querySelector('input[name="links-rel-status-code"]:checked').value;
+
+        let result = preparedATags;
+        if (protocol !== 'all') {
+            result = result.filter(protocolFilter(protocol));
+        }
+
+        if (href !== 'all') {
+            result = result.filter(hrefFilter(href));
+        }
+
+        if (rel !== 'all') {
+            result = result.filter(relFilter(rel));
+        }
+
+        if (statusCode !== 'all') {
+            result = result.filter(statusCodeFilter(statusCode));
+        }
+
+        return result;
+    };
+
+    const $statusFilter = document.querySelector('[data-status-filter]');
+    const $linkStarterChecker = document.querySelector('[link-starter-checker]');
+
+    const renderLinks = () => {
+        // Сбрасываем выведенный до этого результат
+        $linksContainer.querySelector('.dropdown').innerHTML = '';
+        const tags = filteredATags();
+        if (!tags.length) {
+            const $clearFilters = document.createElement('button');
+            $clearFilters.classList.add('links-checker-button');
+            $clearFilters.style.margin = '10px 0';
+            $clearFilters.innerHTML = `<i class="fa fa-rotate-left"></i> Сбросить фильтр`;
+            $clearFilters.addEventListener('click', () => {
+                $linksContainer.querySelector('input[name="links-href-radio"]').checked = false;
+                $linksContainer.querySelector('input[value="all"][name="links-href-radio"]').checked = true;
+                $linksContainer.querySelector('input[name="links-protocol-radio"]').checked = false;
+                $linksContainer.querySelector('input[value="all"][name="links-protocol-radio"]').checked = true;
+                $linksContainer.querySelector('input[name="links-rel-radio"]').checked = false;
+                $linksContainer.querySelector('input[value="all"][name="links-rel-radio"]').checked = true;
+                $linksContainer.querySelector('input[name="links-rel-status-code"]').checked = false;
+                $linksContainer.querySelector('input[value="all"][name="links-rel-status-code"]').checked = true;
+                renderLinks();
+            });
+
+            const $info = document.createElement('div');
+            $info.append('Нет данных для отображения', document.createElement('br'), $clearFilters);
+            $info.style.color = 'var(--grey)';
+            $info.style.textAlign = 'center';
+            $info.style.background = 'transparent';
+
+            $linksContainer.querySelector('.dropdown').append($info);
+            return;
+        }
+
+        for (const aTag of tags) {
+            const $aTagContainer = document.createElement('div');
+            $aTagContainer.setAttribute('data-link-id', aTag.id);
+
+            try {
+                const url = new URL(aTag.hrefFull);
+                if (['http:', 'https:'].includes(url.protocol)) {
+                    $aTagContainer.innerHTML = `<span class="empty-value">Href: </span><span data-link-url><a target="_blank" href="${aTag.hrefFull}">${aTag.href}</a></span>`;
+                } else {
+                    $aTagContainer.innerHTML = `<span class="empty-value">Href: </span><span data-link-url>${aTag.href}</span>`;
+                }
+            } catch (error) {
+                if (aTag.href.indexOf('/') === 0) {
+                    $aTagContainer.innerHTML = `<span class="empty-value">Href: </span><span data-link-url><a target="_blank" href="${aTag.hrefFull}">${aTag.href}</a></span>`;
+                } else {
+                    $aTagContainer.innerHTML = `<span class="empty-value">Href: </span><span data-link-url>${aTag.href}</span>`;
+                }
+            }
+
+            if (aTag.redirectTo) {
+                $aTagContainer.append(document.createElement('br'), $createRedirect(aTag.redirectTo));
+            }
+
+            let contentRel = aTag.rel;
+            if (typeof contentRel !== 'string') {
+                contentRel = '<span class="empty-value">Отсутствует</span>';
+            } else {
+                contentRel = contentRel.trim();
+                if (!contentRel) {
+                    contentRel = '<span class="empty-value">Пустой</span>';
+                }
+            }
+
+            const $rel = document.createElement('span');
+            $rel.innerHTML = '<span class="empty-value">Rel: </span>' + contentRel;
+
+            const $contentLabel = document.createElement('span');
+            $contentLabel.classList.add('empty-value');
+            $contentLabel.innerHTML = 'Анкор: ';
+
+            const $content = document.createElement('span');
+            $content.append($contentLabel, aTag.innerHTML);
+            $aTagContainer.prepend($content, document.createElement('br'));
+            $aTagContainer.append(document.createElement('br'), $rel);
+
+            if (typeof aTag.statusCode === 'number') {
+                $aTagContainer.append($createStatusCode(aTag.statusCode));
+            }
+
+            if (aTag.error) {
+                $aTagContainer.append($createStatusCode('Что-то пошло не так'));
+            }
+
+            $linksContainer.querySelector('.dropdown').appendChild($aTagContainer);
+        }
+    };
+
+    renderLinks();
+
+    const $linksHrefRadios = $linksContainer.querySelectorAll('input[name="links-href-radio"]');
+    for (const $linksHrefRadio of $linksHrefRadios) {
+        const value = $linksHrefRadio.value;
+        if (value !== 'all') {
+            $linksHrefRadio.nextElementSibling.append(` (${preparedATags.filter(hrefFilter(value)).length})`);
+        } else {
+            $linksHrefRadio.nextElementSibling.append(` (${preparedATags.length})`);
+        }
+
+        $linksHrefRadio.addEventListener('change', () => renderLinks());
+    }
+
+    const $linksProtocolRadios = $linksContainer.querySelectorAll('input[name="links-protocol-radio"]');
+    for (const $linksProtocolRadio of $linksProtocolRadios) {
+        const value = $linksProtocolRadio.value;
+        if (value !== 'all') {
+            $linksProtocolRadio.nextElementSibling.append(` (${preparedATags.filter(protocolFilter(value)).length})`);
+        }
+
+        $linksProtocolRadio.addEventListener('change', () => renderLinks());
+    }
+
+    const $linksRelRadios = $linksContainer.querySelectorAll('input[name="links-rel-radio"]');
+    for (const $linksRelRadio of $linksRelRadios) {
+        const value = $linksRelRadio.value;
+        if (value !== 'all') {
+            $linksRelRadio.nextElementSibling.append(` (${preparedATags.filter(relFilter(value)).length})`);
+        }
+
+        $linksRelRadio.addEventListener('change', () => renderLinks());
+    }
+
+    const $linksStatusCodeRadios = $linksContainer.querySelectorAll('input[name="links-rel-status-code"]');
+    for (const $linksRelRadio of $linksStatusCodeRadios) {
+        $linksRelRadio.addEventListener('change', () => renderLinks());
+    }
+
+    const delay = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
+
+    Tools.setData(`linksLength`, preparedATags.length);
+
+    const $linkStartChecker = document.getElementById('links-start-check');
+
+    const $countUrl = document.querySelector(`[for="links-rel-status-code-other"] [data-count]`);
+    $countUrl.innerText = parseInt(preparedATags.filter(statusCodeFilter('other')).length);
+
+    if (preparedATags.find((tag) => typeof tag.statusCode === 'number' || tag.redirectTo || tag.error)) {
+        for (const filterName of ['3xx', '4xx', '5xx', '2xx']) {
+            const $countUrl = document.querySelector(`[for="links-rel-status-code-${filterName}"] [data-count]`);
+            $countUrl.innerText = parseInt(preparedATags.filter(statusCodeFilter(filterName)).length);
+        }
+
+        if (
+            preparedATags.find(
+                (tag) => tag.isNeedCheck && typeof tag.statusCode !== 'number' && !tag.redirectTo && !tag.error,
+            )
+        ) {
+            $linkStartChecker.innerText = 'Допроверить';
+        } else {
+            $linkStarterChecker.style.display = 'none';
+        }
+
+        $statusFilter.style.display = 'block';
+    }
+
+    $linkStartChecker.addEventListener('click', async (e) => {
+        e.disabled = true;
+
+        const timeout = parseInt(document.querySelector('input[name="links-fetch-timeout"]').value);
+
+        $statusFilter.style.display = 'block';
+        $linkStarterChecker.style.display = 'none';
+
+        for (const tag of filteredATags()) {
+            if (typeof tag.statusCode === 'number' || tag.redirectTo || tag.error || !tag.isNeedCheck) {
+                continue;
+            }
+
+            const $link = document.querySelector(`[data-link-id="${tag.id}"]`);
+            const checkATagResponse = await chrome.tabs.sendMessage(tabId, {
+                action: 'check_a_tag',
+                payload: {
+                    id: tag.id,
+                    url: tag.hrefFull,
+                    isExternal: tag.isExternal,
+                },
+            });
+
+            if (checkATagResponse.error) {
+                const $countUrl = document.querySelector('[for="links-rel-status-code-other"] [data-count]');
+                $countUrl.innerText = parseInt($countUrl.textContent) + 1;
+                tag.error = checkATagResponse.error;
+                if ($link) {
+                    $link.append('Что-то пошло не так');
+                }
+            } else {
+                tag.statusCode = checkATagResponse.data.statusCode;
+                tag.redirectTo = checkATagResponse.data.redirectTo;
+                if (tag.redirectTo) {
+                    $link
+                        .querySelector('[data-link-url]')
+                        .after(document.createElement('br'), $createRedirect(checkATagResponse.data.redirectTo));
+                }
+
+                let statusCode = 'other';
+                if (tag.statusCode >= 300 && tag.statusCode <= 399) {
+                    statusCode = '3xx';
+                } else if (tag.statusCode >= 400 && tag.statusCode <= 499) {
+                    statusCode = '4xx';
+                } else if (tag.statusCode >= 500 && tag.statusCode <= 599) {
+                    statusCode = '5xx';
+                } else if (tag.statusCode >= 200 && tag.statusCode <= 299) {
+                    statusCode = '2xx';
+                }
+
+                const $countUrl = document.querySelector(`[for="links-rel-status-code-${statusCode}"] [data-count]`);
+                $countUrl.innerText = parseInt($countUrl.textContent) + 1;
+                if ($link) {
+                    $link.append($createStatusCode(tag.statusCode));
+                }
+            }
+
+            await delay(timeout);
+        }
+
+        e.disabled = false;
+    });
+
+    document.getElementById(`linksLength`).addEventListener('click', function () {
+        document.querySelector('[data-tab=overview]').classList.remove('active');
+        document.querySelector('#overview').classList.remove('active');
+
+        document.querySelector('[data-tab=links]').classList.add('active');
+        document.querySelector('#links').classList.add('active');
+    });
+
+    document.getElementById('links-export').addEventListener('click', () => {
+        let fileName = `${url.hostname}_links`;
+        const href = $linksContainer.querySelector('input[name="links-href-radio"]:checked').value;
+        if (href !== 'all') {
+            fileName += `_${href}`;
+        }
+
+        const protocol = $linksContainer.querySelector('input[name="links-protocol-radio"]:checked').value;
+        if (protocol !== 'all') {
+            fileName += `_${protocol}`;
+        }
+
+        const rel = $linksContainer.querySelector('input[name="links-rel-radio"]:checked').value;
+        if (rel !== 'all') {
+            fileName += `_${rel}`;
+        }
+
+        const statusCode = $linksContainer.querySelector('input[name="links-rel-status-code"]:checked').value;
+        if (statusCode !== 'all') {
+            fileName += `_${statusCode}`;
+        }
+
+        exportCSV(
+            fileName,
+            [['Status', 'Href', 'Redirect', 'Anchor(html)', 'Anchor(text)', 'Rel', 'Type', 'Protocol']].concat(
+                filteredATags().map((tag) => [
+                    tag.statusCode ?? '',
+                    tag.href,
+                    tag.redirectTo ?? '',
+                    tag.innerHTML
+                        .trim()
+                        .replaceAll(/\r|\n|\r\n|\t/gm, '')
+                        .replaceAll('"', '""'),
+                    tag.innerText
+                        .trim()
+                        .replaceAll(/\r|\n|\r\n|\t/gm, '')
+                        .replaceAll('"', '""'),
+                    tag.rel ?? '',
+                    tag.isExternal ? (checkIsExternal(tag) ? 'external' : '') : 'internal',
+                    tag.hrefURL && ['http:', 'https:'].includes(tag.hrefURL.protocol)
+                        ? tag.hrefURL.protocol.replace(':', '')
+                        : 'other',
+                ]),
+            ),
+        );
+    });
+
     document.getElementById('disableJS').addEventListener('click', toggleJS(tab));
 
     let tabsContent = document.querySelector('.tabs-content');
@@ -1240,25 +1688,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const value = parent.querySelector('.can-copied').firstElementChild.innerText.trim();
             if (value) {
-                try {
-                    await clipboard(value);
-                    if (!parent.querySelector('.fa-check')) {
-                        const icon = parent.querySelector('i');
-                        const initialClass = icon.className;
-                        icon.className = 'fas fa-check';
-
-                        const tooltip = parent.querySelector('.copy-tooltip');
-                        const text = tooltip.innerHTML;
-                        tooltip.innerHTML = 'РЎРєРѕРїРёСЂРѕРІР°РЅРѕ';
-
-                        setTimeout(() => {
-                            tooltip.innerHTML = text;
-                            icon.className = initialClass;
-                        }, 1500);
-                    }
-                } catch (error) {
-                    console.error('Error:', e.message);
-                }
+                onCopyElement(parent, value)();
             }
         }
     });
