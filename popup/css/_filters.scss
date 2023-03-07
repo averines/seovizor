@@ -1,0 +1,52 @@
+.filters {
+    display: flex;
+    column-gap: 10px;
+    align-items: flex-start;
+}
+
+.filter {
+    display: grid;
+    grid-template-columns: 1fr;
+
+
+    &__btn {
+        cursor: pointer;
+        border: none;
+        background-color: #fff;
+        padding: 0.6em 1.5em;
+        border: 1px solid $line;
+        margin-bottom: -1px;
+        transition: $t;
+        text-align: left;
+
+        &:first-child {
+            border-radius: $br $br 0 0;
+        }
+
+        &:last-child {
+            border-radius: 0 0 $br $br;
+        }
+
+        &:hover {
+            background-color: $bg-l;
+        }
+
+        &--active {
+            border: 1px solid $line-m;
+            background-color: lighten($main-ll, 4);
+            color: $main;
+            z-index: 1;
+
+            &:hover {
+                background-color: lighten($main-ll, 4);
+            }
+        }
+
+        > span {
+            font-size: 10px;
+            opacity: 0.6;
+            padding-left: 0.33em;
+            
+        }
+    }
+}

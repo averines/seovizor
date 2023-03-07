@@ -1,0 +1,23 @@
+.btn {
+    cursor: pointer;
+    border: none;
+    padding: 0.65em 1.25em;
+    border-radius: $br-sm;
+    font-weight: 500;
+    transition: $t;
+    color: $main-d;
+    background-color: $main-l;
+
+    &:hover {
+        background-color: lighten($main-l, 2);
+    }
+
+    &--main {
+        background-color: $main-d;
+        color: #fff; 
+        
+        &:hover {
+            background-color: $main;
+        }
+    }
+}

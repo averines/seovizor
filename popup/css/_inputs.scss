@@ -1,0 +1,14 @@
+.textinput {
+    border: 1px solid $line;
+    padding: 0.5em 0.75em;
+    border-radius: $br-sm;
+
+    &:focus {
+        outline: none;
+        border-color: $line-m;
+    }
+
+    &--sm {
+        max-width: 50px;
+    }
+}

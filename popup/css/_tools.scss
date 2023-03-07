@@ -19,6 +19,7 @@
     transition: $t;
     background: none;
     text-align: left;
+    user-select: none;
 
     &--sm {
         padding-top: 10px;
@@ -34,12 +35,15 @@
         border-radius: 0 0 $br $br;
     }
 
+    &:first-child:last-child {
+        border-radius: $br;
+    }
+
     &:hover {
         background-color: lighten($bg-l, 1);
     }
 
     &:disabled {
-        // background-color: red;
         opacity: 0.5;
         cursor: not-allowed;
     }
@@ -84,6 +88,13 @@
         align-self: stretch;
         background: url(/images/open.svg) no-repeat center/17px;
     }
+
+    &__dropdown {
+        width: 30px;
+        margin-left: auto;
+        align-self: stretch;
+        background: url(/images/dropdown.svg) no-repeat center/17px;
+    }    
 
     &__copy {
         width: 30px;
@@ -149,7 +160,65 @@
     }
 }
 
-
-button.tool {
+.tool-switcher {
     cursor: pointer;
+    margin-left: auto;
+
+    > input {
+        position: absolute;
+        width: 0;
+        height: 0;
+
+        &:checked {
+            + span {
+                opacity: 1;
+                background-color: $main;
+
+                &::after {
+                    margin-left: calc(100% - 16px);
+                    border-color: $main;
+                }
+            }
+        }
+    }
+
+    > span {
+        display: flex;
+        align-items: center;
+        width: 26px;
+        height: 12px;
+        background-color: $text-l;
+        border-radius: 12px;
+        transition: $t;
+        opacity: 0.7;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &::after {
+            flex-shrink: 0;
+            width: 16px;
+            height: 16px;
+            display: block;
+            content: "";
+            background-color: #fff;
+            border: 2px solid $text-l;
+            border-radius: 50%;
+            transition: $t;
+        }
+    }
+}
+
+a.tool,
+button.tool,
+label.tool {
+    cursor: pointer;
+
+    &:active {
+        .tool__content {
+            transition: $t;
+            transform: scale(0.98);
+        }
+    }
 }

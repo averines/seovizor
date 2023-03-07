@@ -15,10 +15,10 @@
 <body>
     <div class="wrapper">
         <header class="tablist" role="tablist" aria-label="Главное меню">
-            <button class="tab" role="tab" aria-selected="true" aria-controls="tabpanel1" id="main">Total</button>
+            <button class="tab" role="tab" aria-selected="true" aria-controls="tabpanel1" id="main">Main</button>
             <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel2" id="search">Search</button>
             <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel3" id="page">Page</button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel4" id="text">Text</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel4" id="links">Links</button>
             <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel5" id="pics">Images</button>
             <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel6" id="scheme">Scheme</button>
             <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel7" id="tools">Tools</button>
@@ -117,7 +117,6 @@
                             <div class="data-counter__content">76</div>
                         </div>
                     </div>
-
                     <div class="data-counters data-counters--sm">
                         <div class="data-counter">
                             <div class="data-counter__title">H1</div>
@@ -148,7 +147,6 @@
                             <div class="data-counter__content">1</div>
                         </div>
                     </div>
-
                     <div class="data-counters">
                         <div class="data-counter">
                             <div class="data-counter__title">
@@ -236,12 +234,145 @@
             </div>
             <div class="tabpanel" role="tabpanel" id="tabpanel3" aria-labelledby="page" aria-hidden="true">
                 <div class="tabpanel__content">
-                    <p>Страница</p>
+                    <div class="tools">
+                        <label class="tool">
+                            <div class="tool__content">
+                                <div class="tool__title">Подстветить заголовки H1-H6</div>
+                            </div>
+                            <div class="tool-switcher">
+                                <input type="checkbox" id="switch-headings">
+                                <span></span>
+                            </div>
+                        </label>
+                        <label class="tool">
+                            <div class="tool__content">
+                                <div class="tool__title">Показать Alt для изображений</div>
+                            </div>
+                            <div class="tool-switcher">
+                                <input type="checkbox" id="switch-alt">
+                                <span></span>
+                            </div>
+                        </label>
+                        <label class="tool">
+                            <div class="tool__content">
+                                <div class="tool__title">Подстветить Noindex-элементы и Nofollow-ссылки</div>
+                            </div>
+                            <div class="tool-switcher">
+                                <input type="checkbox" id="switch-noindex">
+                                <span></span>
+                            </div>
+                        </label>
+                        <label class="tool">
+                            <div class="tool__content">
+                                <div class="tool__title">Отключить JS-скрипты</div>
+                                <div class="tool__subtitle">Эта настройка сохраняется для всех страниц сайта.<br>Отключите её вручную при необходимости</div>
+                            </div>
+                            <div class="tool-switcher">
+                                <input type="checkbox" id="switch-scripts">
+                                <span></span>
+                            </div>
+                        </label>
+                        <a class="tool" href="" target="_blank" id="tool-webmaster">
+                            <div class="tool__content">
+                                <div class="tool__title">Отправить url на переобход в ЯндексВебмастер</div>
+                                <div class="tool__subtitle">Ссылка будет скопирована в буфер обмена</div>
+                            </div>
+                            <div class="tool__open"></div>
+                        </a>
+                        <a class="tool" href="" target="_blank" id="tool-cache-g">
+                            <div class="tool__content">
+                                <div class="tool__title">Открыть страницу из кеша Google</div>
+                            </div>
+                            <div class="tool__open"></div>
+                        </a>
+                    </div>
+
+                    <div class="tools mt-4">
+                        <div class="tool">
+                            <div class="tool__content">
+                                <div class="tool__title">Статистика текста страницы</div>
+                            </div>
+                            <div class="tool__dropdown"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="tabpanel" role="tabpanel" id="tabpanel4" aria-labelledby="text" aria-hidden="true">
+            <div class="tabpanel" role="tabpanel" id="tabpanel4" aria-labelledby="links" aria-hidden="true">
                 <div class="tabpanel__content">
-                    <p>Текст</p>
+                    <div class="filters">
+                        <div class="filter">
+                            <button class="filter__btn filter__btn--active">Все ссылки <span>81</span></button>
+                            <button class="filter__btn">Внутренние <span>80</span></button>
+                            <button class="filter__btn">Внешние <span>1</span></button>
+                        </div>
+                        <div class="filter">
+                            <button class="filter__btn filter__btn--active">Все протоколы <span>81</span></button>
+                            <button class="filter__btn">Https <span>76</span></button>
+                            <button class="filter__btn">Http <span>4</span></button>
+                            <button class="filter__btn">Другой <span>1</span></button>
+                        </div>
+                        <div class="filter">
+                            <button class="filter__btn filter__btn--active">Все атрибуты <span>81</span></button>
+                            <button class="filter__btn">Follow <span>79</span></button>
+                            <button class="filter__btn">NoFollow <span>1</span></button>
+                            <button class="filter__btn">Другой <span>1</span></button>
+                        </div>
+                    </div>
+                    <table class="data-table mt-4 mb-1">
+                        <thead>
+                            <tr>
+                                <th>Href</th>
+                                <th>Anchor</th>
+                                <th>Rel</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="#">info/delivery</a></td>
+                                <td>Доставка</td>
+                                <td>Follow</td>
+                                <td>200</td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">info/delivery</a></td>
+                                <td>Доставка</td>
+                                <td>Follow</td>
+                                <td>200</td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">info/delivery</a></td>
+                                <td>Доставка</td>
+                                <td>Follow</td>
+                                <td>200</td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">info/delivery</a></td>
+                                <td>Доставка</td>
+                                <td>Follow</td>
+                                <td>200</td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">info/delivery</a></td>
+                                <td>Доставка</td>
+                                <td>Follow</td>
+                                <td>200</td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">info/delivery</a></td>
+                                <td>Доставка</td>
+                                <td>Follow</td>
+                                <td>200</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tabpanel__footer tabpanel__footer--main">
+                    <div>
+                        <button class="btn">Проверить</button> все ссылки с задержкой <input class="textinput textinput--sm" type="text" value="200"> мс.
+                    </div>
+
+                    <button class="btn btn--main">Скачать CSV</button>
                 </div>
             </div>
             <div class="tabpanel" role="tabpanel" id="tabpanel5" aria-labelledby="pics" aria-hidden="true">

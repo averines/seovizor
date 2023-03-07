@@ -66,6 +66,9 @@ const toolOrgGEl = document.getElementById("tool-org-g");
 const toolOrgYEl = document.getElementById("tool-org-y");
 const toolCopyResultsEl = document.getElementById("tool-copy-results");
 
+// вкладка Page
+const toolCacheGEl = document.getElementById("tool-cache-g");
+const toolWebmasterEl = document.getElementById("tool-webmaster");
 
 // вкладка Tools
 const toolSpeedEl = document.getElementById("tool-speed");
@@ -104,7 +107,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         // url.pathname;  // "/asdf/asdf/sadf.aspx"
         // url.search;    // "?blah"
 
-
         const urlNoProtocol = `${url.hostname}${url.pathname}`;
         // TODO: заменить регуляркой
         const hostnameNoWww = url.hostname.replace("www.", "").replace("www2.", "");
@@ -130,6 +132,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (url.hostname.includes("yandex.") || url.hostname.includes("google.")) {
             toolCopyResultsEl.disabled = false;
         }
+
+        // вкладка Page
+        toolCacheGEl.href = `https://webcache.googleusercontent.com/search?q=cache:${encodeURIComponent(url.href)}`;
 
 
         // вкладка Tools
