@@ -1,0 +1,40 @@
+.og {
+    border: 1px solid $line;
+    border-radius: $br-lg;
+    overflow: hidden;
+    width: 420px;
+    margin-bottom: 20px;
+
+    &__pic {
+        > img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border: none;
+        }
+    }
+
+    &__content {
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 3px;
+    }
+
+    &__title {
+        font-weight: 500;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    &__subtitle {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    &__link {
+        color: $text-l;
+    }
+}

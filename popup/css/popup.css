@@ -537,6 +537,8 @@ label.tool:active .tool__content {
 }
 .table tr td:first-child {
   padding-top: 5px;
+  padding-right: 40px;
+  max-width: 160px;
 }
 .table .row-title {
   width: 130px;
@@ -638,6 +640,23 @@ label.tool:active .tool__content {
        column-gap: 10px;
   align-items: flex-start;
 }
+.filters--horizontal {
+  flex-direction: column;
+}
+.filters--horizontal .filter {
+  display: flex;
+}
+.filters--horizontal .filter__btn {
+  margin-right: -1px;
+  margin-bottom: 0;
+  padding: 0.5em 1.5em;
+}
+.filters--horizontal .filter__btn:first-child {
+  border-radius: 8px 0 0 8px;
+}
+.filters--horizontal .filter__btn:last-child {
+  border-radius: 0 8px 8px 0;
+}
 
 .filter {
   display: grid;
@@ -673,6 +692,7 @@ label.tool:active .tool__content {
 }
 .filter__btn > span {
   font-size: 10px;
+  line-height: 1.6;
   opacity: 0.6;
   padding-left: 0.33em;
 }
@@ -714,6 +734,76 @@ label.tool:active .tool__content {
 }
 .textinput--sm {
   max-width: 50px;
+}
+
+.data-rows {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.data-row {
+  display: flex;
+  -moz-column-gap: 30px;
+       column-gap: 30px;
+}
+.data-row__pic {
+  width: 50px;
+}
+.data-row__pic > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 100px;
+}
+.data-row__content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 3px;
+  font-size: 13px;
+}
+
+.data-info__title {
+  text-transform: uppercase;
+  font-size: 11px;
+  color: #8e95a0;
+}
+.data-info--inactive {
+  opacity: 0.5;
+}
+
+.og {
+  border: 1px solid #dee7ec;
+  border-radius: 16px;
+  overflow: hidden;
+  width: 420px;
+  margin-bottom: 20px;
+}
+.og__pic > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: none;
+}
+.og__content {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 3px;
+}
+.og__title {
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.og__subtitle {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.og__link {
+  color: #8e95a0;
 }
 
 .mt-0,

@@ -1,0 +1,40 @@
+.data-rows {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.data-row {
+    display: flex;
+    column-gap: 30px;
+
+    &__pic {
+        width: 50px;
+
+        > img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 100px;
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        row-gap: 3px;
+        font-size: 13px;
+    }
+}
+
+.data-info {
+    &__title {
+        text-transform: uppercase;
+        font-size: 11px;
+        color: $text-l;
+    }
+
+    &--inactive {
+        opacity: 0.5;
+    }
+}

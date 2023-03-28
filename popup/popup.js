@@ -1,28 +1,28 @@
 import { punycode } from '/libs/punycode.js';
 
-document.getElementById("action-test").addEventListener("click", () => {
-    // смена иконки
-    // chrome.action.setIcon({
-    //     path: { "16": "icons/16-2.png" }
-    // })
+// document.getElementById("action-test").addEventListener("click", () => {
+//     // смена иконки
+//     // chrome.action.setIcon({
+//     //     path: { "16": "icons/16-2.png" }
+//     // })
 
-    // смена тайтла (показывается при наведении на иконку в панели)
-    chrome.action.setTitle({ title: "123" });
+//     // смена тайтла (показывается при наведении на иконку в панели)
+//     chrome.action.setTitle({ title: "123" });
 
-    // добавление мелкой подписи к иконке
-    chrome.action.setBadgeText({ text: "200" });
-    chrome.action.setBadgeBackgroundColor({ color: "black" });
-    chrome.action.setBadgeTextColor({ color: "#fff" });
-})
+//     // добавление мелкой подписи к иконке
+//     chrome.action.setBadgeText({ text: "200" });
+//     chrome.action.setBadgeBackgroundColor({ color: "black" });
+//     chrome.action.setBadgeTextColor({ color: "#fff" });
+// })
 
 
-document.querySelector('#go-to-options').addEventListener('click', function () {
-    if (chrome.runtime.openOptionsPage) {
-        chrome.runtime.openOptionsPage();
-    } else {
-        window.open(chrome.runtime.getURL('options/options.html'));
-    }
-});
+// document.querySelector('#go-to-options').addEventListener('click', function () {
+//     if (chrome.runtime.openOptionsPage) {
+//         chrome.runtime.openOptionsPage();
+//     } else {
+//         window.open(chrome.runtime.getURL('options/options.html'));
+//     }
+// });
 
 function tabsToggle() {
     const tabs = document.querySelectorAll('[role="tab"]');
@@ -53,7 +53,6 @@ const h1counterEl = document.getElementById("h1counter");
 // вкладка Main
 const dataYandexXGEl = document.getElementById("data-yandex-x");
 
-
 // вкладка Search
 const toolSearchGEl = document.getElementById("tool-search-g");
 const toolSearchYEl = document.getElementById("tool-search-y");
@@ -80,6 +79,11 @@ const toolCmsEl = document.getElementById("tool-cms");
 const toolResponseEl = document.getElementById("tool-response");
 const toolDuplicateEl = document.getElementById("tool-duplicate");
 const toolTrustEl = document.getElementById("tool-trust");
+
+// вкладка Scheme
+const toolSchemePcEl = document.getElementById("tool-scheme-pc");
+const toolSchemeMobileEl = document.getElementById("tool-scheme-mobile");
+const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
 
 function getData() {
     // TODO: возвращать не массив с текстом заголовка, а объект со всеми нужными полями
@@ -148,6 +152,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         toolDuplicateEl.href = `https://be1.ru/dubli-stranic/?url=${url.hostname}`;
         toolTrustEl.href = `https://checktrust.ru/analyze/${url.hostname}`;
 
+        // вкладка Scheme
+        toolSchemePcEl.href = `https://search.google.com/test/rich-results?url=${url.href}&user_agent=2`;
+        toolSchemeMobileEl.href = `https://search.google.com/test/rich-results?url=${url.href}&user_agent=1`;
+        toolSchemeCheckEl.href = `https://validator.schema.org/#url=${url.href}`;
+
+        
 
         chrome.scripting.executeScript({ target: { tabId, allFrames: false }, func: getData }, getDataResult)
 

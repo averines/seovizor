@@ -2,12 +2,33 @@
     display: flex;
     column-gap: 10px;
     align-items: flex-start;
+
+    &--horizontal {
+        flex-direction: column;
+
+        .filter {
+            display: flex;
+
+            &__btn {
+                margin-right: -1px;
+                margin-bottom: 0;
+                padding: 0.5em 1.5em;
+
+                &:first-child {
+                    border-radius: $br 0 0 $br;
+                }
+
+                &:last-child {
+                    border-radius: 0 $br $br 0;
+                }
+            }
+        }
+    }
 }
 
 .filter {
     display: grid;
     grid-template-columns: 1fr;
-
 
     &__btn {
         cursor: pointer;
@@ -44,9 +65,9 @@
 
         > span {
             font-size: 10px;
+            line-height: 1.6;
             opacity: 0.6;
             padding-left: 0.33em;
-            
         }
     }
 }
