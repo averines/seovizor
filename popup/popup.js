@@ -45,13 +45,25 @@ function tabsToggle() {
 tabsToggle()
 
 
+// вкладка Main
 const urlEl = document.getElementById("url");
 const canonicalEl = document.getElementById("canonical");
-const h1El = document.getElementById("h1");
-const h1counterEl = document.getElementById("h1counter");
 
-// вкладка Main
+
+const titleEl = document.getElementById("title");
+const titleLengthEl = document.getElementById("title-length");
+const titleAlertEl = document.getElementById("title-alert");
+
+const descriptionEl = document.getElementById("description");
+const descriptionLengthEl = document.getElementById("description-length");
+const descriptionAlertEl = document.getElementById("description-alert");
+
+const h1El = document.getElementById("h1");
+const h1LengthEl = document.getElementById("h1-length");
+const h1AlertEl = document.getElementById("h1-alert");
+
 const dataYandexXGEl = document.getElementById("data-yandex-x");
+
 
 // вкладка Search
 const toolSearchGEl = document.getElementById("tool-search-g");
@@ -86,15 +98,67 @@ const toolSchemeMobileEl = document.getElementById("tool-scheme-mobile");
 const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
 
 function getData() {
-    // TODO: возвращать не массив с текстом заголовка, а объект со всеми нужными полями
-    return Array.from(document.querySelectorAll("h1")).map(h => h.innerText);
+    let data = {
+        "h1s": Array.from(document.querySelectorAll("h1")).map(h => h.innerText.trim()),
+        "h2s": Array.from(document.querySelectorAll("h2")).map(h => h.innerText.trim()),
+        "h3s": Array.from(document.querySelectorAll("h3")).map(h => h.innerText.trim()),
+        "h4s": Array.from(document.querySelectorAll("h4")).map(h => h.innerText.trim()),
+        "h5s": Array.from(document.querySelectorAll("h5")).map(h => h.innerText.trim()),
+        "h6s": Array.from(document.querySelectorAll("h6")).map(h => h.innerText.trim()),
+        "titles": Array.from(document.querySelectorAll("title")).map(t => t.innerText.trim()),
+        "descriptions": Array.from(document.querySelectorAll('meta[name="description"]')).map(d => d.getAttribute("content").trim()),
+        "canonical": document.querySelector('link[rel="canonical"]').getAttribute("href"),
+    }
+    return data;
 };
 
 function getDataResult(frames) {
-    // TODO: принимать объект полей и обрабатывать из значения
-    // console.log(frames[0].result);
-    h1El.innerText = frames[0].result[0];
-    h1counterEl.innerText = frames[0].result[0].length;
+    let data = frames[0].result
+    console.log(data);
+
+
+    if (data.titles[0].length) {
+        titleEl.innerText = data.titles[0];
+    } else {
+        titleEl.classList.add("is-empty")
+    }
+
+    if (data.descriptions.length > 1) {
+        titleAlertEl.classList.add("is-active")
+    }
+
+    titleLengthEl.innerText = data.titles[0].length;
+
+
+
+    if (data.descriptions[0].length) {
+        descriptionEl.innerText = data.descriptions[0];
+    } else {
+        descriptionEl.classList.add("is-empty")
+    }
+
+    if (data.descriptions.length > 1) {
+        descriptionAlertEl.classList.add("is-active")
+    }
+
+    descriptionLengthEl.innerText = data.descriptions[0].length;
+
+    if (data.h1s[0].length) {
+        h1El.innerText = data.h1s[0];
+    } else {
+        h1El.classList.add("is-empty")
+    }
+
+    if (data.h1s.length > 1) {
+        h1AlertEl.classList.add("is-active")
+    }
+
+    h1LengthEl.innerText = data.h1s[0].length;
+
+    canonicalEl.innerText = data.canonical;
+    canonicalEl.href = data.canonical;
+
+
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -103,8 +167,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (tabs) {
         const tabId = tabs[0].id;
         const url = new URL(tabs[0].url);
-
-        console.log(tabs[0]);
 
         // url.protocol;  // "http:"
         // url.hostname;  // "aaa.bbb.ccc.com"
@@ -115,10 +177,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         // TODO: заменить регуляркой
         const hostnameNoWww = url.hostname.replace("www.", "").replace("www2.", "");
         const urlNoWww = `${hostnameNoWww}${url.pathname}`;
-        urlEl.innerText = url.href;
-        urlEl.href = url.href;
+
 
         // вкладка Main
+        urlEl.innerText = url.href;
+        urlEl.href = url.href;
         dataYandexXGEl.src = `https://webmaster.yandex.ru/sqicounter?theme=light&host=${url.hostname}`
 
 
@@ -157,13 +220,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         toolSchemeMobileEl.href = `https://search.google.com/test/rich-results?url=${url.href}&user_agent=1`;
         toolSchemeCheckEl.href = `https://validator.schema.org/#url=${url.href}`;
 
-        
 
         chrome.scripting.executeScript({ target: { tabId, allFrames: false }, func: getData }, getDataResult)
 
-        // const initReviewTabResponse = await chrome.tabs.sendMessage(tabId, { action: 'init_review_tab' });
-        // const { titles, metaTags, canonicals = [], hreflangs = [] } = initReviewTabResponse.head;
-        // console.log(initReviewTabResponse.head);
 
     } else {
         return;

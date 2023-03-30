@@ -15,7 +15,6 @@ const clipboard = async (value) => {
 };
 
 
-
 const CANONICAL_STATUS = {
     none: 'none',
     eq: 'eq',
@@ -96,7 +95,6 @@ const getDescriptionByCanonicalStatus = (canonicalStatus, canonicals) => {
 };
 
 
-
 const META_ROBOTS = ['robots', 'yandex', 'googlebot'];
 
 const getMetaRobotStatus = (metaTags) => {
@@ -173,6 +171,8 @@ const getRobotsStatus = (statusCode, lines, meta) => {
         )
         .join('<hr>');
 };
+
+
 
 const getPromise = (callback) => new Promise(callback);
 

@@ -1,6 +1,9 @@
 {
-    "name": "SeoVizor",
+    "name": "SeoVizor: free quick metadata report",
+    "short_name": "SeoVizor",
     "description": "Free quick metadata report and basic SEO information for website analysis. 12 free SEO tools. No registration required.",
+    "homepage_url": "https://averines.github.io/seovizor/",
+    "author": "Averines",
     "version": "1.0",
     "manifest_version": 3,
     "icons": {

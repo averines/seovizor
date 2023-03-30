@@ -21,3 +21,19 @@
         }
     }
 }
+
+.btn-link {
+    cursor: pointer;
+    padding: 0;
+    background: none;
+    border: none;
+    color: $text-l;
+    border-bottom: 1px dashed $text-l;
+    font-size: inherit;
+    transition: $t;
+
+    &:hover {
+        color: $text;
+        border-bottom-color: $text;
+    }
+}
