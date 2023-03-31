@@ -38,9 +38,19 @@
     .row-content {
         display: flex;
         column-gap: 10px;
+
+        .is-empty {
+            &::after {
+                content: "Содержимое отсутствует";
+                font-style: italic;
+                color: $text-l;
+                pointer-events: none;
+                user-select: none;
+            }
+        }
     }
 
-    .row-icon {
+    .row-status {
         min-width: 20px;
     }
 }

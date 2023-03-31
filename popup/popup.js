@@ -1,4 +1,4 @@
-import { punycode } from '/libs/punycode.js';
+console.log("1. Активирован Popup. В консоли расширения");
 
 // document.getElementById("action-test").addEventListener("click", () => {
 //     // смена иконки
@@ -24,46 +24,41 @@ import { punycode } from '/libs/punycode.js';
 //     }
 // });
 
-function tabsToggle() {
-    const tabs = document.querySelectorAll('[role="tab"]');
-    const tabpanels = document.querySelectorAll('[role="tabpanel"]');
-    tabs.forEach(t => {
+import { punycode } from '/libs/punycode.js';
+
+// функционал переключения вкладок в попапе
+(function () {
+    const tabTitles = document.querySelectorAll('[role="tab"]');
+    const tabPanels = document.querySelectorAll('[role="tabpanel"]');
+    tabTitles.forEach(t => {
         t.addEventListener('click', () => {
-            tabs.forEach(t => { t.setAttribute('aria-selected', false); });
+            tabTitles.forEach(t => { t.setAttribute('aria-selected', false); });
             t.setAttribute('aria-selected', true);
 
-            tabpanels.forEach(p => {
+            tabPanels.forEach(p => {
                 p.setAttribute('aria-hidden', true);
-                if (p.id == t.getAttribute('aria-controls')) {
-                    p.setAttribute('aria-hidden', false);
-                }
+                if (p.id == t.getAttribute('aria-controls')) { p.setAttribute('aria-hidden', false); }
             })
         })
     })
-}
-
-tabsToggle()
+}());
 
 
+// определение функциональных элементов попапа
 // вкладка Main
 const urlEl = document.getElementById("url");
-const canonicalEl = document.getElementById("canonical");
-
-
 const titleEl = document.getElementById("title");
 const titleLengthEl = document.getElementById("title-length");
 const titleAlertEl = document.getElementById("title-alert");
-
 const descriptionEl = document.getElementById("description");
 const descriptionLengthEl = document.getElementById("description-length");
 const descriptionAlertEl = document.getElementById("description-alert");
-
 const h1El = document.getElementById("h1");
 const h1LengthEl = document.getElementById("h1-length");
 const h1AlertEl = document.getElementById("h1-alert");
-
+const canonicalEl = document.getElementById("canonical");
+const canonicalStatusEl = document.getElementById("canonical-status");
 const dataYandexXGEl = document.getElementById("data-yandex-x");
-
 
 // вкладка Search
 const toolSearchGEl = document.getElementById("tool-search-g");
@@ -97,134 +92,112 @@ const toolSchemePcEl = document.getElementById("tool-scheme-pc");
 const toolSchemeMobileEl = document.getElementById("tool-scheme-mobile");
 const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
 
-function getData() {
-    let data = {
-        "h1s": Array.from(document.querySelectorAll("h1")).map(h => h.innerText.trim()),
-        "h2s": Array.from(document.querySelectorAll("h2")).map(h => h.innerText.trim()),
-        "h3s": Array.from(document.querySelectorAll("h3")).map(h => h.innerText.trim()),
-        "h4s": Array.from(document.querySelectorAll("h4")).map(h => h.innerText.trim()),
-        "h5s": Array.from(document.querySelectorAll("h5")).map(h => h.innerText.trim()),
-        "h6s": Array.from(document.querySelectorAll("h6")).map(h => h.innerText.trim()),
-        "titles": Array.from(document.querySelectorAll("title")).map(t => t.innerText.trim()),
-        "descriptions": Array.from(document.querySelectorAll('meta[name="description"]')).map(d => d.getAttribute("content").trim()),
-        "canonical": document.querySelector('link[rel="canonical"]').getAttribute("href"),
-    }
-    return data;
-};
 
-function getDataResult(frames) {
-    let data = frames[0].result
-    console.log(data);
+// получаем активную вкладку браузера
+(async () => {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    const url = new URL(tab.url);
+
+    // url.protocol;  // "http:"
+    // url.hostname;  // "aaa.bbb.ccc.com"
+    // url.pathname;  // "/asdf/asdf/sadf.aspx"
+    // url.search;    // "?blah"
+
+    // заполняем некоторые данные в попапе на основании ссылки, полученной из вкладки баузера
+    // TODO: заменить регуляркой для всех вариантов www. www2. www3.
+    const hostnameNoWww = url.hostname.replace("www.", "")
+    const urlNoWww = `${hostnameNoWww}${url.pathname}`;
+    const urlNoProtocol = `${url.hostname}${url.pathname}`;
+
+    // вкладка Main
+    urlEl.innerText = url.href;
+    urlEl.href = url.href;
+    dataYandexXGEl.src = `https://webmaster.yandex.ru/sqicounter?theme=light&host=${url.hostname}`
+
+    // вкладка Search
+    toolSearchGEl.href = `https://www.google.ru/search?q=site:${url.href}`;
+    toolSearchYEl.href = `https://yandex.ru/search/?text=url:${urlNoWww} | url:${urlNoProtocol}`;
+    toolDuplicateYEl.href = `https://yandex.ru/search/?text=title:("${tab.title}") site:${url.hostname}`;
+    toolDomainYEl.href = `https://yandex.ru/search/?text=url:${url.hostname}/* | url:${hostnameNoWww}/* | url:${url.hostname} | url:${hostnameNoWww}`;
+    toolSiteGEl.href = `https://www.google.ru/search?q=site:${url.hostname}`;
+    toolSiteYEl.href = `https://yandex.ru/search/?text=site:${url.hostname}`;
+    toolHostYEl.href = `https://yandex.ru/search/?text=host:${url.hostname}`;
+    toolOrgGEl.href = `https://www.google.com/maps/search/${punycode.toUnicode(url.hostname)}`;
+    toolOrgYEl.href = `https://yandex.ru/maps/?mode=search&text=${punycode.toUnicode(url.hostname)}`;
+    if (url.hostname.includes("yandex.") || url.hostname.includes("google.")) { toolCopyResultsEl.disabled = false; }
+
+    // вкладка Page
+    toolCacheGEl.href = `https://webcache.googleusercontent.com/search?q=cache:${encodeURIComponent(url.href)}`;
+
+    // вкладка Tools
+    toolSpeedEl.href = `https://pagespeed.web.dev/report?url=${url.href}`;
+    toolMobileEl.href = `https://search.google.com/test/mobile-friendly?url=${url.href}`;
+    toolArchiveEl.href = `https://web.archive.org/web/*/${url.href}`;
+    toolSslEl.href = `https://www.sslshopper.com/ssl-checker.html#hostname=${url.hostname}`;
+    toolWhoisEl.href = `https://www.webnames.ru/whois?domname=${url.hostname}`;
+    toolCmsEl.href = `https://be1.ru/cms/?url=${url.hostname}`;
+    toolResponseEl.href = `https://www.bertal.ru/?url=${url.href}`;
+    toolDuplicateEl.href = `https://be1.ru/dubli-stranic/?url=${url.hostname}`;
+    toolTrustEl.href = `https://checktrust.ru/analyze/${url.hostname}`;
+
+    // вкладка Scheme
+    toolSchemePcEl.href = `https://search.google.com/test/rich-results?url=${url.href}&user_agent=2`;
+    toolSchemeMobileEl.href = `https://search.google.com/test/rich-results?url=${url.href}&user_agent=1`;
+    toolSchemeCheckEl.href = `https://validator.schema.org/#url=${url.href}`;
 
 
-    if (data.titles[0].length) {
-        titleEl.innerText = data.titles[0];
+
+    // запрашиваем данные из вкладки браузера
+    const seodata = await chrome.tabs.sendMessage(tab.id, { action: "GET SEODATA" });
+    console.log("3. Получен ответ от контент скрипта. В консоли расширения");
+    console.log(seodata);
+
+    // обработка title
+    if (seodata.titles[0].length) {
+        titleEl.innerText = seodata.titles[0];
     } else {
         titleEl.classList.add("is-empty")
     }
 
-    if (data.descriptions.length > 1) {
-        titleAlertEl.classList.add("is-active")
-    }
+    if (seodata.titles.length > 1) { titleAlertEl.classList.add("is-active") }
+    titleLengthEl.innerText = seodata.titles[0].length;
 
-    titleLengthEl.innerText = data.titles[0].length;
-
-
-
-    if (data.descriptions[0].length) {
-        descriptionEl.innerText = data.descriptions[0];
+    // обработка description
+    if (seodata.descriptions[0].length) {
+        descriptionEl.innerText = seodata.descriptions[0];
     } else {
         descriptionEl.classList.add("is-empty")
     }
 
-    if (data.descriptions.length > 1) {
-        descriptionAlertEl.classList.add("is-active")
-    }
+    if (seodata.descriptions.length > 1) { descriptionAlertEl.classList.add("is-active") }
+    descriptionLengthEl.innerText = seodata.descriptions[0].length;
 
-    descriptionLengthEl.innerText = data.descriptions[0].length;
-
-    if (data.h1s[0].length) {
-        h1El.innerText = data.h1s[0];
+    // обработка h1
+    if (seodata.h1s[0].length) {
+        h1El.innerText = seodata.h1s[0];
     } else {
         h1El.classList.add("is-empty")
     }
 
-    if (data.h1s.length > 1) {
-        h1AlertEl.classList.add("is-active")
-    }
+    if (seodata.h1s.length > 1) { h1AlertEl.classList.add("is-active") }
+    h1LengthEl.innerText = seodata.h1s[0].length;
 
-    h1LengthEl.innerText = data.h1s[0].length;
+    // обработка canonical
+    if (seodata.canonicals.length) {
+        canonicalEl.innerText = seodata.canonicals[0];
+        canonicalEl.href = seodata.canonicals[0];
 
-    canonicalEl.innerText = data.canonical;
-    canonicalEl.href = data.canonical;
-
-
-};
-
-document.addEventListener('DOMContentLoaded', async () => {
-    const tabs = await chrome.tabs.query({ currentWindow: true, active: true });
-
-    if (tabs) {
-        const tabId = tabs[0].id;
-        const url = new URL(tabs[0].url);
-
-        // url.protocol;  // "http:"
-        // url.hostname;  // "aaa.bbb.ccc.com"
-        // url.pathname;  // "/asdf/asdf/sadf.aspx"
-        // url.search;    // "?blah"
-
-        const urlNoProtocol = `${url.hostname}${url.pathname}`;
-        // TODO: заменить регуляркой
-        const hostnameNoWww = url.hostname.replace("www.", "").replace("www2.", "");
-        const urlNoWww = `${hostnameNoWww}${url.pathname}`;
-
-
-        // вкладка Main
-        urlEl.innerText = url.href;
-        urlEl.href = url.href;
-        dataYandexXGEl.src = `https://webmaster.yandex.ru/sqicounter?theme=light&host=${url.hostname}`
-
-
-        // вкладка Search
-        toolSearchGEl.href = `https://www.google.ru/search?q=site:${url.href}`;
-        toolSearchYEl.href = `https://yandex.ru/search/?text=url:${urlNoWww} | url:${urlNoProtocol}`;
-        toolDuplicateYEl.href = `https://yandex.ru/search/?text=title:("${tabs[0].title}") site:${url.hostname}`;
-        toolDomainYEl.href = `https://yandex.ru/search/?text=url:${url.hostname}/* | url:${hostnameNoWww}/* | url:${url.hostname} | url:${hostnameNoWww}`;
-        toolSiteGEl.href = `https://www.google.ru/search?q=site:${url.hostname}`;
-        toolSiteYEl.href = `https://yandex.ru/search/?text=site:${url.hostname}`;
-        toolHostYEl.href = `https://yandex.ru/search/?text=host:${url.hostname}`;
-        toolOrgGEl.href = `https://www.google.com/maps/search/${punycode.toUnicode(url.hostname)}`;
-        toolOrgYEl.href = `https://yandex.ru/maps/?mode=search&text=${punycode.toUnicode(url.hostname)}`;
-
-        if (url.hostname.includes("yandex.") || url.hostname.includes("google.")) {
-            toolCopyResultsEl.disabled = false;
+        if (seodata.canonicals[0] != url.href) {
+            canonicalStatusEl.classList.add("is-active");
+            canonicalStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
+            canonicalStatusEl.querySelector(".status__content").innerText = "Канонический url отличается от url страницы. Это не является ошибкой, но требует внимания.";
         }
-
-        // вкладка Page
-        toolCacheGEl.href = `https://webcache.googleusercontent.com/search?q=cache:${encodeURIComponent(url.href)}`;
-
-
-        // вкладка Tools
-        toolSpeedEl.href = `https://pagespeed.web.dev/report?url=${url.href}`;
-        toolMobileEl.href = `https://search.google.com/test/mobile-friendly?url=${url.href}`;
-        toolArchiveEl.href = `https://web.archive.org/web/*/${url.href}`;
-        toolSslEl.href = `https://www.sslshopper.com/ssl-checker.html#hostname=${url.hostname}`;
-        toolWhoisEl.href = `https://www.webnames.ru/whois?domname=${url.hostname}`;
-        toolCmsEl.href = `https://be1.ru/cms/?url=${url.hostname}`;
-        toolResponseEl.href = `https://www.bertal.ru/?url=${url.href}`;
-        toolDuplicateEl.href = `https://be1.ru/dubli-stranic/?url=${url.hostname}`;
-        toolTrustEl.href = `https://checktrust.ru/analyze/${url.hostname}`;
-
-        // вкладка Scheme
-        toolSchemePcEl.href = `https://search.google.com/test/rich-results?url=${url.href}&user_agent=2`;
-        toolSchemeMobileEl.href = `https://search.google.com/test/rich-results?url=${url.href}&user_agent=1`;
-        toolSchemeCheckEl.href = `https://validator.schema.org/#url=${url.href}`;
-
-
-        chrome.scripting.executeScript({ target: { tabId, allFrames: false }, func: getData }, getDataResult)
 
 
     } else {
-        return;
+        canonicalEl.classList.add("is-empty");
+
     }
-});
+
+
+})();

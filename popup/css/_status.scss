@@ -1,0 +1,45 @@
+.status {
+    position: relative;
+
+    &.is-active {
+        &:hover {
+            .status__content {
+                opacity: 1;
+                transform: translateY(0);
+                visibility: visible;
+                pointer-events: all;
+            }
+        }
+    }
+
+    &__content {
+        max-width: 430px;
+        min-width: 400px;
+        opacity: 0;
+        border-radius: $br;
+        box-shadow: $bs-sm;
+        padding: 22px 22px 25px 22px;
+        position: absolute;
+        bottom: 30px;
+        left: -10px;
+        background-color: #fff;
+        transition: transform 0.3s cubic-bezier(0.76, -0.44, 0.35, 1.46), opacity 0.1s ease-in-out;
+        transform: translateY(-10px);
+        visibility: hidden;
+        pointer-events: none;
+
+        &::before {
+            content: "";
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            bottom: -4px;
+            z-index: 0;
+            left: 15px;
+            display: block;
+            width: 8px;
+            height: 8px;
+            transform: rotate(45deg);
+        }
+    }
+}
