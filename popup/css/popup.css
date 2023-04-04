@@ -64,7 +64,6 @@ textarea {
 a {
   color: #2785e1;
   transition: all 0.1s ease-in-out;
-  word-break: break-all;
 }
 a:hover {
   color: #0b70e8;
@@ -315,32 +314,46 @@ hr.dotted {
   min-height: 30px;
   background: linear-gradient(90deg, #f9fafb 0%, #f6f8f9 100%);
 }
+.field:hover .field__copy {
+  visibility: visible;
+  pointer-events: all;
+  transform: translateY(0);
+}
 .field__header {
+  width: 60px;
   background-color: #f6f8f9;
-  padding: 4px 7px 5px 25px;
+  padding: 4px 7px 5px 20px;
   position: absolute;
-  top: -5px;
+  top: -6px;
   right: 0;
-  border-radius: 20px 4px 0 0;
+  bottom: 0;
+  border-radius: 10px 4px 4px 0;
+  overflow: hidden;
+}
+.field__title {
+  text-align: right;
+  text-transform: uppercase;
+  color: #8e95a0;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
   pointer-events: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
 }
-.field__title {
-  text-transform: uppercase;
-  color: #8e95a0;
-  font-size: 10px;
-  letter-spacing: 0.04em;
-  line-height: 1.5;
-}
 .field__counter {
   color: #8e95a0;
-  font-size: 10px;
+  font-size: 9px;
   line-height: 1;
   letter-spacing: 0.1em;
   text-align: right;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 .field__content {
   font-size: 14px;
@@ -360,6 +373,26 @@ hr.dotted {
 }
 .field__content.is-missing::after {
   content: "Элемент не найден";
+}
+.field__copy {
+  border: none;
+  background-color: #2785e1;
+  color: #fff;
+  font-size: 10px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.35em 0.85em;
+  line-height: 1;
+  border-radius: 5px 0 0 0;
+  cursor: pointer;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: all 0.05s ease-in-out;
+}
+.field__copy:hover {
+  background-color: #0b70e8;
 }
 
 .footer {
@@ -613,6 +646,9 @@ label.tool:active .tool__content {
   display: flex;
   -moz-column-gap: 10px;
        column-gap: 10px;
+}
+.table .row-content a {
+  word-break: break-all;
 }
 .table .row-content .is-empty::after {
   content: "Содержимое отсутствует";

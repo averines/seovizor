@@ -32,13 +32,33 @@
     min-height: 30px;
     background: linear-gradient(90deg, lighten($bg-l, 1) 0%, $bg-l 100%);
 
+    &:hover {
+        .field__copy {
+            visibility: visible;
+            pointer-events: all;
+            transform: translateY(0);
+        }
+    }
+
     &__header {
+        width: 60px;
         background-color: $bg-l;
-        padding: 4px 7px 5px 25px;
+        padding: 4px 7px 5px 20px;
         position: absolute;
-        top: -5px;
+        top: -6px;
         right: 0;
-        border-radius: 20px 4px 0 0;
+        bottom: 0;
+        border-radius: 10px 4px 4px 0;
+        overflow: hidden;
+    }
+
+    &__title {
+        text-align: right;
+        text-transform: uppercase;
+        color: $text-l;
+        font-size: 10px;
+        letter-spacing: 0.04em;
+        line-height: 1.5;
         pointer-events: none;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -48,20 +68,19 @@
         user-select: none;
     }
 
-    &__title {
-        text-transform: uppercase;
-        color: $text-l;
-        font-size: 10px;
-        letter-spacing: 0.04em;
-        line-height: 1.5;
-    }
-
     &__counter {
         color: $text-l;
-        font-size: 10px;
+        font-size: 9px;
         line-height: 1;
         letter-spacing: 0.1em;
         text-align: right;
+        pointer-events: none;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     &__content {
@@ -85,6 +104,28 @@
             &::after {
                 content: "Элемент не найден";
             }
+        }
+    }
+
+    &__copy {
+        border: none;
+        background-color: $main;
+        color: #fff;
+        font-size: 10px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 0.35em 0.85em;
+        line-height: 1;
+        border-radius: 5px 0 0 0;
+        cursor: pointer;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(20px);
+        transition: all 0.05s ease-in-out;
+
+        &:hover {
+            background-color: $main-d;
         }
     }
 }

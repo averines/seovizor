@@ -39,6 +39,10 @@
         display: flex;
         column-gap: 10px;
 
+        a {
+            word-break: break-all;
+        }
+
         .is-empty {
             &::after {
                 content: "Содержимое отсутствует";

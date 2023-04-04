@@ -44,6 +44,26 @@ import { punycode } from '/libs/punycode.js';
 }());
 
 
+window.addEventListener('click', (e) => {
+    // отслеживаем клик по кнопке Копировать
+    if (e.target.classList.contains("field__copy")) {
+        let parentField = e.target.closest(".field");
+        let parentFieldContent = parentField.querySelector(".field__content");
+
+        //находим текс поля и пишем его в буфер обмена
+        navigator.clipboard.writeText(parentFieldContent.innerText)
+            .then(() => {
+                e.target.innerText = "Copied!";
+                setTimeout(() => { e.target.innerText = "Copy"; }, 2000);
+            })
+            .catch(err => {
+                console.log('Копирование не пашет', err);
+            })
+    }
+})
+
+
+
 // определение функциональных элементов попапа
 // вкладка Main
 const urlEl = document.getElementById("url");

@@ -46,9 +46,11 @@ html {
     height: 18px;
     width: 18px;
 }
+
 ::-webkit-scrollbar-track {
     background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
     background-color: lighten($line-l, 2);
     border-radius: 10px;
@@ -86,7 +88,6 @@ textarea {
 a {
     color: $main;
     transition: $t;
-    word-break: break-all;
 
     &:hover {
         color: $main-d;
