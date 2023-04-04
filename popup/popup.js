@@ -59,6 +59,19 @@ const h1AlertEl = document.getElementById("h1-alert");
 const canonicalEl = document.getElementById("canonical");
 const canonicalStatusEl = document.getElementById("canonical-status");
 const dataYandexXGEl = document.getElementById("data-yandex-x");
+const dataLangEl = document.getElementById("data-lang");
+const dataLinksCounterEl = document.getElementById("data-links-counter");
+const dataPicsCounterEl = document.getElementById("data-pics-counter");
+const fadeEl = document.getElementById("fade");
+const fadeUrlEl = document.getElementById("fade-url");
+
+const h1CounterEl = document.getElementById("h1-counter");
+const h2CounterEl = document.getElementById("h2-counter");
+const h3CounterEl = document.getElementById("h3-counter");
+const h4CounterEl = document.getElementById("h4-counter");
+const h5CounterEl = document.getElementById("h5-counter");
+const h6CounterEl = document.getElementById("h6-counter");
+const hAllCounterEl = document.getElementById("h-all-counter");
 
 // вкладка Search
 const toolSearchGEl = document.getElementById("tool-search-g");
@@ -97,106 +110,139 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
 (async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     const url = new URL(tab.url);
-
     // url.protocol;  // "http:"
     // url.hostname;  // "aaa.bbb.ccc.com"
     // url.pathname;  // "/asdf/asdf/sadf.aspx"
     // url.search;    // "?blah"
 
-    // заполняем некоторые данные в попапе на основании ссылки, полученной из вкладки баузера
-    // TODO: заменить регуляркой для всех вариантов www. www2. www3.
-    const hostnameNoWww = url.hostname.replace("www.", "")
-    const urlNoWww = `${hostnameNoWww}${url.pathname}`;
-    const urlNoProtocol = `${url.hostname}${url.pathname}`;
+    console.log(url.protocol);
 
-    // вкладка Main
-    urlEl.innerText = url.href;
-    urlEl.href = url.href;
-    dataYandexXGEl.src = `https://webmaster.yandex.ru/sqicounter?theme=light&host=${url.hostname}`
+    if (url.protocol == "http:" || url.protocol == "https:") {
+        console.log("работаем");
+        // заполняем некоторые данные в попапе на основании ссылки, полученной из вкладки баузера
+        // TODO: заменить регуляркой для всех вариантов www. www2. www3.
+        const hostnameNoWww = url.hostname.replace("www.", "")
+        const urlNoWww = `${hostnameNoWww}${url.pathname}`;
+        const urlNoProtocol = `${url.hostname}${url.pathname}`;
 
-    // вкладка Search
-    toolSearchGEl.href = `https://www.google.ru/search?q=site:${url.href}`;
-    toolSearchYEl.href = `https://yandex.ru/search/?text=url:${urlNoWww} | url:${urlNoProtocol}`;
-    toolDuplicateYEl.href = `https://yandex.ru/search/?text=title:("${tab.title}") site:${url.hostname}`;
-    toolDomainYEl.href = `https://yandex.ru/search/?text=url:${url.hostname}/* | url:${hostnameNoWww}/* | url:${url.hostname} | url:${hostnameNoWww}`;
-    toolSiteGEl.href = `https://www.google.ru/search?q=site:${url.hostname}`;
-    toolSiteYEl.href = `https://yandex.ru/search/?text=site:${url.hostname}`;
-    toolHostYEl.href = `https://yandex.ru/search/?text=host:${url.hostname}`;
-    toolOrgGEl.href = `https://www.google.com/maps/search/${punycode.toUnicode(url.hostname)}`;
-    toolOrgYEl.href = `https://yandex.ru/maps/?mode=search&text=${punycode.toUnicode(url.hostname)}`;
-    if (url.hostname.includes("yandex.") || url.hostname.includes("google.")) { toolCopyResultsEl.disabled = false; }
+        // вкладка Main
+        urlEl.innerText = url.href;
+        urlEl.href = url.href;
+        dataYandexXGEl.src = `https://webmaster.yandex.ru/sqicounter?theme=light&host=${url.hostname}`
 
-    // вкладка Page
-    toolCacheGEl.href = `https://webcache.googleusercontent.com/search?q=cache:${encodeURIComponent(url.href)}`;
+        // вкладка Search
+        toolSearchGEl.href = `https://www.google.ru/search?q=site:${url.href}`;
+        toolSearchYEl.href = `https://yandex.ru/search/?text=url:${urlNoWww} | url:${urlNoProtocol}`;
+        toolDuplicateYEl.href = `https://yandex.ru/search/?text=title:("${tab.title}") site:${url.hostname}`;
+        toolDomainYEl.href = `https://yandex.ru/search/?text=url:${url.hostname}/* | url:${hostnameNoWww}/* | url:${url.hostname} | url:${hostnameNoWww}`;
+        toolSiteGEl.href = `https://www.google.ru/search?q=site:${url.hostname}`;
+        toolSiteYEl.href = `https://yandex.ru/search/?text=site:${url.hostname}`;
+        toolHostYEl.href = `https://yandex.ru/search/?text=host:${url.hostname}`;
+        toolOrgGEl.href = `https://www.google.com/maps/search/${punycode.toUnicode(url.hostname)}`;
+        toolOrgYEl.href = `https://yandex.ru/maps/?mode=search&text=${punycode.toUnicode(url.hostname)}`;
+        if (url.hostname.includes("yandex.") || url.hostname.includes("google.")) { toolCopyResultsEl.disabled = false; }
 
-    // вкладка Tools
-    toolSpeedEl.href = `https://pagespeed.web.dev/report?url=${url.href}`;
-    toolMobileEl.href = `https://search.google.com/test/mobile-friendly?url=${url.href}`;
-    toolArchiveEl.href = `https://web.archive.org/web/*/${url.href}`;
-    toolSslEl.href = `https://www.sslshopper.com/ssl-checker.html#hostname=${url.hostname}`;
-    toolWhoisEl.href = `https://www.webnames.ru/whois?domname=${url.hostname}`;
-    toolCmsEl.href = `https://be1.ru/cms/?url=${url.hostname}`;
-    toolResponseEl.href = `https://www.bertal.ru/?url=${url.href}`;
-    toolDuplicateEl.href = `https://be1.ru/dubli-stranic/?url=${url.hostname}`;
-    toolTrustEl.href = `https://checktrust.ru/analyze/${url.hostname}`;
+        // вкладка Page
+        toolCacheGEl.href = `https://webcache.googleusercontent.com/search?q=cache:${encodeURIComponent(url.href)}`;
 
-    // вкладка Scheme
-    toolSchemePcEl.href = `https://search.google.com/test/rich-results?url=${url.href}&user_agent=2`;
-    toolSchemeMobileEl.href = `https://search.google.com/test/rich-results?url=${url.href}&user_agent=1`;
-    toolSchemeCheckEl.href = `https://validator.schema.org/#url=${url.href}`;
+        // вкладка Tools
+        toolSpeedEl.href = `https://pagespeed.web.dev/report?url=${url.href}`;
+        toolMobileEl.href = `https://search.google.com/test/mobile-friendly?url=${url.href}`;
+        toolArchiveEl.href = `https://web.archive.org/web/*/${url.href}`;
+        toolSslEl.href = `https://www.sslshopper.com/ssl-checker.html#hostname=${url.hostname}`;
+        toolWhoisEl.href = `https://www.webnames.ru/whois?domname=${url.hostname}`;
+        toolCmsEl.href = `https://be1.ru/cms/?url=${url.hostname}`;
+        toolResponseEl.href = `https://www.bertal.ru/?url=${url.href}`;
+        toolDuplicateEl.href = `https://be1.ru/dubli-stranic/?url=${url.hostname}`;
+        toolTrustEl.href = `https://checktrust.ru/analyze/${url.hostname}`;
+
+        // вкладка Scheme
+        toolSchemePcEl.href = `https://search.google.com/test/rich-results?url=${url.href}&user_agent=2`;
+        toolSchemeMobileEl.href = `https://search.google.com/test/rich-results?url=${url.href}&user_agent=1`;
+        toolSchemeCheckEl.href = `https://validator.schema.org/#url=${url.href}`;
 
 
 
-    // запрашиваем данные из вкладки браузера
-    const seodata = await chrome.tabs.sendMessage(tab.id, { action: "GET SEODATA" });
-    console.log("3. Получен ответ от контент скрипта. В консоли расширения");
-    console.log(seodata);
+        // запрашиваем данные из вкладки браузера
+        const seodata = await chrome.tabs.sendMessage(tab.id, { action: "GET SEODATA" });
+        console.log("3. Получен ответ от контент скрипта. В консоли расширения");
+        console.log(seodata);
 
-    // обработка title
-    if (seodata.titles[0].length) {
-        titleEl.innerText = seodata.titles[0];
-    } else {
-        titleEl.classList.add("is-empty")
-    }
+        // обработка title
+        if (seodata.titles.length) {
+            if (seodata.titles[0].length) {
+                titleEl.innerText = seodata.titles[0];
+            } else { titleEl.classList.add("is-empty") }
+        } else { titleEl.classList.add("is-missing") }
 
-    if (seodata.titles.length > 1) { titleAlertEl.classList.add("is-active") }
-    titleLengthEl.innerText = seodata.titles[0].length;
+        if (seodata.titles.length > 1) { titleAlertEl.classList.add("is-active") }
+        titleLengthEl.innerText = seodata.titles[0].length;
 
-    // обработка description
-    if (seodata.descriptions[0].length) {
-        descriptionEl.innerText = seodata.descriptions[0];
-    } else {
-        descriptionEl.classList.add("is-empty")
-    }
+        // обработка description
+        if (seodata.descriptions.length) {
+            if (seodata.descriptions[0].length) {
+                descriptionEl.innerText = seodata.descriptions[0];
+            } else { descriptionEl.classList.add("is-empty") }
+        } else { descriptionEl.classList.add("is-missing") }
 
-    if (seodata.descriptions.length > 1) { descriptionAlertEl.classList.add("is-active") }
-    descriptionLengthEl.innerText = seodata.descriptions[0].length;
+        if (seodata.descriptions.length > 1) { descriptionAlertEl.classList.add("is-active") }
+        descriptionLengthEl.innerText = seodata.descriptions[0].length;
 
-    // обработка h1
-    if (seodata.h1s[0].length) {
-        h1El.innerText = seodata.h1s[0];
-    } else {
-        h1El.classList.add("is-empty")
-    }
+        // обработка h1
+        if (seodata.h1s.length) {
+            if (seodata.h1s.length > 1) { h1AlertEl.classList.add("is-active") }
+            if (seodata.h1s[0].length) {
+                h1El.innerText = seodata.h1s[0];
+                h1LengthEl.innerText = seodata.h1s[0].length;
+            } else { h1El.classList.add("is-empty") }
+        } else { h1El.classList.add("is-missing") }
 
-    if (seodata.h1s.length > 1) { h1AlertEl.classList.add("is-active") }
-    h1LengthEl.innerText = seodata.h1s[0].length;
 
-    // обработка canonical
-    if (seodata.canonicals.length) {
-        canonicalEl.innerText = seodata.canonicals[0];
-        canonicalEl.href = seodata.canonicals[0];
+        // обработка остальных заголовков
+        let hAllCounter = 0;
+        if (seodata.h1s.length) { h1CounterEl.innerText = seodata.h1s.length; h1CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h1s.length; }
+        if (seodata.h2s.length) { h2CounterEl.innerText = seodata.h2s.length; h2CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h2s.length; }
+        if (seodata.h3s.length) { h3CounterEl.innerText = seodata.h3s.length; h3CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h3s.length; }
+        if (seodata.h4s.length) { h4CounterEl.innerText = seodata.h4s.length; h4CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h4s.length; }
+        if (seodata.h5s.length) { h5CounterEl.innerText = seodata.h5s.length; h5CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h5s.length; }
+        if (seodata.h6s.length) { h6CounterEl.innerText = seodata.h6s.length; h6CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h6s.length; }
+        hAllCounterEl.innerText = hAllCounter;
 
-        if (seodata.canonicals[0] != url.href) {
-            canonicalStatusEl.classList.add("is-active");
-            canonicalStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
-            canonicalStatusEl.querySelector(".status__content").innerText = "Канонический url отличается от url страницы. Это не является ошибкой, но требует внимания.";
+
+        // обработка canonical
+        if (seodata.canonicals.length) {
+            canonicalEl.innerText = seodata.canonicals[0];
+            canonicalEl.href = seodata.canonicals[0];
+
+            if (seodata.canonicals[0] != url.href) {
+                canonicalStatusEl.classList.add("is-active");
+                canonicalStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
+                canonicalStatusEl.querySelector(".status__content").innerText = "Канонический url отличается от url страницы. Это не является ошибкой, но требует внимания.";
+            }
+        } else { canonicalEl.classList.add("is-empty"); }
+
+
+        // обработка lang
+        if (seodata.langs.length) {
+            if (seodata.langs[0].length) {
+                dataLangEl.innerText = seodata.langs[0];
+            } else { dataLangEl.classList.add("is-empty") }
+        } else { dataLangEl.classList.add("is-missing") }
+
+
+        // подсчет ссылок
+        if (seodata.links.length) {
+            dataLinksCounterEl.innerHTML = seodata.links.length;
         }
 
-
+        // подсчет картинок
+        if (seodata.pics.length) {
+            dataPicsCounterEl.innerHTML = seodata.pics.length;
+        }
     } else {
-        canonicalEl.classList.add("is-empty");
-
+        console.log("заглушка");
+        fadeEl.classList.add("is-active");
+        fadeUrlEl.innerText = url.href;
     }
 
 

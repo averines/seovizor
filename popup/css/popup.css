@@ -325,6 +325,7 @@ hr.dotted {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 .field__title {
@@ -352,6 +353,13 @@ hr.dotted {
 }
 .field__content.is-empty::after {
   content: "Содержимое отсуствует";
+}
+.field__content.is-missing {
+  font-style: italic;
+  color: #8e95a0;
+}
+.field__content.is-missing::after {
+  content: "Элемент не найден";
 }
 
 .footer {
@@ -397,6 +405,7 @@ hr.dotted {
   text-align: left;
   -webkit-user-select: none;
      -moz-user-select: none;
+      -ms-user-select: none;
           user-select: none;
 }
 .tool--sm {
@@ -613,6 +622,7 @@ label.tool:active .tool__content {
   pointer-events: none;
   -webkit-user-select: none;
      -moz-user-select: none;
+      -ms-user-select: none;
           user-select: none;
 }
 .table .row-status {
@@ -642,6 +652,10 @@ label.tool:active .tool__content {
   -moz-column-gap: 12px;
        column-gap: 12px;
 }
+.data-counters--sm .data-counter__content {
+  font-size: 12px;
+  padding-top: 0.25em;
+}
 
 .data-counter__title {
   display: flex;
@@ -654,6 +668,15 @@ label.tool:active .tool__content {
 }
 .data-counter__content--inactive {
   opacity: 0.2;
+}
+.data-counter__content.is-empty {
+  color: #8e95a0;
+}
+.data-counter__content.is-empty::after {
+  content: "—";
+}
+.data-counter__content.is-missing::after {
+  content: "X";
 }
 
 .version {
@@ -895,6 +918,41 @@ label.tool:active .tool__content {
   width: 8px;
   height: 8px;
   transform: rotate(45deg);
+}
+
+.fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #fff;
+  padding: 90px;
+  display: none;
+  z-index: 99;
+}
+.fade.is-active {
+  display: block;
+}
+.fade__title {
+  line-height: 1.4;
+  font-size: 18px;
+  font-weight: 500;
+  padding-bottom: 0.5em;
+}
+.fade__description {
+  font-size: 14px;
+}
+.fade__link {
+  font-weight: 500;
+}
+.fade__alert {
+  border: 1px solid #61d5a7;
+  padding: 0.15em 0.55em;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 3px;
+  color: #61d5a7;
 }
 
 .mt-0,

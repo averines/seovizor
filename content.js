@@ -18,6 +18,9 @@ chrome.runtime.onMessage.addListener(
             seodata['titles'] = Array.from(document.querySelectorAll("title")).map(t => t.innerText.trim());
             seodata['descriptions'] = Array.from(document.querySelectorAll('meta[name="description"]')).map(i => i.content.trim());
             seodata['canonicals'] = Array.from(document.querySelectorAll('link[rel="canonical"]')).map(i => i.getAttribute("href"));
+            seodata['langs'] = Array.from(document.querySelectorAll('html')).map(i => i.getAttribute("lang"));
+            seodata['links'] = Array.from(document.querySelectorAll('a')).map(i => i.getAttribute("href"));
+            seodata['pics'] = Array.from(document.querySelectorAll('img')).map(i => ({ "src": i.getAttribute("src"), "alt": i.getAttribute("alt"), "title": i.getAttribute("title") }));
 
             console.log(seodata);
 

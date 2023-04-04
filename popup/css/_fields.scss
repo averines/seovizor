@@ -77,5 +77,14 @@
                 content: "Содержимое отсуствует";
             }
         }
+
+        &.is-missing {
+            font-style: italic;
+            color: $text-l;
+
+            &::after {
+                content: "Элемент не найден";
+            }
+        }
     }
 }

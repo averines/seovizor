@@ -124,45 +124,45 @@
                     <div class="data-counters">
                         <div class="data-counter">
                             <div class="data-counter__title">Lang</div>
-                            <div class="data-counter__content">ru</div>
+                            <div class="data-counter__content" id="data-lang"></div>
                         </div>
                         <div class="data-counter">
                             <div class="data-counter__title">Links</div>
-                            <div class="data-counter__content">294</div>
+                            <div class="data-counter__content" id="data-links-counter">0</div>
                         </div>
                         <div class="data-counter">
                             <div class="data-counter__title">Images</div>
-                            <div class="data-counter__content">76</div>
+                            <div class="data-counter__content" id="data-pics-counter">0</div>
                         </div>
                     </div>
                     <div class="data-counters data-counters--sm">
                         <div class="data-counter">
                             <div class="data-counter__title">H1</div>
-                            <div class="data-counter__content">1</div>
+                            <div class="data-counter__content data-counter__content--inactive" id="h1-counter">—</div>
                         </div>
                         <div class="data-counter">
                             <div class="data-counter__title">H2</div>
-                            <div class="data-counter__content data-counter__content--inactive">—</div>
+                            <div class="data-counter__content data-counter__content--inactive" id="h2-counter">—</div>
                         </div>
                         <div class="data-counter">
                             <div class="data-counter__title">H3</div>
-                            <div class="data-counter__content data-counter__content--inactive">—</div>
+                            <div class="data-counter__content data-counter__content--inactive" id="h3-counter">—</div>
                         </div>
                         <div class="data-counter">
                             <div class="data-counter__title">H4</div>
-                            <div class="data-counter__content data-counter__content--inactive">—</div>
+                            <div class="data-counter__content data-counter__content--inactive" id="h4-counter">—</div>
                         </div>
                         <div class="data-counter">
                             <div class="data-counter__title">H5</div>
-                            <div class="data-counter__content data-counter__content--inactive">—</div>
+                            <div class="data-counter__content data-counter__content--inactive" id="h5-counter">—</div>
                         </div>
                         <div class="data-counter">
                             <div class="data-counter__title">H6</div>
-                            <div class="data-counter__content data-counter__content--inactive">—</div>
+                            <div class="data-counter__content data-counter__content--inactive" id="h6-counter">—</div>
                         </div>
                         <div class="data-counter">
                             <div class="data-counter__title">H1-H6</div>
-                            <div class="data-counter__content">1</div>
+                            <div class="data-counter__content" id="h-all-counter">0</div>
                         </div>
                     </div>
                     <div class="data-counters">
@@ -751,6 +751,13 @@
         <footer class="footer">
             <p class="footer__author">Сделано в <a href="#">Абракадабра</a></p>
         </footer>
+    </div>
+    <div class="fade" id="fade">
+        <p class="fade__title">Невозможно получить seo-данные об&nbsp;этой&nbsp;странице</p>
+        <div class="fade__description">
+            <p>Веб-страница по адресу <span class="fade__link" id="fade-url"></span> непригодна&nbsp;для&nbsp;обработки в&nbsp;этом приложении.</p>
+            <p>Откройте страницу, url которой начинается с <span class="fade__alert">http:</span> или <span class="fade__alert">https:</span></p>
+        </div>
     </div>
     <script type="module" src="popup.js"></script>
 </body>
