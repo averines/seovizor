@@ -58,12 +58,16 @@ const h1LengthEl = document.getElementById("h1-length");
 const h1AlertEl = document.getElementById("h1-alert");
 const canonicalEl = document.getElementById("canonical");
 const canonicalStatusEl = document.getElementById("canonical-status");
+const metaRobotsEl = document.getElementById("meta-robots");
+const metaRobotsStatusEl = document.getElementById("meta-robots-status");
 const dataYandexXGEl = document.getElementById("data-yandex-x");
 const dataLangEl = document.getElementById("data-lang");
 const dataLinksCounterEl = document.getElementById("data-links-counter");
 const dataPicsCounterEl = document.getElementById("data-pics-counter");
+
 const fadeEl = document.getElementById("fade");
 const fadeUrlEl = document.getElementById("fade-url");
+const robotsUrlEl = document.getElementById("robots-url");
 
 const h1CounterEl = document.getElementById("h1-counter");
 const h2CounterEl = document.getElementById("h2-counter");
@@ -110,15 +114,13 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
 (async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     const url = new URL(tab.url);
+    // console.log(url);
     // url.protocol;  // "http:"
     // url.hostname;  // "aaa.bbb.ccc.com"
     // url.pathname;  // "/asdf/asdf/sadf.aspx"
     // url.search;    // "?blah"
 
-    console.log(url.protocol);
-
     if (url.protocol == "http:" || url.protocol == "https:") {
-        console.log("работаем");
         // заполняем некоторые данные в попапе на основании ссылки, полученной из вкладки баузера
         // TODO: заменить регуляркой для всех вариантов www. www2. www3.
         const hostnameNoWww = url.hostname.replace("www.", "")
@@ -129,6 +131,7 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
         urlEl.innerText = url.href;
         urlEl.href = url.href;
         dataYandexXGEl.src = `https://webmaster.yandex.ru/sqicounter?theme=light&host=${url.hostname}`
+        robotsUrlEl.href = `${url.href}robots.txt`;
 
         // вкладка Search
         toolSearchGEl.href = `https://www.google.ru/search?q=site:${url.href}`;
@@ -170,23 +173,27 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
 
         // обработка title
         if (seodata.titles.length) {
+
+            if (seodata.titles.length > 1) { titleAlertEl.classList.add("is-active") }
+            titleLengthEl.innerText = seodata.titles[0].length;
+
             if (seodata.titles[0].length) {
                 titleEl.innerText = seodata.titles[0];
             } else { titleEl.classList.add("is-empty") }
         } else { titleEl.classList.add("is-missing") }
 
-        if (seodata.titles.length > 1) { titleAlertEl.classList.add("is-active") }
-        titleLengthEl.innerText = seodata.titles[0].length;
 
         // обработка description
         if (seodata.descriptions.length) {
+
+            if (seodata.descriptions.length > 1) { descriptionAlertEl.classList.add("is-active") }
+            descriptionLengthEl.innerText = seodata.descriptions[0].length;
+
             if (seodata.descriptions[0].length) {
                 descriptionEl.innerText = seodata.descriptions[0];
             } else { descriptionEl.classList.add("is-empty") }
         } else { descriptionEl.classList.add("is-missing") }
 
-        if (seodata.descriptions.length > 1) { descriptionAlertEl.classList.add("is-active") }
-        descriptionLengthEl.innerText = seodata.descriptions[0].length;
 
         // обработка h1
         if (seodata.h1s.length) {
@@ -214,12 +221,26 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
             canonicalEl.innerText = seodata.canonicals[0];
             canonicalEl.href = seodata.canonicals[0];
 
-            if (seodata.canonicals[0] != url.href) {
+            if (seodata.canonicals.length > 1) {
                 canonicalStatusEl.classList.add("is-active");
                 canonicalStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
-                canonicalStatusEl.querySelector(".status__content").innerText = "Канонический url отличается от url страницы. Это не является ошибкой, но требует внимания.";
+                canonicalStatusEl.querySelector(".status__content").innerText = "Обнаружено несколько тегов canonical";
+            } else {
+                if (seodata.canonicals[0].length) {
+                    if (new URL(seodata.canonicals[0]).href == url.href) {
+                        canonicalStatusEl.classList.add("is-active");
+                        canonicalStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
+                        canonicalStatusEl.querySelector(".status__content").innerText = "Эта страница назначена канонической.";
+                    } else {
+                        canonicalStatusEl.classList.add("is-active");
+                        canonicalStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
+                        canonicalStatusEl.querySelector(".status__content").innerText = "Канонический url отличается от url страницы. Это не является ошибкой, но требует внимания.";
+                    }
+                } else {
+                    canonicalEl.classList.add("is-empty");
+                }
             }
-        } else { canonicalEl.classList.add("is-empty"); }
+        } else { canonicalEl.classList.add("is-missing"); }
 
 
         // обработка lang
@@ -239,11 +260,54 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
         if (seodata.pics.length) {
             dataPicsCounterEl.innerHTML = seodata.pics.length;
         }
+
+        // обработка metarobots
+        if (seodata.metarobots.length) {
+            if (seodata.metarobots.length > 1) {
+                metaRobotsStatusEl.classList.add("is-active");
+                metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
+                metaRobotsStatusEl.querySelector(".status__content").innerText = "Обнаружено несколько мета-тегов robots";
+            } else {
+                metaRobotsEl.innerText = seodata.metarobots[0];
+
+                if (seodata.metarobots[0].length) {
+                    // TODO: потенциальная ошибка. переделать в массив по разделителю и проверять целиком слово, а не вхождение подстроки в строку
+                    if (seodata.metarobots[0].toLowerCase().includes("noindex")) {
+                        metaRobotsStatusEl.classList.add("is-active");
+                        metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--bad");
+                        metaRobotsStatusEl.querySelector(".status__content").innerText = "Индексирование страницы запрещено";
+                    } else if (seodata.metarobots[0].toLowerCase().includes("index")) {
+                        metaRobotsStatusEl.classList.add("is-active");
+                        metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
+                        metaRobotsStatusEl.querySelector(".status__content").innerText = "Индексирование страницы разрешено";
+                    }
+                    else {
+                        metaRobotsStatusEl.classList.add("is-active");
+                        metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
+                        metaRobotsStatusEl.querySelector(".status__content").innerText = "Запрет индексирования страницы не обнаружен";
+                    }
+                } else {
+                    metaRobotsEl.classList.add("is-empty");
+                    metaRobotsStatusEl.classList.add("is-active");
+                    metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
+                    metaRobotsStatusEl.querySelector(".status__content").innerText = "Запрет индексирования страницы не обнаружен";
+                }
+            }
+        } else {
+            metaRobotsEl.classList.add("is-missing");
+            metaRobotsStatusEl.classList.add("is-active");
+            metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
+            metaRobotsStatusEl.querySelector(".status__content").innerText = "Запрет индексирования страницы не обнаружен";
+        }
+
+
+        // парсинг файла robotx.txt
+        // TODO: делай
+
+
     } else {
-        console.log("заглушка");
         fadeEl.classList.add("is-active");
         fadeUrlEl.innerText = url.href;
     }
-
 
 })();

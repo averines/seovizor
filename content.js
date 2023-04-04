@@ -9,15 +9,16 @@ chrome.runtime.onMessage.addListener(
             // user.innerHTML = request.name;
 
             let seodata = {}
-            seodata['h1s'] = Array.from(document.querySelectorAll("h1")).map(i => i.innerText.trim());
-            seodata['h2s'] = Array.from(document.querySelectorAll("h2")).map(i => i.innerText.trim());
-            seodata['h3s'] = Array.from(document.querySelectorAll("h3")).map(i => i.innerText.trim());
-            seodata['h4s'] = Array.from(document.querySelectorAll("h4")).map(i => i.innerText.trim());
-            seodata['h5s'] = Array.from(document.querySelectorAll("h5")).map(i => i.innerText.trim());
-            seodata['h6s'] = Array.from(document.querySelectorAll("h6")).map(i => i.innerText.trim());
+            seodata['h1s'] = Array.from(document.querySelectorAll("h1")).map(i => i.innerText.replace(/(\r\n|\n|\r)/gm, " ").trim());
+            seodata['h2s'] = Array.from(document.querySelectorAll("h2")).map(i => i.innerText.replace(/(\r\n|\n|\r)/gm, " ").trim());
+            seodata['h3s'] = Array.from(document.querySelectorAll("h3")).map(i => i.innerText.replace(/(\r\n|\n|\r)/gm, " ").trim());
+            seodata['h4s'] = Array.from(document.querySelectorAll("h4")).map(i => i.innerText.replace(/(\r\n|\n|\r)/gm, " ").trim());
+            seodata['h5s'] = Array.from(document.querySelectorAll("h5")).map(i => i.innerText.replace(/(\r\n|\n|\r)/gm, " ").trim());
+            seodata['h6s'] = Array.from(document.querySelectorAll("h6")).map(i => i.innerText.replace(/(\r\n|\n|\r)/gm, " ").trim());
             seodata['titles'] = Array.from(document.querySelectorAll("title")).map(t => t.innerText.trim());
             seodata['descriptions'] = Array.from(document.querySelectorAll('meta[name="description"]')).map(i => i.content.trim());
             seodata['canonicals'] = Array.from(document.querySelectorAll('link[rel="canonical"]')).map(i => i.getAttribute("href"));
+            seodata['metarobots'] = Array.from(document.querySelectorAll('meta[name="robots"]')).map(i => i.content.trim());
             seodata['langs'] = Array.from(document.querySelectorAll('html')).map(i => i.getAttribute("lang"));
             seodata['links'] = Array.from(document.querySelectorAll('a')).map(i => i.getAttribute("href"));
             seodata['pics'] = Array.from(document.querySelectorAll('img')).map(i => ({ "src": i.getAttribute("src"), "alt": i.getAttribute("alt"), "title": i.getAttribute("title") }));

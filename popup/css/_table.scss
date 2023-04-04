@@ -48,6 +48,16 @@
                 user-select: none;
             }
         }
+
+        .is-missing {
+            &::after {
+                content: "Элемент не найден";
+                font-style: italic;
+                color: $text-l;
+                pointer-events: none;
+                user-select: none;
+            }
+        }
     }
 
     .row-status {

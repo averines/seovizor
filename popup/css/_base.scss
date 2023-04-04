@@ -86,6 +86,7 @@ textarea {
 a {
     color: $main;
     transition: $t;
+    word-break: break-all;
 
     &:hover {
         color: $main-d;
