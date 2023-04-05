@@ -358,16 +358,10 @@ const resultClass = 'dropdown__item_result';
 const btnClass = 'btn btn_arrow';
 
 const fetchRobotsTXT = async (url) => {
-    const response = await fetch(url, {
-        mode: 'no-cors',
-    });
+    const response = await fetch(url, { mode: 'no-cors' });
     const statusCode = response.status;
-    if (!response.ok) {
-        return { statusCode, text: null };
-    }
-
+    if (!response.ok) {return { statusCode, text: null };}
     const text = await response.text();
-
     return { statusCode, text };
 };
 

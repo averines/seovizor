@@ -88,6 +88,12 @@ const dataPicsCounterEl = document.getElementById("data-pics-counter");
 const fadeEl = document.getElementById("fade");
 const fadeUrlEl = document.getElementById("fade-url");
 const robotsUrlEl = document.getElementById("robots-url");
+const robotsUrlTextEl = document.getElementById("robots-url-text");
+const robotsUrlStatusEl = document.getElementById("robots-url-status");
+const robotsEl = document.getElementById("robots");
+
+const sitemapsEl = document.getElementById("sitemaps");
+const sitemapsStatusEl = document.getElementById("sitemaps-status");
 
 const h1CounterEl = document.getElementById("h1-counter");
 const h2CounterEl = document.getElementById("h2-counter");
@@ -151,7 +157,7 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
         urlEl.innerText = url.href;
         urlEl.href = url.href;
         dataYandexXGEl.src = `https://webmaster.yandex.ru/sqicounter?theme=light&host=${url.hostname}`
-        robotsUrlEl.href = `${url.href}robots.txt`;
+        robotsUrlEl.href = `${url.origin}/robots.txt`;
 
         // вкладка Search
         toolSearchGEl.href = `https://www.google.ru/search?q=site:${url.href}`;
@@ -265,9 +271,11 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
 
         // обработка lang
         if (seodata.langs.length) {
-            if (seodata.langs[0].length) {
-                dataLangEl.innerText = seodata.langs[0];
-            } else { dataLangEl.classList.add("is-empty") }
+            if (seodata.langs[0]) {
+                if (seodata.langs[0].length) {
+                    dataLangEl.innerText = seodata.langs[0];
+                } else { dataLangEl.classList.add("is-empty") }
+            } else { dataLangEl.classList.add("is-missing") }
         } else { dataLangEl.classList.add("is-missing") }
 
 
@@ -295,34 +303,103 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
                     if (seodata.metarobots[0].toLowerCase().includes("noindex")) {
                         metaRobotsStatusEl.classList.add("is-active");
                         metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--bad");
-                        metaRobotsStatusEl.querySelector(".status__content").innerText = "Индексирование страницы запрещено";
+                        metaRobotsStatusEl.querySelector(".status__content").innerText = "Индексация страницы запрещена";
                     } else if (seodata.metarobots[0].toLowerCase().includes("index")) {
                         metaRobotsStatusEl.classList.add("is-active");
                         metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
-                        metaRobotsStatusEl.querySelector(".status__content").innerText = "Индексирование страницы разрешено";
+                        metaRobotsStatusEl.querySelector(".status__content").innerText = "Индексация страницы разрешена";
                     }
                     else {
                         metaRobotsStatusEl.classList.add("is-active");
                         metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
-                        metaRobotsStatusEl.querySelector(".status__content").innerText = "Запрет индексирования страницы не обнаружен";
+                        metaRobotsStatusEl.querySelector(".status__content").innerText = "Запрет индексации страницы не обнаружен";
                     }
                 } else {
                     metaRobotsEl.classList.add("is-empty");
                     metaRobotsStatusEl.classList.add("is-active");
                     metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
-                    metaRobotsStatusEl.querySelector(".status__content").innerText = "Запрет индексирования страницы не обнаружен";
+                    metaRobotsStatusEl.querySelector(".status__content").innerText = "Запрет индексации страницы не обнаружен";
                 }
             }
         } else {
             metaRobotsEl.classList.add("is-missing");
             metaRobotsStatusEl.classList.add("is-active");
             metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
-            metaRobotsStatusEl.querySelector(".status__content").innerText = "Запрет индексирования страницы не обнаружен";
+            metaRobotsStatusEl.querySelector(".status__content").innerText = "Запрет индексации страницы не обнаружен";
         }
 
 
-        // парсинг файла robotx.txt
-        // TODO: делай
+        // парсинг файла robots.txt
+        (async function () {
+            const robotsResponse = await fetch(`${url.origin}/robots.txt`, { mode: 'no-cors' }).catch(err => console.log("Ошибка при скачивании файла robots.txt"));
+            if (robotsResponse.status == 200) {
+                let robotsText = await robotsResponse.text();
+                robotsUrlTextEl.classList.add("is-hidden");
+
+                // получаем массив с агентами и их правилами
+                let robotsAgents = robotsText.split(/(?=User-Agent:)/g);
+                robotsAgents = robotsAgents.map(row => row.split("\r\n"));
+                robotsAgents = robotsAgents.map(agent => agent.filter(row => row.length));
+
+                let robotsData = robotsAgents.map(agent => {
+                    let agentObj = {};
+                    agentObj["title"] = agent[0].split(":")[1].trim();
+                    agentObj["data"] = agent.slice(1);
+                    return agentObj;
+                });
+
+                // console.log(robotsData);
+
+                // перебираем и показываем агентов
+                // ищем sitemap
+                let sitemapLinks = [];
+                let robotsHtml = "";
+                robotsData.forEach(agent => {
+                    if (agent["title"] == "*") {
+                        let sitemapRows = agent["data"].filter(row => row.toLowerCase().includes("sitemap"));
+                        if (sitemapRows.length) {
+                            sitemapLinks = sitemapRows.map(row => row.replace("Sitemap:", "").trim())
+                        }
+                    }
+
+                    if (agent["title"].toLowerCase() == "yandex" || agent["title"].toLowerCase() == "googlebot" || agent["title"] == "*") {
+                        // TODO: добавить проверку запрета обхода страницы
+                        robotsHtml += `<li>User-agent: ${agent["title"]} — OK</li>`;
+                    }
+                });
+
+                robotsEl.innerHTML = robotsHtml;
+
+
+                if (sitemapLinks.length) {
+                    let sitemapsHtml = "";
+                    sitemapLinks.forEach(i => sitemapsHtml += `<li><a href="${i}" target="_blank">${i}</a></li>`);
+                    sitemapsEl.innerHTML = sitemapsHtml;
+                } else {
+                    sitemapsEl.classList.add("is-missing");
+                    sitemapsStatusEl.classList.add("is-active");
+                    sitemapsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
+                    sitemapsStatusEl.querySelector(".status__content").innerText = "В файле robots.txt не обнаружены директивы sitemap";
+                }
+
+
+
+
+            } else {
+                robotsUrlTextEl.classList.add("is-missing");
+                robotsUrlStatusEl.classList.add("is-active");
+                robotsUrlStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
+                robotsUrlStatusEl.querySelector(".status__content").innerText = "Не обнаружен файл robots.txt, это требует внимания. Запрет индексации страницы не обнаружен";
+
+                // TODO: сделать отдельную проверку существования файла /sitemap.xml по стандартному пути, даже если директив в robots.txt
+                sitemapsEl.classList.add("is-missing");
+                sitemapsStatusEl.classList.add("is-active");
+                sitemapsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
+                sitemapsStatusEl.querySelector(".status__content").innerText = "Отсутствуют директивы sitemap, так как не обнаружен файл robots.txt, это требует внимания.";
+            }
+        }());
+
+
 
 
     } else {

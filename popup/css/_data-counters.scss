@@ -37,7 +37,7 @@
 
         &.is-missing {
             &::after {
-                content: "X";
+                content: "✖";
             }
         }
     }

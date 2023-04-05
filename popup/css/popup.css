@@ -166,6 +166,10 @@ hr.dotted {
   height: auto;
 }
 
+.is-hidden {
+  display: none;
+}
+
 .btn {
   cursor: pointer;
   border: none;
@@ -719,7 +723,7 @@ label.tool:active .tool__content {
   content: "—";
 }
 .data-counter__content.is-missing::after {
-  content: "X";
+  content: "✖";
 }
 
 .version {
