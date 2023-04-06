@@ -884,8 +884,8 @@ label.tool:active .tool__content {
   width: 80px;
   padding: 7px;
   flex-shrink: 0;
-  border: 1px solid #dee7ec;
   position: relative;
+  background-color: #f4f7fa;
 }
 .data-row__pic > img {
   display: block;

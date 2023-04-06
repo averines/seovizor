@@ -468,7 +468,7 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
                 let altStatusClass = "";
                 if (!i.title) { i.title = "", titleStatusClass = "data-info--inactive" };
                 if (!i.alt) { i.alt = ""; filterQuery = "alt-false"; altStatusClass = "data-info--inactive" };
-                if (i.src[0] != "h") { i.src = `${url.origin}${i.src}` };
+                if (i.src.length && i.src[0] != "h") { i.src = `${url.origin}${i.src}` };
 
                 let description = ""
                 if (i.width == 0 || i.height == 0) {

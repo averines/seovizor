@@ -21,15 +21,20 @@ chrome.runtime.onMessage.addListener(
             seodata['metarobots'] = Array.from(document.querySelectorAll('meta[name="robots"]')).map(i => i.content.trim());
             seodata['langs'] = Array.from(document.querySelectorAll('html')).map(i => i.getAttribute("lang"));
             seodata['links'] = Array.from(document.querySelectorAll('a')).map(i => i.getAttribute("href"));
-            seodata['images'] = Array.from(document.querySelectorAll('img')).map(i => {
-                return {
+
+
+            let images = Array.from(document.querySelectorAll('img')).map(i => (
+                {
                     "src": i.getAttribute("src"),
                     "alt": i.getAttribute("alt"),
                     "title": i.getAttribute("title"),
                     "width": i.naturalWidth,
                     "height": i.naturalHeight
                 }
-            });
+            ));
+
+            images = images.filter(i => i.src);
+            seodata['images'] = images
 
             // console.log(seodata);
 

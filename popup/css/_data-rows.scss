@@ -12,8 +12,9 @@
         width: 80px;
         padding: 7px;
         flex-shrink: 0;
-        border: 1px solid $line;
+        // border: 1px solid $line;
         position: relative;
+        background-color: $bg-d;
 
         > img {
             display: block;
