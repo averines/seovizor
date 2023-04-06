@@ -372,14 +372,15 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
 
 
         // проверка наличия sitemap
-        let isSitemapFileAviable;
+        let isSitemapFileAviable = false;
         (async function () {
             const sitemapResponse = await fetch(`${url.origin}/sitemap.xml`, { mode: 'no-cors' }).catch(err => console.log("Ошибка при скачивании файла sitemap.xml"));
             if (sitemapResponse.status == 200) {
-                sitemapsUrlEl.href = `${url.origin}/sitemap.xml`;
-                isSitemapFileAviable = true;
-            } else {
-                isSitemapFileAviable = false;
+                let sitemapText = await sitemapResponse.text().trim();
+                if (sitemapText.startsWith("<?xml")) {
+                    sitemapsUrlEl.href = `${url.origin}/sitemap.xml`;
+                    isSitemapFileAviable = true;
+                }
             }
         }());
 
@@ -490,8 +491,8 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
             dataImagesCounterEl.innerHTML = seodata.images.length;
 
             imagesAllCounterEl.innerText = seodata.images.length
-            imagesWithAltCounterEl.innerText = seodata.images.filter(i => i["alt"] != null).length;
-            imagesWithoutAltCounterEl.innerText = seodata.images.filter(i => i["alt"] == null).length;
+            imagesWithAltCounterEl.innerText = seodata.images.filter(i => i["alt"]).length;
+            imagesWithoutAltCounterEl.innerText = seodata.images.filter(i => i["alt"] == "").length;
 
             let dataImages = "";
             seodata.images.forEach(i => {
