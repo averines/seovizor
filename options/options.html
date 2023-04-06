@@ -9,25 +9,44 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="options.css">
+    <link rel="stylesheet" href="./css/options.css">
 </head>
 
 <body>
-    Оptions
 
-    <p>
-        При обнаружении нескольких title показывать:
-        Только первый / Все / Предупреждение
-    </p>
+    <div class="panel">
+        <h1>Оptions</h1>
 
-    <p>
-        При обнаружении нескольких descr
-        Только первый / Все / Предупреждение
-    </p>
+        <div class="filters filters--horizontal">
+            <p>Тема оформления</p>
+            <div class="filter">
+                <button class="filter__btn filter__btn--active">Синий иней</button>
+                <button class="filter__btn">Зелень мелень</button>
+                <button class="filter__btn">Крылья ночи</button>
+            </div>
 
-    <p>
-        Показывать панель с доп. инфо на вкладке Total
-    </p>
+            <p>При обнаружении нескольких title показывать</p>
+            <div class="filter">
+                <button class="filter__btn filter__btn--active">Только первый</button>
+                <button class="filter__btn">Все</button>
+                <button class="filter__btn">Предупреждение</button>
+            </div>
+
+            <p>При обнаружении нескольких description показывать:</p>
+            <div class="filter">
+                <button class="filter__btn filter__btn--active">Только первый</button>
+                <button class="filter__btn">Все</button>
+                <button class="filter__btn">Предупреждение</button>
+            </div>
+
+            <p>Показывать панель с доп. инфо на вкладке Total</p>
+            <div class="filter">
+                <button class="filter__btn filter__btn--active">Да</button>
+                <button class="filter__btn">Не</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>
