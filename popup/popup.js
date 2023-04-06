@@ -93,6 +93,7 @@ const robotsUrlStatusEl = document.getElementById("robots-url-status");
 const robotsEl = document.getElementById("robots");
 
 const sitemapsEl = document.getElementById("sitemaps");
+const sitemapsUrlEl = document.getElementById("sitemaps-url");
 const sitemapsStatusEl = document.getElementById("sitemaps-status");
 
 const h1CounterEl = document.getElementById("h1-counter");
@@ -157,7 +158,7 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
         urlEl.innerText = url.href;
         urlEl.href = url.href;
         dataYandexXGEl.src = `https://webmaster.yandex.ru/sqicounter?theme=light&host=${url.hostname}`
-        robotsUrlEl.href = `${url.origin}/robots.txt`;
+
 
         // вкладка Search
         toolSearchGEl.href = `https://www.google.ru/search?q=site:${url.href}`;
@@ -333,13 +334,16 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
         (async function () {
             const robotsResponse = await fetch(`${url.origin}/robots.txt`, { mode: 'no-cors' }).catch(err => console.log("Ошибка при скачивании файла robots.txt"));
             if (robotsResponse.status == 200) {
+                robotsUrlEl.href = `${url.origin}/robots.txt`;
                 let robotsText = await robotsResponse.text();
+                // console.log(robotsText);
                 robotsUrlTextEl.classList.add("is-hidden");
 
                 // получаем массив с агентами и их правилами
-                let robotsAgents = robotsText.split(/(?=User-Agent:)/g);
+                let robotsAgents = robotsText.split(/(?=user-agent:)/gi);
+                // console.log(robotsAgents);
                 robotsAgents = robotsAgents.map(row => row.split("\r\n"));
-                robotsAgents = robotsAgents.map(agent => agent.filter(row => row.length));
+                robotsAgents = robotsAgents.map(agent => agent.filter(row => row.includes(":")));
 
                 let robotsData = robotsAgents.map(agent => {
                     let agentObj = {};
@@ -390,12 +394,24 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
                 robotsUrlStatusEl.classList.add("is-active");
                 robotsUrlStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
                 robotsUrlStatusEl.querySelector(".status__content").innerText = "Не обнаружен файл robots.txt, это требует внимания. Запрет индексации страницы не обнаружен";
-
-                // TODO: сделать отдельную проверку существования файла /sitemap.xml по стандартному пути, даже если директив в robots.txt
+                
                 sitemapsEl.classList.add("is-missing");
                 sitemapsStatusEl.classList.add("is-active");
                 sitemapsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
                 sitemapsStatusEl.querySelector(".status__content").innerText = "Отсутствуют директивы sitemap, так как не обнаружен файл robots.txt, это требует внимания.";
+            }
+        }());
+
+        // проверка наличия sitemap
+        (async function () {
+            const robotsResponse = await fetch(`${url.origin}/sitemap.xml`, { mode: 'no-cors' }).catch(err => console.log("Ошибка при скачивании файла sitemap.xml"));
+            if (robotsResponse.status == 200) {
+                sitemapsUrlEl.href = `${url.origin}/sitemap.xml`;
+            } else {
+                sitemapsEl.classList.add("is-missing");
+                sitemapsStatusEl.classList.add("is-active");
+                sitemapsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
+                sitemapsStatusEl.querySelector(".status__content").innerText = "Файл sitemap.xml не обнаружен";
             }
         }());
 

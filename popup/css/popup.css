@@ -222,7 +222,7 @@ hr.dotted {
   display: flex;
 }
 .tabpanel__content {
-  padding: 20px 15px 20px 30px;
+  padding: 20px 15px 25px 30px;
   height: 100%;
   overflow-y: scroll;
 }
@@ -345,6 +345,7 @@ hr.dotted {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 .field__counter {
@@ -357,6 +358,7 @@ hr.dotted {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 .field__content {
@@ -442,6 +444,7 @@ hr.dotted {
   text-align: left;
   -webkit-user-select: none;
      -moz-user-select: none;
+      -ms-user-select: none;
           user-select: none;
 }
 .tool--sm {
@@ -624,7 +627,7 @@ label.tool:active .tool__content {
   vertical-align: top;
 }
 .table tr td:first-child {
-  padding-top: 5px;
+  padding-top: 7px;
   padding-right: 40px;
   max-width: 160px;
 }
@@ -637,12 +640,15 @@ label.tool:active .tool__content {
 }
 .table .row-title a {
   color: #8e95a0;
+}
+.table .row-title a[href] {
+  color: #8e95a0;
   text-decoration: none;
   border-bottom: 1px solid #dee7ec;
   padding-bottom: 0.075em;
   transition: all 0.1s ease-in-out;
 }
-.table .row-title a:hover {
+.table .row-title a[href]:hover {
   border-bottom-color: #e5eefd;
   color: #0b70e8;
 }
@@ -654,6 +660,14 @@ label.tool:active .tool__content {
 .table .row-content a {
   word-break: break-all;
 }
+.table .row-content ul {
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+}
+.table .row-content ul li {
+  margin: 0;
+}
 .table .row-content .is-empty::after {
   content: "Содержимое отсутствует";
   font-style: italic;
@@ -661,6 +675,7 @@ label.tool:active .tool__content {
   pointer-events: none;
   -webkit-user-select: none;
      -moz-user-select: none;
+      -ms-user-select: none;
           user-select: none;
 }
 .table .row-content .is-missing::after {
@@ -670,6 +685,7 @@ label.tool:active .tool__content {
   pointer-events: none;
   -webkit-user-select: none;
      -moz-user-select: none;
+      -ms-user-select: none;
           user-select: none;
 }
 .table .row-status {
