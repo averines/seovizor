@@ -24,6 +24,14 @@
 //     }
 // });
 
+// url.protocol;  // "http:"
+// url.hostname;  // "127.0.0.1"
+// url.hostname;  // "127.0.0.1:5502"
+// url.origin;  // "http://127.0.0.1:5502"
+// url.href;  // "http://127.0.0.1:5502/popup/popup.html"
+// url.pathname;  // "/popup/popup.html"
+// url.search;    // "?blah"
+
 import { punycode } from '/libs/punycode.js';
 
 // функционал переключения вкладок в попапе
@@ -79,25 +87,22 @@ function setFilter() {
     })
 };
 
-
+// отслеживание кликов через window
 window.addEventListener('click', (e) => {
     // отслеживаем клик по кнопке Копировать
     if (e.target.classList.contains("field__copy")) {
         let parentField = e.target.closest(".field");
         let parentFieldContent = parentField.querySelector(".field__content");
 
-        //находим текс поля и пишем его в буфер обмена
+        //находим текст поля и пишем его в буфер обмена
         navigator.clipboard.writeText(parentFieldContent.innerText)
             .then(() => {
                 e.target.innerText = "Copied!";
                 setTimeout(() => { e.target.innerText = "Copy"; }, 2000);
             })
-            .catch(err => {
-                console.log('Копирование не пашет', err);
-            })
+            .catch(err => {console.log('Копирование не пашет', err);})
     }
 })
-
 
 
 // определение функциональных элементов попапа
@@ -120,18 +125,15 @@ const dataYandexXGEl = document.getElementById("data-yandex-x");
 const dataLangEl = document.getElementById("data-lang");
 const dataLinksCounterEl = document.getElementById("data-links-counter");
 const dataImagesCounterEl = document.getElementById("data-images-counter");
-
 const fadeEl = document.getElementById("fade");
 const fadeUrlEl = document.getElementById("fade-url");
 const robotsUrlEl = document.getElementById("robots-url");
 const robotsUrlTextEl = document.getElementById("robots-url-text");
 const robotsUrlStatusEl = document.getElementById("robots-url-status");
 const robotsEl = document.getElementById("robots");
-
 const sitemapsEl = document.getElementById("sitemaps");
 const sitemapsUrlEl = document.getElementById("sitemaps-url");
 const sitemapsStatusEl = document.getElementById("sitemaps-status");
-
 const h1CounterEl = document.getElementById("h1-counter");
 const h2CounterEl = document.getElementById("h2-counter");
 const h3CounterEl = document.getElementById("h3-counter");
@@ -183,14 +185,6 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
 (async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     const url = new URL(tab.url);
-    // console.log(url);
-    // url.protocol;  // "http:"
-    // url.hostname;  // "127.0.0.1"
-    // url.hostname;  // "127.0.0.1:5502"
-    // url.origin;  // "http://127.0.0.1:5502"
-    // url.href;  // "http://127.0.0.1:5502/popup/popup.html"
-    // url.pathname;  // "/popup/popup.html"
-    // url.search;    // "?blah"
 
     if (url.protocol == "http:" || url.protocol == "https:") {
         // заполняем некоторые данные в попапе на основании ссылки, полученной из вкладки баузера
@@ -515,5 +509,4 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
         fadeEl.classList.add("is-active");
         fadeUrlEl.innerText = url.href;
     }
-
 })();
