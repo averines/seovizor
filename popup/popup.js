@@ -15,7 +15,6 @@
 //     chrome.action.setBadgeTextColor({ color: "#fff" });
 // })
 
-
 // document.querySelector('#go-to-options').addEventListener('click', function () {
 //     if (chrome.runtime.openOptionsPage) {
 //         chrome.runtime.openOptionsPage();
@@ -185,7 +184,7 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
 (async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     const url = new URL(tab.url);
-    // console.log(url);
+    console.log(url);
 
     if (url.protocol == "http:" || url.protocol == "https:") {
         // заполняем некоторые данные в попапе на основании ссылки, полученной из вкладки браузера
@@ -237,281 +236,280 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
         console.log("3. Получен ответ от контент скрипта. В консоли расширения");
         console.log(seodata);
 
-        // обработка title
-        if (seodata.titles.length) {
+        if (Object.keys(seodata).length) {
 
-            if (seodata.titles.length > 1) { titleAlertEl.classList.add("is-active") }
-            titleLengthEl.innerText = seodata.titles[0].length;
+            // обработка title
+            if (seodata.titles.length) {
+                if (seodata.titles.length > 1) { titleAlertEl.classList.add("is-active") }
+                titleLengthEl.innerText = seodata.titles[0].length;
 
-            if (seodata.titles[0].length) {
-                titleEl.innerText = seodata.titles[0];
-            } else { titleEl.classList.add("is-empty") }
-        } else { titleEl.classList.add("is-missing") }
-
-
-        // обработка description
-        if (seodata.descriptions.length) {
-
-            if (seodata.descriptions.length > 1) { descriptionAlertEl.classList.add("is-active") }
-            descriptionLengthEl.innerText = seodata.descriptions[0].length;
-
-            if (seodata.descriptions[0].length) {
-                descriptionEl.innerText = seodata.descriptions[0];
-            } else { descriptionEl.classList.add("is-empty") }
-        } else { descriptionEl.classList.add("is-missing") }
+                if (seodata.titles[0].length) {
+                    titleEl.innerText = seodata.titles[0];
+                } else { titleEl.classList.add("is-empty") }
+            } else { titleEl.classList.add("is-missing") }
 
 
-        // обработка h1
-        if (seodata.h1s.length) {
-            if (seodata.h1s.length > 1) { h1AlertEl.classList.add("is-active") }
-            if (seodata.h1s[0].length) {
-                h1El.innerText = seodata.h1s[0];
-                h1LengthEl.innerText = seodata.h1s[0].length;
-            } else { h1El.classList.add("is-empty") }
-        } else { h1El.classList.add("is-missing") }
+            // обработка description
+            if (seodata.descriptions.length) {
+                if (seodata.descriptions.length > 1) { descriptionAlertEl.classList.add("is-active") }
+                descriptionLengthEl.innerText = seodata.descriptions[0].length;
+
+                if (seodata.descriptions[0].length) {
+                    descriptionEl.innerText = seodata.descriptions[0];
+                } else { descriptionEl.classList.add("is-empty") }
+            } else { descriptionEl.classList.add("is-missing") }
 
 
-        // обработка остальных заголовков
-        let hAllCounter = 0;
-        if (seodata.h1s.length) { h1CounterEl.innerText = seodata.h1s.length; h1CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h1s.length; }
-        if (seodata.h2s.length) { h2CounterEl.innerText = seodata.h2s.length; h2CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h2s.length; }
-        if (seodata.h3s.length) { h3CounterEl.innerText = seodata.h3s.length; h3CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h3s.length; }
-        if (seodata.h4s.length) { h4CounterEl.innerText = seodata.h4s.length; h4CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h4s.length; }
-        if (seodata.h5s.length) { h5CounterEl.innerText = seodata.h5s.length; h5CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h5s.length; }
-        if (seodata.h6s.length) { h6CounterEl.innerText = seodata.h6s.length; h6CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h6s.length; }
-        hAllCounterEl.innerText = hAllCounter;
+            // обработка h1
+            if (seodata.h1s.length) {
+                if (seodata.h1s.length > 1) { h1AlertEl.classList.add("is-active") }
+                if (seodata.h1s[0].length) {
+                    h1El.innerText = seodata.h1s[0];
+                    h1LengthEl.innerText = seodata.h1s[0].length;
+                } else { h1El.classList.add("is-empty") }
+            } else { h1El.classList.add("is-missing") }
 
 
-        // обработка canonical
-        if (seodata.canonicals.length) {
-            canonicalEl.innerText = seodata.canonicals[0];
-            canonicalEl.href = seodata.canonicals[0];
+            // обработка остальных заголовков
+            let hAllCounter = 0;
+            if (seodata.h1s.length) { h1CounterEl.innerText = seodata.h1s.length; h1CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h1s.length; }
+            if (seodata.h2s.length) { h2CounterEl.innerText = seodata.h2s.length; h2CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h2s.length; }
+            if (seodata.h3s.length) { h3CounterEl.innerText = seodata.h3s.length; h3CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h3s.length; }
+            if (seodata.h4s.length) { h4CounterEl.innerText = seodata.h4s.length; h4CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h4s.length; }
+            if (seodata.h5s.length) { h5CounterEl.innerText = seodata.h5s.length; h5CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h5s.length; }
+            if (seodata.h6s.length) { h6CounterEl.innerText = seodata.h6s.length; h6CounterEl.classList.remove("data-counter__content--inactive"); hAllCounter += seodata.h6s.length; }
+            hAllCounterEl.innerText = hAllCounter;
 
-            if (seodata.canonicals.length > 1) {
-                canonicalStatusEl.classList.add("is-active");
-                canonicalStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
-                canonicalStatusEl.querySelector(".status__content").innerText = "Обнаружено несколько тегов Сanonical.";
-            } else {
-                if (seodata.canonicals[0].length) {
-                    if (new URL(seodata.canonicals[0]).href == url.href) {
-                        canonicalStatusEl.classList.add("is-active");
-                        canonicalStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
-                        canonicalStatusEl.querySelector(".status__content").innerText = "Индексация страницы разрешена. Эта страница назначена канонической.";
+
+            // обработка canonical
+            if (seodata.canonicals.length) {
+                canonicalEl.innerText = seodata.canonicals[0];
+                canonicalEl.href = seodata.canonicals[0];
+
+                if (seodata.canonicals.length > 1) {
+                    canonicalStatusEl.classList.add("is-active");
+                    canonicalStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
+                    canonicalStatusEl.querySelector(".status__content").innerText = "Обнаружено несколько тегов Сanonical.";
+                } else {
+                    if (seodata.canonicals[0].length) {
+                        if (new URL(seodata.canonicals[0]).href == url.href) {
+                            canonicalStatusEl.classList.add("is-active");
+                            canonicalStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
+                            canonicalStatusEl.querySelector(".status__content").innerText = "Индексация страницы разрешена. Эта страница назначена канонической.";
+                        } else {
+                            canonicalStatusEl.classList.add("is-active");
+                            canonicalStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
+                            canonicalStatusEl.querySelector(".status__content").innerText = "Индексация страницы запрещена, так как канонический url отличается от url этой страницы. Это не является ошибкой, но требует внимания.";
+                        }
                     } else {
-                        canonicalStatusEl.classList.add("is-active");
-                        canonicalStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
-                        canonicalStatusEl.querySelector(".status__content").innerText = "Индексация страницы запрещена, так как канонический url отличается от url этой страницы. Это не является ошибкой, но требует внимания.";
+                        canonicalEl.classList.add("is-empty");
                     }
-                } else {
-                    canonicalEl.classList.add("is-empty");
                 }
-            }
-        } else {
-            canonicalEl.classList.add("is-missing");
-            canonicalStatusEl.classList.add("is-active");
-            canonicalStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
-            canonicalStatusEl.querySelector(".status__content").innerText = "Индексация страницы разрешена, так как канонический url не указан.";
-
-        }
-
-
-        // обработка lang
-        if (seodata.langs.length) {
-            if (seodata.langs[0]) {
-                if (seodata.langs[0].length) {
-                    dataLangEl.innerText = seodata.langs[0];
-                } else { dataLangEl.classList.add("is-empty") }
-            } else { dataLangEl.classList.add("is-missing") }
-        } else { dataLangEl.classList.add("is-missing") }
-
-
-        // подсчет ссылок
-        if (seodata.links.length) {
-            dataLinksCounterEl.innerHTML = seodata.links.length;
-        }
-
-
-        // обработка metarobots
-        if (seodata.metarobots.length) {
-            if (seodata.metarobots.length > 1) {
-                metaRobotsStatusEl.classList.add("is-active");
-                metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
-                metaRobotsStatusEl.querySelector(".status__content").innerText = "Обнаружено несколько тегов Robots.";
             } else {
-                metaRobotsEl.innerText = seodata.metarobots[0];
+                canonicalEl.classList.add("is-missing");
+                canonicalStatusEl.classList.add("is-active");
+                canonicalStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
+                canonicalStatusEl.querySelector(".status__content").innerText = "Индексация страницы разрешена, так как канонический url не указан.";
+            }
 
-                if (seodata.metarobots[0].length) {
-                    // TODO: потенциальная ошибка. переделать в массив по разделителю и проверять целиком слово, а не вхождение подстроки в строку
-                    if (seodata.metarobots[0].toLowerCase().includes("noindex")) {
-                        metaRobotsStatusEl.classList.add("is-active");
-                        metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--bad");
-                        metaRobotsStatusEl.querySelector(".status__content").innerText = "Индексация страницы запрещена.";
-                    } else if (seodata.metarobots[0].toLowerCase().includes("index")) {
-                        metaRobotsStatusEl.classList.add("is-active");
-                        metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
-                        metaRobotsStatusEl.querySelector(".status__content").innerText = "Индексация страницы разрешена.";
-                    }
-                    else {
-                        metaRobotsStatusEl.classList.add("is-active");
-                        metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
-                        metaRobotsStatusEl.querySelector(".status__content").innerText = "Запрет индексации страницы не обнаружен.";
-                    }
-                } else {
-                    metaRobotsEl.classList.add("is-empty");
+
+            // обработка lang
+            if (seodata.langs.length) {
+                if (seodata.langs[0]) {
+                    if (seodata.langs[0].length) {
+                        dataLangEl.innerText = seodata.langs[0];
+                    } else { dataLangEl.classList.add("is-empty") }
+                } else { dataLangEl.classList.add("is-missing") }
+            } else { dataLangEl.classList.add("is-missing") }
+
+
+            // подсчет ссылок
+            if (seodata.links.length) {
+                dataLinksCounterEl.innerHTML = seodata.links.length;
+            }
+
+
+            // обработка metarobots
+            if (seodata.metarobots.length) {
+                if (seodata.metarobots.length > 1) {
                     metaRobotsStatusEl.classList.add("is-active");
-                    metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
-                    metaRobotsStatusEl.querySelector(".status__content").innerText = "Запрет индексации страницы не обнаружен, так как тег Robots пустой.";
+                    metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
+                    metaRobotsStatusEl.querySelector(".status__content").innerText = "Обнаружено несколько тегов Robots.";
+                } else {
+                    metaRobotsEl.innerText = seodata.metarobots[0];
+
+                    if (seodata.metarobots[0].length) {
+                        // TODO: потенциальная ошибка. переделать в массив по разделителю и проверять целиком слово, а не вхождение подстроки в строку
+                        if (seodata.metarobots[0].toLowerCase().includes("noindex")) {
+                            metaRobotsStatusEl.classList.add("is-active");
+                            metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--bad");
+                            metaRobotsStatusEl.querySelector(".status__content").innerText = "Индексация страницы запрещена.";
+                        } else if (seodata.metarobots[0].toLowerCase().includes("index")) {
+                            metaRobotsStatusEl.classList.add("is-active");
+                            metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
+                            metaRobotsStatusEl.querySelector(".status__content").innerText = "Индексация страницы разрешена.";
+                        }
+                        else {
+                            metaRobotsStatusEl.classList.add("is-active");
+                            metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
+                            metaRobotsStatusEl.querySelector(".status__content").innerText = "Запрет индексации страницы не обнаружен.";
+                        }
+                    } else {
+                        metaRobotsEl.classList.add("is-empty");
+                        metaRobotsStatusEl.classList.add("is-active");
+                        metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
+                        metaRobotsStatusEl.querySelector(".status__content").innerText = "Запрет индексации страницы не обнаружен, так как тег Robots пустой.";
+                    }
                 }
+            } else {
+                metaRobotsEl.classList.add("is-missing");
+                metaRobotsStatusEl.classList.add("is-active");
+                metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
+                metaRobotsStatusEl.querySelector(".status__content").innerText = "Запрет индексации страницы не обнаружен, так как тег Robots не обнаружен.";
             }
-        } else {
-            metaRobotsEl.classList.add("is-missing");
-            metaRobotsStatusEl.classList.add("is-active");
-            metaRobotsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--good");
-            metaRobotsStatusEl.querySelector(".status__content").innerText = "Запрет индексации страницы не обнаружен, так как тег Robots не обнаружен.";
-        }
 
 
-        // проверка наличия sitemap
-        let isSitemapFileAviable = false;
-        (async function () {
-            const sitemapResponse = await fetch(`${url.origin}/sitemap.xml`, { mode: 'no-cors' }).catch(err => console.log("Ошибка при скачивании файла sitemap.xml"));
-            if (sitemapResponse.status == 200) {
-                let sitemapText = await sitemapResponse.text().trim();
-                if (sitemapText.startsWith("<?xml")) {
-                    sitemapsUrlEl.href = `${url.origin}/sitemap.xml`;
-                    isSitemapFileAviable = true;
+            // проверка наличия sitemap
+            let isSitemapFileAviable = false;
+            (async function () {
+                const sitemapResponse = await fetch(`${url.origin}/sitemap.xml`, { mode: 'no-cors' }).catch(err => console.log("Ошибка при скачивании файла sitemap.xml"));
+                if (sitemapResponse.status == 200) {
+                    let sitemapText = await sitemapResponse.text().trim();
+                    if (sitemapText.startsWith("<?xml")) {
+                        sitemapsUrlEl.href = `${url.origin}/sitemap.xml`;
+                        isSitemapFileAviable = true;
+                    }
                 }
-            }
-        }());
+            }());
 
 
-        // парсинг файла robots.txt
-        (async function () {
-            const robotsResponse = await fetch(`${url.origin}/robots.txt`, { mode: 'no-cors' }).catch(err => console.log("Ошибка при скачивании файла robots.txt"));
-            if (robotsResponse.status == 200) {
-                robotsUrlEl.href = `${url.origin}/robots.txt`;
-                let robotsText = await robotsResponse.text();
-                // console.log(robotsText);
+            // парсинг файла robots.txt
+            (async function () {
+                const robotsResponse = await fetch(`${url.origin}/robots.txt`, { mode: 'no-cors' }).catch(err => console.log("Ошибка при скачивании файла robots.txt"));
+                if (robotsResponse.status == 200) {
+                    robotsUrlEl.href = `${url.origin}/robots.txt`;
+                    let robotsText = await robotsResponse.text();
+                    // console.log(robotsText);
 
-                if (robotsText.trim().length) {
-                    // прячем текст статуса, так как файл найден и в нем есть текст
-                    robotsUrlTextEl.classList.add("is-hidden");
+                    if (robotsText.trim().length) {
+                        // прячем текст статуса, так как файл найден и в нем есть текст
+                        robotsUrlTextEl.classList.add("is-hidden");
 
-                    // получаем массив с агентами и их правилами
-                    let robotsAgents = robotsText.split(/(?=user-agent:)/gi);
-                    robotsAgents = robotsAgents.map(row => row.split(/\r?\n/));
-                    robotsAgents = robotsAgents.map(agent => agent.filter(row => row.includes(":")));
-                    // console.log(robotsAgents);
+                        // получаем массив с агентами и их правилами
+                        let robotsAgents = robotsText.split(/(?=user-agent:)/gi);
+                        robotsAgents = robotsAgents.map(row => row.split(/\r?\n/));
+                        robotsAgents = robotsAgents.map(agent => agent.filter(row => row.includes(":")));
+                        // console.log(robotsAgents);
 
-                    let robotsData = robotsAgents.map(agent => {
-                        let agentObj = {};
-                        agentObj["title"] = agent[0].split(":")[1].trim();
-                        agentObj["data"] = agent.slice(1);
-                        return agentObj;
-                    });
-                    // console.log(robotsData);
+                        let robotsData = robotsAgents.map(agent => {
+                            let agentObj = {};
+                            agentObj["title"] = agent[0].split(":")[1].trim();
+                            agentObj["data"] = agent.slice(1);
+                            return agentObj;
+                        });
+                        // console.log(robotsData);
 
-                    // перебираем и показываем агентов
-                    // ищем sitemap
-                    let sitemapLinks = [];
-                    let robotsHtml = "";
-                    robotsData.forEach(agent => {
-                        if (agent["title"] == "*") {
-                            let sitemapRows = agent["data"].filter(row => row.toLowerCase().includes("sitemap"));
-                            if (sitemapRows.length) {
-                                sitemapLinks = sitemapRows.map(row => row.replace("Sitemap:", "").trim())
+                        // перебираем и показываем агентов
+                        // ищем sitemap
+                        let sitemapLinks = [];
+                        let robotsHtml = "";
+                        robotsData.forEach(agent => {
+                            if (agent["title"] == "*") {
+                                let sitemapRows = agent["data"].filter(row => row.toLowerCase().includes("sitemap"));
+                                if (sitemapRows.length) {
+                                    sitemapLinks = sitemapRows.map(row => row.replace("Sitemap:", "").trim())
+                                }
+                            }
+
+                            if (agent["title"].toLowerCase() == "yandex" || agent["title"].toLowerCase() == "googlebot" || agent["title"] == "*") {
+                                // TODO: добавить проверку запрета обхода страницы
+                                robotsHtml += `<li>User-agent: ${agent["title"]} — OK</li>`;
+                            }
+                        });
+
+                        robotsEl.innerHTML = robotsHtml;
+
+                        if (sitemapLinks.length) {
+                            let sitemapsHtml = "";
+                            sitemapLinks.forEach(i => sitemapsHtml += `<li><a href="${i}" target="_blank">${i}</a></li>`);
+                            sitemapsEl.innerHTML = sitemapsHtml;
+                        } else {
+                            if (isSitemapFileAviable) {
+                                sitemapsStatusEl.classList.add("is-active");
+                                sitemapsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
+                                sitemapsStatusEl.querySelector(".status__content").innerText = "Файл sitemap.xml обнаружен, но отсутствуют директивы sitemap в файле robots.txt. Это требует внимания.";
+                            } else {
+                                sitemapsEl.classList.add("is-missing");
+                                sitemapsStatusEl.classList.add("is-active");
+                                sitemapsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
+                                sitemapsStatusEl.querySelector(".status__content").innerText = "В файле robots.txt не обнаружены директивы sitemap. Это требует внимания.";
                             }
                         }
-
-                        if (agent["title"].toLowerCase() == "yandex" || agent["title"].toLowerCase() == "googlebot" || agent["title"] == "*") {
-                            // TODO: добавить проверку запрета обхода страницы
-                            robotsHtml += `<li>User-agent: ${agent["title"]} — OK</li>`;
-                        }
-                    });
-
-                    robotsEl.innerHTML = robotsHtml;
-
-                    if (sitemapLinks.length) {
-                        let sitemapsHtml = "";
-                        sitemapLinks.forEach(i => sitemapsHtml += `<li><a href="${i}" target="_blank">${i}</a></li>`);
-                        sitemapsEl.innerHTML = sitemapsHtml;
                     } else {
+                        robotsUrlTextEl.classList.add("is-empty");
+                        robotsUrlStatusEl.classList.add("is-active");
+                        robotsUrlStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
+                        robotsUrlStatusEl.querySelector(".status__content").innerText = "Запрет индексации страницы не обнаружен, так как файл robots.txt пустой. Это требует внимания.";
+
                         if (isSitemapFileAviable) {
                             sitemapsStatusEl.classList.add("is-active");
                             sitemapsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
-                            sitemapsStatusEl.querySelector(".status__content").innerText = "Файл sitemap.xml обнаружен, но отсутствуют директивы sitemap в файле robots.txt. Это требует внимания.";
+                            sitemapsStatusEl.querySelector(".status__content").innerText = "Файл sitemap.xml обнаружен, но отсутствуют директивы sitemap, так robots.txt пустой. Это требует внимания.";
                         } else {
                             sitemapsEl.classList.add("is-missing");
                             sitemapsStatusEl.classList.add("is-active");
                             sitemapsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
-                            sitemapsStatusEl.querySelector(".status__content").innerText = "В файле robots.txt не обнаружены директивы sitemap. Это требует внимания.";
+                            sitemapsStatusEl.querySelector(".status__content").innerText = "Не обнаружен файл sitemap.xml. Отсутствуют директивы sitemap, так как файл robots.txt пустой. Это требует внимания.";
                         }
                     }
+
+
                 } else {
-                    robotsUrlTextEl.classList.add("is-empty");
+                    robotsUrlTextEl.classList.add("is-missing");
                     robotsUrlStatusEl.classList.add("is-active");
                     robotsUrlStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
-                    robotsUrlStatusEl.querySelector(".status__content").innerText = "Запрет индексации страницы не обнаружен, так как файл robots.txt пустой. Это требует внимания.";
+                    robotsUrlStatusEl.querySelector(".status__content").innerText = "Запрет индексации страницы не обнаружен, так как файл robots.txt не обнаружен. Это требует внимания.";
 
                     if (isSitemapFileAviable) {
                         sitemapsStatusEl.classList.add("is-active");
                         sitemapsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
-                        sitemapsStatusEl.querySelector(".status__content").innerText = "Файл sitemap.xml обнаружен, но отсутствуют директивы sitemap, так robots.txt пустой. Это требует внимания.";
+                        sitemapsStatusEl.querySelector(".status__content").innerText = "Файл sitemap.xml обнаружен, но отсутствуют директивы sitemap, так как не обнаружен файл robots.txt. Это требует внимания.";
                     } else {
                         sitemapsEl.classList.add("is-missing");
                         sitemapsStatusEl.classList.add("is-active");
                         sitemapsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
-                        sitemapsStatusEl.querySelector(".status__content").innerText = "Не обнаружен файл sitemap.xml. Отсутствуют директивы sitemap, так как файл robots.txt пустой. Это требует внимания.";
+                        sitemapsStatusEl.querySelector(".status__content").innerText = "Не обнаружен файл sitemap.xml. Отсутствуют директивы sitemap, так как не обнаружен файл robots.txt. Это требует внимания.";
                     }
                 }
+            }());
 
 
-            } else {
-                robotsUrlTextEl.classList.add("is-missing");
-                robotsUrlStatusEl.classList.add("is-active");
-                robotsUrlStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
-                robotsUrlStatusEl.querySelector(".status__content").innerText = "Запрет индексации страницы не обнаружен, так как файл robots.txt не обнаружен. Это требует внимания.";
+            // обработка картинок
+            if (seodata.images.length) {
+                dataImagesCounterEl.innerHTML = seodata.images.length;
 
-                if (isSitemapFileAviable) {
-                    sitemapsStatusEl.classList.add("is-active");
-                    sitemapsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
-                    sitemapsStatusEl.querySelector(".status__content").innerText = "Файл sitemap.xml обнаружен, но отсутствуют директивы sitemap, так как не обнаружен файл robots.txt. Это требует внимания.";
-                } else {
-                    sitemapsEl.classList.add("is-missing");
-                    sitemapsStatusEl.classList.add("is-active");
-                    sitemapsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
-                    sitemapsStatusEl.querySelector(".status__content").innerText = "Не обнаружен файл sitemap.xml. Отсутствуют директивы sitemap, так как не обнаружен файл robots.txt. Это требует внимания.";
-                }
-            }
-        }());
+                imagesAllCounterEl.innerText = seodata.images.length
+                imagesWithAltCounterEl.innerText = seodata.images.filter(i => i["alt"]).length;
+                imagesWithoutAltCounterEl.innerText = seodata.images.filter(i => i["alt"] == "").length;
 
+                let dataImages = "";
+                seodata.images.forEach(i => {
 
-        // обработка картинок
-        if (seodata.images.length) {
-            dataImagesCounterEl.innerHTML = seodata.images.length;
+                    let filterQuery = "alt-true";
+                    let titleStatusClass = "";
+                    let altStatusClass = "";
+                    if (!i.title) { i.title = "", titleStatusClass = "data-info--inactive" };
+                    if (!i.alt) { i.alt = ""; filterQuery = "alt-false"; altStatusClass = "data-info--inactive" };
+                    if (i.src.length && i.src[0] != "h") { i.src = `${url.origin}${i.src}` };
 
-            imagesAllCounterEl.innerText = seodata.images.length
-            imagesWithAltCounterEl.innerText = seodata.images.filter(i => i["alt"]).length;
-            imagesWithoutAltCounterEl.innerText = seodata.images.filter(i => i["alt"] == "").length;
+                    let description = ""
+                    if (i.width == 0 || i.height == 0) {
+                        description = "lazy";
+                    } else {
+                        description = `${i.width}x${i.height}`;
+                    }
 
-            let dataImages = "";
-            seodata.images.forEach(i => {
-
-                let filterQuery = "alt-true";
-                let titleStatusClass = "";
-                let altStatusClass = "";
-                if (!i.title) { i.title = "", titleStatusClass = "data-info--inactive" };
-                if (!i.alt) { i.alt = ""; filterQuery = "alt-false"; altStatusClass = "data-info--inactive" };
-                if (i.src.length && i.src[0] != "h") { i.src = `${url.origin}${i.src}` };
-
-                let description = ""
-                if (i.width == 0 || i.height == 0) {
-                    description = "lazy";
-                } else {
-                    description = `${i.width}x${i.height}`;
-                }
-
-                dataImages += `
+                    dataImages += `
                         <div class="data-row" data-filter="img-${filterQuery}">
                             <div class="data-row__pic">
                                 <img src="${i.src}">
@@ -532,12 +530,15 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
                             </div>
                         </div>
                     `
-            })
-            dataImagesEl.innerHTML = dataImages;
+                })
+                dataImagesEl.innerHTML = dataImages;
 
+            }
+
+            setFilter()
+        } else {
+            console.log("Не получен ответ от контент скрипта");
         }
-
-        setFilter()
 
     } else {
         fadeEl.classList.add("is-active");

@@ -36,7 +36,6 @@ chrome.runtime.onMessage.addListener(
             seodata['images'] = images
 
             // console.log(seodata);
-
             sendResponse(seodata);
         }
     }
