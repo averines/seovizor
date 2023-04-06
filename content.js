@@ -22,10 +22,9 @@ chrome.runtime.onMessage.addListener(
             seodata['langs'] = Array.from(document.querySelectorAll('html')).map(i => i.getAttribute("lang"));
             seodata['links'] = Array.from(document.querySelectorAll('a')).map(i => i.getAttribute("href"));
 
-
             let images = Array.from(document.querySelectorAll('img')).map(i => (
                 {
-                    "src": i.getAttribute("src"),
+                    "src": i.dataset.src ? i.dataset.src : i.src,
                     "alt": i.getAttribute("alt"),
                     "title": i.getAttribute("title"),
                     "width": i.naturalWidth,
