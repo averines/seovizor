@@ -1,6 +1,6 @@
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
-        console.log("2. Получено сообщение и запущен контент скрипт. В консоли страницы");
+        // console.log("2. Получено сообщение и запущен контент скрипт. В консоли страницы");
         // console.log(request);
 
         if (request.action === "GET SEODATA") {
@@ -21,9 +21,17 @@ chrome.runtime.onMessage.addListener(
             seodata['metarobots'] = Array.from(document.querySelectorAll('meta[name="robots"]')).map(i => i.content.trim());
             seodata['langs'] = Array.from(document.querySelectorAll('html')).map(i => i.getAttribute("lang"));
             seodata['links'] = Array.from(document.querySelectorAll('a')).map(i => i.getAttribute("href"));
-            seodata['pics'] = Array.from(document.querySelectorAll('img')).map(i => ({ "src": i.getAttribute("src"), "alt": i.getAttribute("alt"), "title": i.getAttribute("title") }));
+            seodata['images'] = Array.from(document.querySelectorAll('img')).map(i => {
+                return {
+                    "src": i.getAttribute("src"),
+                    "alt": i.getAttribute("alt"),
+                    "title": i.getAttribute("title"),
+                    "width": i.naturalWidth,
+                    "height": i.naturalHeight
+                }
+            });
 
-            console.log(seodata);
+            // console.log(seodata);
 
             sendResponse(seodata);
         }

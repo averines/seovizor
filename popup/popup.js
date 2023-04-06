@@ -1,4 +1,4 @@
-console.log("1. Активирован Popup. В консоли расширения");
+// console.log("1. Активирован Popup. В консоли расширения");
 
 // document.getElementById("action-test").addEventListener("click", () => {
 //     // смена иконки
@@ -44,6 +44,42 @@ import { punycode } from '/libs/punycode.js';
 }());
 
 
+// функционал фильтра
+function setFilter() {
+    const filterTitles = document.querySelectorAll('[data-filter-title]');
+    const filterRows = document.querySelectorAll('[data-filter]');
+
+    filterTitles.forEach(t => {
+        t.addEventListener('click', () => {
+            filterTitles.forEach(btn => {
+                if (btn.dataset.filterTitle == t.dataset.filterTitle) {
+                    btn.classList.remove("filter__btn--active");
+                }
+            });
+            t.classList.add("filter__btn--active");
+
+            if (t.dataset.filterQuery.includes("all")) {
+                filterRows.forEach(r => {
+                    if (r.dataset.filter.includes(t.dataset.filterTitle)) {
+                        r.classList.remove("is-hidden");
+                    }
+                })
+            } else {
+                filterRows.forEach(r => {
+                    if (r.dataset.filter.includes(t.dataset.filterTitle)) {
+                        if (r.dataset.filter.includes(t.dataset.filterQuery)) {
+                            r.classList.remove("is-hidden");
+                        } else {
+                            r.classList.add("is-hidden");
+                        }
+                    }
+                })
+            }
+        })
+    })
+};
+
+
 window.addEventListener('click', (e) => {
     // отслеживаем клик по кнопке Копировать
     if (e.target.classList.contains("field__copy")) {
@@ -83,7 +119,7 @@ const metaRobotsStatusEl = document.getElementById("meta-robots-status");
 const dataYandexXGEl = document.getElementById("data-yandex-x");
 const dataLangEl = document.getElementById("data-lang");
 const dataLinksCounterEl = document.getElementById("data-links-counter");
-const dataPicsCounterEl = document.getElementById("data-pics-counter");
+const dataImagesCounterEl = document.getElementById("data-images-counter");
 
 const fadeEl = document.getElementById("fade");
 const fadeUrlEl = document.getElementById("fade-url");
@@ -131,6 +167,12 @@ const toolResponseEl = document.getElementById("tool-response");
 const toolDuplicateEl = document.getElementById("tool-duplicate");
 const toolTrustEl = document.getElementById("tool-trust");
 
+// вкладка Images
+const imagesAllCounterEl = document.getElementById("images-all-counter");
+const imagesWithAltCounterEl = document.getElementById("images-with-alt-counter");
+const imagesWithoutAltCounterEl = document.getElementById("images-without-alt-counter");
+const dataImagesEl = document.getElementById("data-images");
+
 // вкладка Scheme
 const toolSchemePcEl = document.getElementById("tool-scheme-pc");
 const toolSchemeMobileEl = document.getElementById("tool-scheme-mobile");
@@ -143,8 +185,11 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
     const url = new URL(tab.url);
     // console.log(url);
     // url.protocol;  // "http:"
-    // url.hostname;  // "aaa.bbb.ccc.com"
-    // url.pathname;  // "/asdf/asdf/sadf.aspx"
+    // url.hostname;  // "127.0.0.1"
+    // url.hostname;  // "127.0.0.1:5502"
+    // url.origin;  // "http://127.0.0.1:5502"
+    // url.href;  // "http://127.0.0.1:5502/popup/popup.html"
+    // url.pathname;  // "/popup/popup.html"
     // url.search;    // "?blah"
 
     if (url.protocol == "http:" || url.protocol == "https:") {
@@ -285,10 +330,6 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
             dataLinksCounterEl.innerHTML = seodata.links.length;
         }
 
-        // подсчет картинок
-        if (seodata.pics.length) {
-            dataPicsCounterEl.innerHTML = seodata.pics.length;
-        }
 
         // обработка metarobots
         if (seodata.metarobots.length) {
@@ -394,13 +435,14 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
                 robotsUrlStatusEl.classList.add("is-active");
                 robotsUrlStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
                 robotsUrlStatusEl.querySelector(".status__content").innerText = "Не обнаружен файл robots.txt, это требует внимания. Запрет индексации страницы не обнаружен";
-                
+
                 sitemapsEl.classList.add("is-missing");
                 sitemapsStatusEl.classList.add("is-active");
                 sitemapsStatusEl.querySelector(".status__icon").classList.add("icon", "icon--warning");
                 sitemapsStatusEl.querySelector(".status__content").innerText = "Отсутствуют директивы sitemap, так как не обнаружен файл robots.txt, это требует внимания.";
             }
         }());
+
 
         // проверка наличия sitemap
         (async function () {
@@ -416,7 +458,58 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
         }());
 
 
+        // обработка картинок
+        if (seodata.images.length) {
+            dataImagesCounterEl.innerHTML = seodata.images.length;
 
+            imagesAllCounterEl.innerText = seodata.images.length
+            imagesWithAltCounterEl.innerText = seodata.images.filter(i => i["alt"] != null).length;
+            imagesWithoutAltCounterEl.innerText = seodata.images.filter(i => i["alt"] == null).length;
+
+            let dataImages = "";
+            seodata.images.forEach(i => {
+
+                let filterQuery = "alt-true";
+                let titleStatusClass = "";
+                let altStatusClass = "";
+                if (!i.title) { i.title = "", titleStatusClass = "data-info--inactive" };
+                if (!i.alt) { i.alt = ""; filterQuery = "alt-false"; altStatusClass = "data-info--inactive" };
+                if (i.src[0] != "h") { i.src = `${url.origin}${i.src}` };
+
+                let description = ""
+                if (i.width == 0 || i.height == 0) {
+                    description = "lazy";
+                } else {
+                    description = `${i.width}x${i.height}`;
+                }
+
+                dataImages += `
+                        <div class="data-row" data-filter="img-${filterQuery}">
+                            <div class="data-row__pic">
+                                <img src="${i.src}">
+                                <div class="data-row__description">${description}</div>
+                            </div>
+                            <div class="data-row__content">
+                                <div class="data-row__info data-info">
+                                    <span class="data-info__content"><a href="${i.src}" target="_blank">${i.src}</a></span>
+                                </div>
+                                <div class="data-row__info data-info ${altStatusClass}">
+                                    <span class="data-info__title">Alt:</span>
+                                    <span class="data-info__content">${i.alt}</span>
+                                </div>
+                                <div class="data-row__info data-info ${titleStatusClass}">
+                                    <span class="data-info__title">Title:</span>
+                                    <span class="data-info__content">${i.title}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `
+            })
+            dataImagesEl.innerHTML = dataImages;
+
+        }
+
+        setFilter()
 
     } else {
         fadeEl.classList.add("is-active");

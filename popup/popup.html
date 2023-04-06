@@ -19,7 +19,7 @@
             <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel2" id="search">Search</button>
             <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel3" id="page">Page</button>
             <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel4" id="links">Links</button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel5" id="pics">Images</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel5" id="images">Images</button>
             <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel6" id="scheme">Scheme</button>
             <button class="tab" role="tab" aria-selected="false" aria-controls="tabpanel7" id="tools">Tools</button>
         </header>
@@ -28,7 +28,6 @@
             <div class="tabpanel" role="tabpanel" id="tabpanel1" aria-labelledby="main" aria-hidden="false">
                 <div class="tabpanel__content">
                     <div class="fields">
-
                         <div class="fields-group">
                             <div class="field">
                                 <div class="field__content" id="title"></div>
@@ -75,7 +74,7 @@
                         </div>
                     </div>
 
-                    <table class="table mt-3">
+                    <table class="table mt-2">
                         <tr>
                             <td class="row-title">Url</td>
                             <td class="row-content">
@@ -138,7 +137,7 @@
                         </div>
                         <div class="data-counter">
                             <div class="data-counter__title">Images</div>
-                            <div class="data-counter__content" id="data-pics-counter">0</div>
+                            <div class="data-counter__content" id="data-images-counter">0</div>
                         </div>
                     </div>
                     <div class="data-counters data-counters--sm">
@@ -398,179 +397,16 @@
                     <button class="btn btn--main">Скачать CSV</button>
                 </div>
             </div>
-            <div class="tabpanel" role="tabpanel" id="tabpanel5" aria-labelledby="pics" aria-hidden="true">
+            <div class="tabpanel" role="tabpanel" id="tabpanel5" aria-labelledby="images" aria-hidden="true">
                 <div class="tabpanel__content">
                     <div class="filters filters--horizontal">
                         <div class="filter">
-                            <button class="filter__btn filter__btn--active">Все <span>81</span></button>
-                            <button class="filter__btn">С alt <span>80</span></button>
-                            <button class="filter__btn">Без alt <span>1</span></button>
+                            <button class="filter__btn filter__btn--active" data-filter-title="img" data-filter-query="img-all">Все <span id="images-all-counter">0</span></button>
+                            <button class="filter__btn" data-filter-title="img" data-filter-query="alt-true">С alt <span id="images-with-alt-counter">0</span></button>
+                            <button class="filter__btn" data-filter-title="img" data-filter-query="alt-false">Без alt <span id="images-without-alt-counter">0</span></button>
                         </div>
                     </div>
-                    <div class="data-rows mt-4">
-                        <div class="data-row">
-                            <div class="data-row__pic">
-                                <img src="https://cdn0.moyo.moda/ws/main/470x705/855380.jpg" alt="">
-                            </div>
-                            <div class="data-row__content">
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__content"><a href="#">https://cdn0.moyo.moda/ws/main/470x705/855380.jpg</a></span>
-                                </div>
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__title">Alt:</span>
-                                    <span class="data-info__content">Платье EZANNA #853722</span>
-                                </div>
-                                <div class="data-row__info data-info data-info--inactive">
-                                    <span class="data-info__title">Title:</span>
-                                    <span class="data-info__content">—</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="data-row">
-                            <div class="data-row__pic">
-                                <img src="https://cdn0.moyo.moda/ws/main/470x705/855380.jpg" alt="">
-                            </div>
-                            <div class="data-row__content">
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__content"><a href="#">https://cdn0.moyo.moda/ws/main/470x705/855380.jpg</a></span>
-                                </div>
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__title">Alt:</span>
-                                    <span class="data-info__content">Платье EZANNA #853722</span>
-                                </div>
-                                <div class="data-row__info data-info data-info--inactive">
-                                    <span class="data-info__title">Title:</span>
-                                    <span class="data-info__content">—</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="data-row">
-                            <div class="data-row__pic">
-                                <img src="https://cdn0.moyo.moda/ws/main/470x705/855380.jpg" alt="">
-                            </div>
-                            <div class="data-row__content">
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__content"><a href="#">https://cdn0.moyo.moda/ws/main/470x705/855380.jpg</a></span>
-                                </div>
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__title">Alt:</span>
-                                    <span class="data-info__content">Платье EZANNA #853722</span>
-                                </div>
-                                <div class="data-row__info data-info data-info--inactive">
-                                    <span class="data-info__title">Title:</span>
-                                    <span class="data-info__content">—</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="data-row">
-                            <div class="data-row__pic">
-                                <img src="https://cdn0.moyo.moda/ws/main/470x705/855380.jpg" alt="">
-                            </div>
-                            <div class="data-row__content">
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__content"><a href="#">https://cdn0.moyo.moda/ws/main/470x705/855380.jpg</a></span>
-                                </div>
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__title">Alt:</span>
-                                    <span class="data-info__content">Платье EZANNA #853722</span>
-                                </div>
-                                <div class="data-row__info data-info data-info--inactive">
-                                    <span class="data-info__title">Title:</span>
-                                    <span class="data-info__content">—</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="data-row">
-                            <div class="data-row__pic">
-                                <img src="https://cdn0.moyo.moda/ws/main/470x705/855380.jpg" alt="">
-                            </div>
-                            <div class="data-row__content">
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__content"><a href="#">https://cdn0.moyo.moda/ws/main/470x705/855380.jpg</a></span>
-                                </div>
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__title">Alt:</span>
-                                    <span class="data-info__content">Платье EZANNA #853722</span>
-                                </div>
-                                <div class="data-row__info data-info data-info--inactive">
-                                    <span class="data-info__title">Title:</span>
-                                    <span class="data-info__content">—</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="data-row">
-                            <div class="data-row__pic">
-                                <img src="https://cdn0.moyo.moda/ws/main/470x705/855380.jpg" alt="">
-                            </div>
-                            <div class="data-row__content">
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__content"><a href="#">https://cdn0.moyo.moda/ws/main/470x705/855380.jpg</a></span>
-                                </div>
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__title">Alt:</span>
-                                    <span class="data-info__content">Платье EZANNA #853722</span>
-                                </div>
-                                <div class="data-row__info data-info data-info--inactive">
-                                    <span class="data-info__title">Title:</span>
-                                    <span class="data-info__content">—</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="data-row">
-                            <div class="data-row__pic">
-                                <img src="https://cdn0.moyo.moda/ws/main/470x705/855380.jpg" alt="">
-                            </div>
-                            <div class="data-row__content">
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__content"><a href="#">https://cdn0.moyo.moda/ws/main/470x705/855380.jpg</a></span>
-                                </div>
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__title">Alt:</span>
-                                    <span class="data-info__content">Платье EZANNA #853722</span>
-                                </div>
-                                <div class="data-row__info data-info data-info--inactive">
-                                    <span class="data-info__title">Title:</span>
-                                    <span class="data-info__content">—</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="data-row">
-                            <div class="data-row__pic">
-                                <img src="https://cdn0.moyo.moda/ws/main/470x705/855380.jpg" alt="">
-                            </div>
-                            <div class="data-row__content">
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__content"><a href="#">https://cdn0.moyo.moda/ws/main/470x705/855380.jpg</a></span>
-                                </div>
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__title">Alt:</span>
-                                    <span class="data-info__content">Платье EZANNA #853722</span>
-                                </div>
-                                <div class="data-row__info data-info data-info--inactive">
-                                    <span class="data-info__title">Title:</span>
-                                    <span class="data-info__content">—</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="data-row">
-                            <div class="data-row__pic">
-                                <img src="https://cdn0.moyo.moda/ws/main/470x705/855380.jpg" alt="">
-                            </div>
-                            <div class="data-row__content">
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__content"><a href="#">https://cdn0.moyo.moda/ws/main/470x705/855380.jpg</a></span>
-                                </div>
-                                <div class="data-row__info data-info">
-                                    <span class="data-info__title">Alt:</span>
-                                    <span class="data-info__content">Платье EZANNA #853722</span>
-                                </div>
-                                <div class="data-row__info data-info data-info--inactive">
-                                    <span class="data-info__title">Title:</span>
-                                    <span class="data-info__content">—</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="data-rows mt-4" id="data-images"></div>
                 </div>
             </div>
             <div class="tabpanel" role="tabpanel" id="tabpanel6" aria-labelledby="scheme" aria-hidden="true">

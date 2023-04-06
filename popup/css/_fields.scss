@@ -1,7 +1,7 @@
 .fields {
     display: flex;
     flex-direction: column;
-    row-gap: 15px;
+    row-gap: 12px;
 }
 
 .fields-group {
@@ -43,12 +43,12 @@
     &__header {
         width: 60px;
         background-color: $bg-l;
-        padding: 4px 7px 5px 20px;
+        padding: 3px 7px 5px 20px;
         position: absolute;
-        top: -6px;
+        top: -4px;
         right: 0;
         bottom: 0;
-        border-radius: 10px 4px 4px 0;
+        border-radius: 12px 6px 6px 0;
         overflow: hidden;
     }
 
@@ -56,7 +56,7 @@
         text-align: right;
         text-transform: uppercase;
         color: $text-l;
-        font-size: 10px;
+        font-size: 9px;
         letter-spacing: 0.04em;
         line-height: 1.5;
         pointer-events: none;

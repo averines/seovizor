@@ -71,12 +71,12 @@
     padding: 0 20px;
     line-height: 1;
     border-bottom: 2px solid rgba(0, 0, 0, 0);
-    height: 40px;
+    height: 36px;
     transition: $t;
     border-radius: 6px 6px 0 0;
 
     &:hover {
-        background-color: lighten($bg-l, 1.2);
+        background-color: $bg-l;
         border-bottom-color: $line;
     }
 
