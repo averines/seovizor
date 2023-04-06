@@ -651,6 +651,7 @@ label.tool:active .tool__content {
 }
 .table .row-content {
   display: flex;
+  align-items: flex-start;
   -moz-column-gap: 10px;
        column-gap: 10px;
 }
@@ -879,6 +880,7 @@ label.tool:active .tool__content {
   display: flex;
   -moz-column-gap: 25px;
        column-gap: 25px;
+  padding-right: 60px;
 }
 .data-row__pic {
   width: 80px;
