@@ -82,7 +82,63 @@
 
     &[aria-selected="true"] {
         color: $main;
-        border-block-color: $main;
+        border-bottom-color: $main;
         background-color: #fff;
+    }
+}
+
+// альтернативный вид вкладок
+.tablist--compact {
+    padding: 0 30px 0 30px;
+    border-bottom: none;
+
+    .tab {
+        border-bottom: none;
+        position: relative;
+        border-radius: 0 0 $br $br;
+        padding: 9px 12px 6px 12px;
+        border: 2px solid #fff;
+        border-top: none;
+        transition: color 0.25s ease-in-out;
+
+        &::after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: calc(100% - 24px);
+            height: 3px;
+            background: none;
+            top: 0;
+            left: 12px;
+            border-radius: 0 0 8px 8px;
+            transition: 0.2s ease-in-out;
+            transform: translateY(-3px);
+        }
+
+        &:hover {
+            background-color: $bg-l;
+            border-bottom-color: $bg-l;
+        }
+
+        &[aria-selected="true"] {
+            color: $main;
+            border-bottom-color: $bg-l;
+            background-color: $bg-l;
+
+            &:hover {
+                background-color: $bg-l;
+                color: $main-d;
+
+                &::after {
+                    background-color: $main-d;
+                    transform: translateY(0);
+                }
+            }
+
+            &::after {
+                background-color: $main;
+                transform: translateY(0);
+            }
+        }
     }
 }

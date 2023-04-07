@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/options.css">
+    <script defer src="options.js" type="module"></script>
 </head>
 
 <body>
@@ -17,34 +18,69 @@
     <div class="panel">
         <h1>Оptions</h1>
 
-        <div class="filters filters--horizontal">
-            <p>Тема оформления</p>
-            <div class="filter">
-                <button class="filter__btn filter__btn--active">Синий иней</button>
-                <button class="filter__btn">Зелень мелень</button>
-                <button class="filter__btn">Крылья ночи</button>
-            </div>
+        <form id="optionsForm">
+            <label for="tabcompact">
+                <input type="checkbox" name="tabcompact" id="tabcompact">
+                Компактные заголовки вкладок
+            </label>
 
-            <p>При обнаружении нескольких title показывать</p>
-            <div class="filter">
-                <button class="filter__btn filter__btn--active">Только первый</button>
-                <button class="filter__btn">Все</button>
-                <button class="filter__btn">Предупреждение</button>
-            </div>
+            <fieldset>
+                <legend>Тема оформления</legend>
 
-            <p>При обнаружении нескольких description показывать:</p>
-            <div class="filter">
-                <button class="filter__btn filter__btn--active">Только первый</button>
-                <button class="filter__btn">Все</button>
-                <button class="filter__btn">Предупреждение</button>
-            </div>
+                <div>
+                    <input type="radio" name="theme" id="theme1" value="theme1" checked>
+                    <label for="theme1">Синий иней</label>
+                </div>
 
-            <p>Показывать панель с доп. инфо на вкладке Total</p>
-            <div class="filter">
-                <button class="filter__btn filter__btn--active">Да</button>
-                <button class="filter__btn">Не</button>
-            </div>
-        </div>
+                <div>
+                    <input type="radio" name="theme" id="theme2" value="theme2" checked>
+                    <label for="theme2">Зелень мелень</label>
+                </div>
+
+                <div>
+                    <input type="radio" name="theme" id="theme3" value="theme3" checked>
+                    <label for="theme3">Крылья ночи</label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>При обнаружении нескольких title показывать</legend>
+
+                <div>
+                    <input type="radio" name="title" id="title1" value="title1" checked>
+                    <label for="theme1">Только первый</label>
+                </div>
+
+                <div>
+                    <input type="radio" name="title" id="title2" value="title2" checked>
+                    <label for="title2">Все</label>
+                </div>
+
+                <div>
+                    <input type="radio" name="title" id="title3" value="title3" checked>
+                    <label for="title3">Предупреждение</label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>При обнаружении нескольких description показывать</legend>
+
+                <div>
+                    <input type="radio" name="description" id="description1" value="description1" checked>
+                    <label for="theme1">Только первый</label>
+                </div>
+
+                <div>
+                    <input type="radio" name="description" id="description2" value="description2" checked>
+                    <label for="description2">Все</label>
+                </div>
+
+                <div>
+                    <input type="radio" name="description" id="description3" value="description3" checked>
+                    <label for="description3">Предупреждение</label>
+                </div>
+            </fieldset>
+        </form>
     </div>
 
 </body>

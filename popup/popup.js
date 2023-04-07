@@ -86,6 +86,10 @@ function setFilter() {
     })
 };
 
+// получаем сохраненные настройки пользователя
+const userOptions = await chrome.storage.sync.get("options");
+console.log(userOptions);
+
 // отслеживание кликов через window
 window.addEventListener('click', (e) => {
     // отслеживаем клик по кнопке Копировать
@@ -105,6 +109,11 @@ window.addEventListener('click', (e) => {
 
 
 // определение функциональных элементов попапа
+const tablistEl = document.getElementById("tablist");
+if (userOptions.options.tabcompact) {
+    tablistEl.classList.add("tablist--compact")
+}
+
 // вкладка Main
 const urlEl = document.getElementById("url");
 const titleEl = document.getElementById("title");
@@ -374,7 +383,8 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
             (async function () {
                 const sitemapResponse = await fetch(`${url.origin}/sitemap.xml`, { mode: 'no-cors' }).catch(err => console.log("Ошибка при скачивании файла sitemap.xml"));
                 if (sitemapResponse.status == 200) {
-                    let sitemapText = await sitemapResponse.text().trim();
+                    let sitemapText = await sitemapResponse.text();
+                    sitemapText = sitemapText.trim();
                     if (sitemapText.startsWith("<?xml")) {
                         sitemapsUrlEl.href = `${url.origin}/sitemap.xml`;
                         isSitemapFileAviable = true;
