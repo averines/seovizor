@@ -22,8 +22,8 @@
 
     &__footer {
         position: relative;
-        background-color: #fff;
-        border-top: 1px solid $line;
+        background-color: var(--bg-l);
+        border-top: 1px solid var(--line);
         padding: 0 30px;
 
         &::before {
@@ -31,7 +31,7 @@
             display: block;
             width: 100%;
             height: 40px;
-            background: linear-gradient(rgba(0, 0, 0, 0) 0%, #fff 100%);
+            background: linear-gradient(rgba(0, 0, 0, 0) 0%, var(--bg-l) 100%);
             position: absolute;
             z-index: 1;
             top: -41px;
@@ -45,7 +45,6 @@
             justify-content: space-between;
             padding-top: 25px;
             padding-bottom: 25px;
-            // background: linear-gradient(90deg, #e4f8ff, transparent);
         }
 
         &--tools {
@@ -57,14 +56,14 @@
 .tablist {
     padding: 10px 30px 0 30px;
     display: flex;
-    border-bottom: 1px solid $line;
+    border-bottom: 1px solid var(--line);
 }
 
 .tab {
     margin-bottom: -1px;
     cursor: pointer;
     border: none;
-    color: $text;
+    color: var(--text);
     font-weight: 500;
     font-size: 13px;
     background: none;
@@ -77,26 +76,34 @@
 
     &:hover {
         background-color: $bg-l;
-        border-bottom-color: $line;
+        border-bottom-color: var(--line);
     }
 
     &[aria-selected="true"] {
-        color: $main;
-        border-bottom-color: $main;
-        background-color: #fff;
+        color: var(--main-d);
+        border-bottom-color: var(--main);
+        background-color: transparent;
     }
 }
 
 // альтернативный вид вкладок
 .tablist--compact {
-    padding: 0 30px 0 30px;
+    padding: 0 30px 10px 30px;
     border-bottom: none;
+
+    + .tabpanels {
+        .tabpanel {
+            &__content {
+                padding-top: 10px;
+            }
+        }
+    }
 
     .tab {
         border-bottom: none;
         position: relative;
         border-radius: 0 0 $br $br;
-        padding: 9px 12px 6px 12px;
+        padding: 7px 12px 4px 12px;
         border: 2px solid #fff;
         border-top: none;
         transition: color 0.25s ease-in-out;
@@ -121,22 +128,22 @@
         }
 
         &[aria-selected="true"] {
-            color: $main;
+            color: var(--main);
             border-bottom-color: $bg-l;
             background-color: $bg-l;
 
             &:hover {
                 background-color: $bg-l;
-                color: $main-d;
+                color: var(--main-d);
 
                 &::after {
-                    background-color: $main-d;
+                    background-color: var(--main-d);
                     transform: translateY(0);
                 }
             }
 
             &::after {
-                background-color: $main;
+                background-color: var(--main);
                 transform: translateY(0);
             }
         }

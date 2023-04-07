@@ -1,5 +1,5 @@
 .footer {
-    background-color: $main-d;
+    background-color: var(--main-d);
     font-size: 12px;
     padding: 3px 30px;
     height: 25px;
@@ -7,14 +7,14 @@
     &__author {
         margin: 0;
         text-align: right;
-        color: lighten($main, 20);
+        color: var(--main-ll);
 
         a {
-            color: lighten($main, 20);
+            color: var(--main-ll);
             transition: $t;
 
             &:hover {
-                color: $main-ll;
+                color: var(--main-l);
             }
         }
     }

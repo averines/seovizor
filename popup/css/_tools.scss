@@ -4,7 +4,7 @@
     flex-direction: column;
     border-radius: $br;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
-    border: 1px solid $line;
+    border: 1px solid var(--line);
 }
 
 .tool {
@@ -15,7 +15,7 @@
     padding: 15px 15px 15px 15px;
     position: relative;
     border: none;
-    border-bottom: 1px solid $line;
+    border-bottom: 1px solid var(--line);
     transition: $t;
     background: none;
     text-align: left;
@@ -68,7 +68,7 @@
     }
 
     &__title {
-        color: $text;
+        color: var(--text);
         font-size: 13px;
         line-height: 1.1;
         -webkit-font-smoothing: antialiased;
@@ -77,7 +77,7 @@
 
     &__subtitle {
         padding-top: 3px;
-        color: $text-l;
+        color: var(--text-l);
         line-height: 1.2;
         font-size: 13px;
     }
@@ -154,9 +154,11 @@
     text-decoration: none;
     padding: 0.3em 0.85em;
     border-radius: $br-sm;
+    color: var(--main);
 
     &:hover {
-        background-color: $main-l;
+        color: var(--main-d);
+        background-color: var(--main-l);
     }
 }
 
@@ -172,11 +174,11 @@
         &:checked {
             + span {
                 opacity: 1;
-                background-color: $main;
+                background-color: var(--main);
 
                 &::after {
                     margin-left: calc(100% - 16px);
-                    border-color: $main;
+                    border-color: var(--main);
                 }
             }
         }

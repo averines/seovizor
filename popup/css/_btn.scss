@@ -5,19 +5,19 @@
     border-radius: $br-sm;
     font-weight: 500;
     transition: $t;
-    color: $main-d;
-    background-color: $main-l;
+    color: var(--main-d);
+    background-color: var(--main-l);
 
     &:hover {
-        background-color: lighten($main-l, 2);
+        background-color: var(--main-ll);
     }
 
     &--main {
-        background-color: $main-d;
+        background-color: var(--main-d);
         color: #fff; 
         
         &:hover {
-            background-color: $main;
+            background-color: var(--main);
         }
     }
 }

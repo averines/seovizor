@@ -29,11 +29,11 @@
     }
 
     &__alert {
-        border: 1px solid $good;
+        border: 1px solid $main;
         padding: 0.15em 0.55em;
         font-size: 13px;
         font-weight: 500;
         border-radius: 3px;
-        color: $good;
+        color: $main;
     }
 }

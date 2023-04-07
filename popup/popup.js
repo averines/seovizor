@@ -114,6 +114,11 @@ if (userOptions.options.tabcompact) {
     tablistEl.classList.add("tablist--compact")
 }
 
+const bodyEl = document.querySelector("body");
+if (userOptions.options.theme) {
+    bodyEl.classList.add(userOptions.options.theme)
+}
+
 // вкладка Main
 const urlEl = document.getElementById("url");
 const titleEl = document.getElementById("title");

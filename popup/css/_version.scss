@@ -19,14 +19,14 @@
     }
 
     &__title {
-        color: $text-l;
+        color: var(--text-l);
     }
 
     &__link {
-        color: $text-l;
+        color: var(--text-l);
 
         &:hover {
-            color: $text-l;
+            color: var(--text-l);
             text-decoration: none;
         }
     }

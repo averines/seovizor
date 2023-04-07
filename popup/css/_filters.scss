@@ -34,7 +34,7 @@
         cursor: pointer;
         border: none;
         background-color: #fff;
-        padding: 0.6em 1.5em;
+        padding: 0.55em 1.5em;
         border: 1px solid $line;
         margin-bottom: -1px;
         transition: $t;
@@ -53,13 +53,13 @@
         }
 
         &--active {
-            border: 1px solid $line-m;
-            background-color: lighten($main-ll, 4);
-            color: $main;
+            border: 1px solid var(--line-m);
+            background-color: var(--main-lll);
+            color: var(--main-d);
             z-index: 1;
 
             &:hover {
-                background-color: lighten($main-ll, 4);
+                background-color: var(--main-ll);
             }
         }
 
