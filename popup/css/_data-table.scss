@@ -2,16 +2,16 @@
     border-collapse: collapse;
     width: 100%;
     border-radius: $br;
-    outline: 1px solid $line;
+    outline: 1px solid var(--line);
 
     th {
         text-align: left;
         font-weight: 400;
-        color: $text-l;
+        color: var(--text-l);
         padding: 0.75em 1.75em;
         font-size: 13px;
         border-color: transparent;
-        border-bottom: 1px solid $line;
+        border-bottom: 1px solid var(--line);
     }
 
     td {

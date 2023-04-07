@@ -1,11 +1,11 @@
 .textinput {
-    border: 1px solid $line;
+    border: 1px solid var(--line);
     padding: 0.5em 0.75em;
     border-radius: $br-sm;
 
     &:focus {
         outline: none;
-        border-color: $line-m;
+        border-color: var(--line-m);
     }
 
     &--sm {

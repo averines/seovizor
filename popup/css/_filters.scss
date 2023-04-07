@@ -33,12 +33,13 @@
     &__btn {
         cursor: pointer;
         border: none;
-        background-color: #fff;
+        background-color: var(--base);
         padding: 0.55em 1.5em;
-        border: 1px solid $line;
+        border: 1px solid var(--line);
         margin-bottom: -1px;
         transition: $t;
         text-align: left;
+        color: var(--main);
 
         &:first-child {
             border-radius: $br $br 0 0;
@@ -49,7 +50,7 @@
         }
 
         &:hover {
-            background-color: $bg-l;
+            background-color: var(--bg-l);
         }
 
         &--active {

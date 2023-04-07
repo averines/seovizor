@@ -1,5 +1,5 @@
 .og {
-    border: 1px solid $line;
+    border: 1px solid var(--line);
     border-radius: $br-lg;
     overflow: hidden;
     width: 420px;
@@ -35,6 +35,6 @@
     }
 
     &__link {
-        color: $text-l;
+        color: var(--text-l);
     }
 }

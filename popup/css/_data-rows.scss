@@ -13,9 +13,8 @@
         width: 80px;
         padding: 7px;
         flex-shrink: 0;
-        // border: 1px solid $line;
         position: relative;
-        background-color: $bg-d;
+        background-color: var(--bg-d);
 
         > img {
             display: block;
@@ -28,7 +27,7 @@
     }
 
     &__description {
-        color: $text-l;
+        color: var(--text-l);
         font-size: 10px;
         text-align: center;
         position: absolute;
@@ -53,7 +52,7 @@
     &__title {
         text-transform: uppercase;
         font-size: 11px;
-        color: $text-l;
+        color: var(--text-l);
     }
 
     &__content {
@@ -66,7 +65,7 @@
     &--inactive {
         .data-info__content {
             opacity: 0.35;
-            color: $text-l;
+            color: var(--text-l);
             font-style: italic;
 
             &::after {

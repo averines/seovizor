@@ -109,7 +109,7 @@
 
     &__copy {
         border: none;
-        background-color: var(--main);
+        background-color: var(--main-d);
         color: #fff;
         font-size: 10px;
         position: absolute;
@@ -125,7 +125,7 @@
         transition: all 0.05s ease-in-out;
 
         &:hover {
-            background-color: var(--main-d);
+            background-color: var(--main);
         }
     }
 }

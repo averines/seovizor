@@ -40,7 +40,7 @@
     }
 
     &:hover {
-        background-color: lighten($bg-l, 1);
+        background-color: var(--bg-l);
     }
 
     &:disabled {
@@ -189,7 +189,7 @@
         align-items: center;
         width: 26px;
         height: 12px;
-        background-color: $text-l;
+        background-color: var(--text-l);
         border-radius: 12px;
         transition: $t;
         opacity: 0.7;
@@ -204,8 +204,8 @@
             height: 16px;
             display: block;
             content: "";
-            background-color: #fff;
-            border: 2px solid $text-l;
+            background-color: var(--base);
+            border: 2px solid var(--text-l);
             border-radius: 50%;
             transition: $t;
         }

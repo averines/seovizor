@@ -14,7 +14,7 @@
 
     &--main {
         background-color: var(--main-d);
-        color: #fff; 
+        color: var(--base); 
         
         &:hover {
             background-color: var(--main);
@@ -27,13 +27,13 @@
     padding: 0;
     background: none;
     border: none;
-    color: $text-l;
-    border-bottom: 1px dashed $text-l;
+    color: var(--text-l);
+    border-bottom: 1px dashed var(--text-l);
     font-size: inherit;
     transition: $t;
 
     &:hover {
-        color: $text;
-        border-bottom-color: $text;
+        color: var(--text-);
+        border-bottom-color: var(--text);
     }
 }
