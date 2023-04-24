@@ -30,6 +30,40 @@
     display: grid;
     grid-template-columns: 1fr;
 
+    &--horizontal {
+        display: flex;
+        flex-direction: row;
+
+        .filter__btn {
+            margin-right: -1px;
+            margin-bottom: 0;
+            padding: 0.5em 1.5em;
+
+            &:first-child {
+                border-radius: $br 0 0 $br;
+            }
+
+            &:last-child {
+                border-radius: 0 $br $br 0;
+            }
+        }
+    }
+
+    input {
+        &:first-child {
+            + .filter__btn {
+                border-radius: $br 0 0 $br;
+            }
+        }
+    }
+
+    &--sm {
+        .filter__btn {
+            font-size: 12px;
+            padding: 0.33em 0.75em;
+        }
+    }
+
     &__btn {
         cursor: pointer;
         border: none;
@@ -40,6 +74,8 @@
         transition: $t;
         text-align: left;
         color: var(--main);
+        font-size: 13px;
+        white-space: nowrap;
 
         &:first-child {
             border-radius: $br $br 0 0;
@@ -69,6 +105,21 @@
             line-height: 1.6;
             opacity: 0.6;
             padding-left: 0.33em;
+        }
+    }
+
+    > input {
+        &:checked {
+            + .filter__btn {
+                border: 1px solid var(--line-m);
+                background-color: var(--main-lll);
+                color: var(--main-d);
+                z-index: 1;
+
+                &:hover {
+                    background-color: var(--main-ll);
+                }
+            }
         }
     }
 }

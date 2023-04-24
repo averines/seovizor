@@ -211,6 +211,18 @@ hr.dotted {
   display: none;
 }
 
+.is-hidden-viz {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: 0;
+}
+
 .btn {
   cursor: pointer;
   border: none;
@@ -439,6 +451,7 @@ hr.dotted {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 .field__counter {
@@ -451,6 +464,7 @@ hr.dotted {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 .field__content {
@@ -536,6 +550,7 @@ hr.dotted {
   text-align: left;
   -webkit-user-select: none;
      -moz-user-select: none;
+      -ms-user-select: none;
           user-select: none;
 }
 .tool--sm {
@@ -769,6 +784,7 @@ label.tool:active .tool__content {
   pointer-events: none;
   -webkit-user-select: none;
      -moz-user-select: none;
+      -ms-user-select: none;
           user-select: none;
 }
 .table .row-content .is-missing::after {
@@ -778,6 +794,7 @@ label.tool:active .tool__content {
   pointer-events: none;
   -webkit-user-select: none;
      -moz-user-select: none;
+      -ms-user-select: none;
           user-select: none;
 }
 .table .row-status {
@@ -892,6 +909,28 @@ label.tool:active .tool__content {
   display: grid;
   grid-template-columns: 1fr;
 }
+.filter--horizontal {
+  display: flex;
+  flex-direction: row;
+}
+.filter--horizontal .filter__btn {
+  margin-right: -1px;
+  margin-bottom: 0;
+  padding: 0.5em 1.5em;
+}
+.filter--horizontal .filter__btn:first-child {
+  border-radius: 8px 0 0 8px;
+}
+.filter--horizontal .filter__btn:last-child {
+  border-radius: 0 8px 8px 0;
+}
+.filter input:first-child + .filter__btn {
+  border-radius: 8px 0 0 8px;
+}
+.filter--sm .filter__btn {
+  font-size: 12px;
+  padding: 0.33em 0.75em;
+}
 .filter__btn {
   cursor: pointer;
   border: none;
@@ -902,6 +941,8 @@ label.tool:active .tool__content {
   transition: all 0.1s ease-in-out;
   text-align: left;
   color: var(--main);
+  font-size: 13px;
+  white-space: nowrap;
 }
 .filter__btn:first-child {
   border-radius: 8px 8px 0 0;
@@ -926,6 +967,15 @@ label.tool:active .tool__content {
   line-height: 1.6;
   opacity: 0.6;
   padding-left: 0.33em;
+}
+.filter > input:checked + .filter__btn {
+  border: 1px solid var(--line-m);
+  background-color: var(--main-lll);
+  color: var(--main-d);
+  z-index: 1;
+}
+.filter > input:checked + .filter__btn:hover {
+  background-color: var(--main-ll);
 }
 
 .data-table {

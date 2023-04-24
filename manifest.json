@@ -4,7 +4,7 @@
     "description": "Free quick metadata report and basic SEO information for website analysis. 12 free SEO tools. No registration required.",
     "homepage_url": "https://averines.github.io/seovizor/",
     "author": "Averines",
-    "version": "1.0",
+    "version": "1.0.0",
     "manifest_version": 3,
     "icons": {
         "16": "images/icons/16.png",
