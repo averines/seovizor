@@ -222,7 +222,24 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
         toolHostYEl.href = `https://yandex.ru/search/?text=host:${url.hostname}`;
         toolOrgGEl.href = `https://www.google.com/maps/search/${punycode.toUnicode(url.hostname)}`;
         toolOrgYEl.href = `https://yandex.ru/maps/?mode=search&text=${punycode.toUnicode(url.hostname)}`;
-        if (url.hostname.includes("yandex.") || url.hostname.includes("google.")) { toolCopyResultsEl.disabled = false; }
+
+        // получаем ссылки со страницы поисковой выдачи
+        if (url.hostname.includes("yandex.") || url.hostname.includes("google.")) {
+            toolCopyResultsEl.disabled = false;
+
+            toolCopyResultsEl.addEventListener("click", async () => {
+                let platform = "";
+                if (url.hostname.includes("yandex.")) { platform = "yandex" }
+                if (url.hostname.includes("google.")) { platform = "google" }
+                let searchLinks = await chrome.tabs.sendMessage(tab.id, { action: "GET-SEARCHLINKS", platform: platform });
+                if (searchLinks.length) {
+                    navigator.clipboard.writeText(searchLinks.join("\n"))
+                }
+            })
+        }
+
+
+
 
         // вкладка Page
         toolCacheGEl.href = `https://webcache.googleusercontent.com/search?q=cache:${encodeURIComponent(url.href)}`;
@@ -246,7 +263,7 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
 
 
         // запрашиваем данные из вкладки браузера
-        const seodata = await chrome.tabs.sendMessage(tab.id, { action: "GET SEODATA" });
+        const seodata = await chrome.tabs.sendMessage(tab.id, { action: "GET-SEODATA" });
         console.log("3. Получен ответ от контент скрипта. В консоли расширения");
         console.log(seodata);
 

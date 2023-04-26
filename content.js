@@ -1,9 +1,9 @@
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
-        // console.log("2. Получено сообщение и запущен контент скрипт. В консоли страницы");
-        // console.log(request);
+        console.log("2. Получено сообщение и запущен контент скрипт. В консоли страницы");
+        console.log(request);
 
-        if (request.action === "GET SEODATA") {
+        if (request.action === "GET-SEODATA") {
             // можно изменить элементы на вкладке браузера
             // let user = document.querySelector(".user")
             // user.innerHTML = request.name;
@@ -37,6 +37,24 @@ chrome.runtime.onMessage.addListener(
 
             // console.log(seodata);
             sendResponse(seodata);
+        }
+
+        if (request.action === "GET-SEARCHLINKS") {
+
+            let searchLinks = [];
+
+            switch (request.platform) {
+                case "yandex":
+                    searchLinks = Array.from(document.querySelectorAll("a.link.organic__url")).map(i => i.getAttribute("href").replace(/(\r\n|\n|\r)/gm, " ").trim());
+                    break;
+                case "google":
+                    console.log("goo");
+                    // TODO: получить ссылки из выдачи гугла
+                    break;
+                default:
+                    break;
+            }
+            sendResponse(searchLinks);
         }
     }
 );

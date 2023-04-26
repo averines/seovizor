@@ -33,10 +33,17 @@
     background: linear-gradient(90deg, var(--bg-ll) 0%, var(--bg-l) 100%);
 
     &:hover {
-        .field__copy {
-            visibility: visible;
-            pointer-events: all;
-            transform: translateY(0);
+        .field__content {
+            &:not(.is-missing),
+            :not(.is-empty) {
+                + .field__header {
+                    .field__copy {
+                        visibility: visible;
+                        pointer-events: all;
+                        transform: translateY(0);
+                    }
+                }
+            }
         }
     }
 

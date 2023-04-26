@@ -80,6 +80,9 @@ body.theme3 .tablist--compact .tab[aria-selected=true]::after {
   background-color: var(--accent);
   box-shadow: 0 2px 25px 3px var(--accent);
 }
+body.theme3 .version__avatar {
+  filter: brightness(0.7);
+}
 body ::-moz-selection {
   background: var(--main);
   color: #fff;
@@ -114,6 +117,7 @@ body ::-webkit-scrollbar-thumb:hover {
 
 input,
 button,
+select,
 textarea {
   font-family: inherit;
 }
@@ -424,7 +428,8 @@ hr.dotted {
   min-height: 30px;
   background: linear-gradient(90deg, var(--bg-ll) 0%, var(--bg-l) 100%);
 }
-.field:hover .field__copy {
+.field:hover .field__content:not(.is-missing) + .field__header .field__copy,
+.field:hover .field__content :not(.is-empty) + .field__header .field__copy {
   visibility: visible;
   pointer-events: all;
   transform: translateY(0);
@@ -451,7 +456,6 @@ hr.dotted {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
 }
 .field__counter {
@@ -464,7 +468,6 @@ hr.dotted {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
 }
 .field__content {
@@ -550,7 +553,6 @@ hr.dotted {
   text-align: left;
   -webkit-user-select: none;
      -moz-user-select: none;
-      -ms-user-select: none;
           user-select: none;
 }
 .tool--sm {
@@ -784,7 +786,6 @@ label.tool:active .tool__content {
   pointer-events: none;
   -webkit-user-select: none;
      -moz-user-select: none;
-      -ms-user-select: none;
           user-select: none;
 }
 .table .row-content .is-missing::after {
@@ -794,7 +795,6 @@ label.tool:active .tool__content {
   pointer-events: none;
   -webkit-user-select: none;
      -moz-user-select: none;
-      -ms-user-select: none;
           user-select: none;
 }
 .table .row-status {
