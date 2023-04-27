@@ -73,6 +73,15 @@ body.theme3 .yandex-x > img {
 body.theme3 .footer {
   background-color: var(--bg-l);
 }
+body.theme3 .footer p {
+  color: var(--main-l);
+}
+body.theme3 .footer p a {
+  color: var(--main-l);
+}
+body.theme3 .footer p a:hover {
+  color: var(--main);
+}
 body.theme3 .field__copy {
   background-color: var(--accent);
 }
@@ -478,6 +487,7 @@ hr.dotted {
 .field__content.is-empty {
   font-style: italic;
   color: var(--text-l);
+  font-size: 13px;
 }
 .field__content.is-empty::after {
   content: "Содержимое отсуствует";
@@ -485,6 +495,7 @@ hr.dotted {
 .field__content.is-missing {
   font-style: italic;
   color: var(--text-l);
+  font-size: 13px;
 }
 .field__content.is-missing::after {
   content: "Элемент не найден";
@@ -515,18 +526,20 @@ hr.dotted {
   font-size: 12px;
   padding: 3px 30px;
   height: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.footer__author {
+.footer p {
   margin: 0;
-  text-align: right;
-  color: var(--main-ll);
+  color: var(--line-m);
 }
-.footer__author a {
-  color: var(--main-ll);
+.footer p a {
+  color: var(--line-m);
   transition: all 0.1s ease-in-out;
 }
-.footer__author a:hover {
-  color: var(--main-l);
+.footer p a:hover {
+  color: var(--main-lll);
 }
 
 .tools {
@@ -628,6 +641,11 @@ hr.dotted {
   display: flex;
   -moz-column-gap: 2px;
        column-gap: 2px;
+}
+.tool__alert {
+  margin-left: auto;
+  color: #8e95a0;
+  font-size: 13px;
 }
 
 .tool-icon {
@@ -874,6 +892,7 @@ label.tool:active .tool__content {
   color: var(--text-l);
 }
 .version__link {
+  margin-left: auto;
   color: var(--text-l);
 }
 .version__link:hover {
@@ -1155,6 +1174,26 @@ label.tool:active .tool__content {
   width: 8px;
   height: 8px;
   transform: rotate(45deg);
+}
+
+.status-dot {
+  color: #61d5a7;
+}
+.status-dot::after {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #61d5a7;
+  transform: translateY(-2px);
+  margin-right: 5px;
+}
+.status-dot--warning {
+  color: #ffc188;
+}
+.status-dot--bad {
+  color: #ff7c64;
 }
 
 .fade {

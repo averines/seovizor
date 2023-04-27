@@ -44,3 +44,27 @@
         }
     }
 }
+
+
+.status-dot {
+    color: $good;
+
+    &::after {
+        content: "";
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: $good;
+        transform: translateY(-2px);
+        margin-right: 5px;
+    }
+
+    &--warning {
+        color: $warning;
+    }
+
+    &--bad {
+        color: $bad;
+    }
+}

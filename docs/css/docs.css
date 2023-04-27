@@ -72,6 +72,15 @@ body.theme3 .yandex-x > img {
 body.theme3 .footer {
   background-color: var(--bg-l);
 }
+body.theme3 .footer p {
+  color: var(--main-l);
+}
+body.theme3 .footer p a {
+  color: var(--main-l);
+}
+body.theme3 .footer p a:hover {
+  color: var(--main);
+}
 body.theme3 .field__copy {
   background-color: var(--accent);
 }

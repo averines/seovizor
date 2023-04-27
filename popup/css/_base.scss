@@ -22,9 +22,9 @@ $bs-sm: 0 1px 4px rgba(0, 0, 0, 0.15);
 
 $t: all 0.1s ease-in-out;
 
-// $warning: #ffc188;
-// $bad: #ff7c64;
-// $good: #61d5a7;
+$warning: #ffc188;
+$bad: #ff7c64;
+$good: #61d5a7;
 
 *,
 *::after,
@@ -102,6 +102,17 @@ body {
 
         .footer {
             background-color: var(--bg-l);
+
+            p {
+                color: var(--main-l);
+
+                a {
+                    color: var(--main-l);
+                    &:hover {
+                        color: var(--main);
+                    }
+                }
+            }
         }
 
         .field__copy {
@@ -280,13 +291,13 @@ hr {
 }
 
 .is-hidden-viz {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  border: 0;
-  padding: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  opacity: 0;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 0;
 }

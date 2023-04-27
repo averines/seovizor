@@ -1,7 +1,7 @@
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
-        console.log("2. Получено сообщение и запущен контент скрипт. В консоли страницы");
-        console.log(request);
+        // console.log("2. Получено сообщение и запущен контент скрипт. В консоли страницы");
+        // console.log(request);
 
         if (request.action === "GET-SEODATA") {
             // можно изменить элементы на вкладке браузера
@@ -40,16 +40,14 @@ chrome.runtime.onMessage.addListener(
         }
 
         if (request.action === "GET-SEARCHLINKS") {
-
             let searchLinks = [];
 
             switch (request.platform) {
                 case "yandex":
-                    searchLinks = Array.from(document.querySelectorAll("a.link.organic__url")).map(i => i.getAttribute("href").replace(/(\r\n|\n|\r)/gm, " ").trim());
+                    searchLinks = Array.from(document.querySelectorAll("a.link.organic__url")).map(i => i.getAttribute("href"));
                     break;
                 case "google":
-                    console.log("goo");
-                    // TODO: получить ссылки из выдачи гугла
+                    searchLinks = Array.from(document.querySelectorAll("#rcnt #search .g h3")).map(i => i.closest("a[target]").getAttribute("href"));
                     break;
                 default:
                     break;

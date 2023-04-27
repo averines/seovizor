@@ -224,22 +224,25 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
         toolOrgYEl.href = `https://yandex.ru/maps/?mode=search&text=${punycode.toUnicode(url.hostname)}`;
 
         // получаем ссылки со страницы поисковой выдачи
-        if (url.hostname.includes("yandex.") || url.hostname.includes("google.")) {
+        if (url.href.match(/yandex.\w+\/search\//) || url.href.match(/google.\w+\/search/)) {
             toolCopyResultsEl.disabled = false;
 
-            toolCopyResultsEl.addEventListener("click", async () => {
+            toolCopyResultsEl.addEventListener("click", async (e) => {
                 let platform = "";
-                if (url.hostname.includes("yandex.")) { platform = "yandex" }
-                if (url.hostname.includes("google.")) { platform = "google" }
+                if (url.hostname.includes("yandex")) { platform = "yandex" }
+                if (url.hostname.includes("google")) { platform = "google" }
                 let searchLinks = await chrome.tabs.sendMessage(tab.id, { action: "GET-SEARCHLINKS", platform: platform });
                 if (searchLinks.length) {
                     navigator.clipboard.writeText(searchLinks.join("\n"))
+                        .then(() => {
+                            let toolAlertEl = e.target.querySelector(".tool__alert")
+                            toolAlertEl.innerText = "Copied!";
+                            setTimeout(() => { toolAlertEl.innerText = ""; }, 2000);
+                        })
+                        .catch(err => { console.log('Копирование не пашет', err); })
                 }
             })
         }
-
-
-
 
         // вкладка Page
         toolCacheGEl.href = `https://webcache.googleusercontent.com/search?q=cache:${encodeURIComponent(url.href)}`;
@@ -264,7 +267,7 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
 
         // запрашиваем данные из вкладки браузера
         const seodata = await chrome.tabs.sendMessage(tab.id, { action: "GET-SEODATA" });
-        console.log("3. Получен ответ от контент скрипта. В консоли расширения");
+        // console.log("3. Получен ответ от контент скрипта. В консоли расширения");
         console.log(seodata);
 
         if (Object.keys(seodata).length) {
@@ -429,15 +432,18 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
 
                         // получаем массив с агентами и их правилами
                         let robotsAgents = robotsText.split(/(?=user-agent:)/gi);
+                        robotsAgents = robotsAgents.filter(row => !row.includes("#"));
                         robotsAgents = robotsAgents.map(row => row.split(/\r?\n/));
                         robotsAgents = robotsAgents.map(agent => agent.filter(row => row.includes(":")));
                         // console.log(robotsAgents);
 
                         let robotsData = robotsAgents.map(agent => {
-                            let agentObj = {};
-                            agentObj["title"] = agent[0].split(":")[1].trim();
-                            agentObj["data"] = agent.slice(1);
-                            return agentObj;
+                            if (agent.length > 1) {
+                                let agentObj = {};
+                                agentObj["title"] = agent[0].split(":")[1].trim();
+                                agentObj["data"] = agent.slice(1);
+                                return agentObj;
+                            }
                         });
                         // console.log(robotsData);
 
@@ -447,15 +453,15 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
                         let robotsHtml = "";
                         robotsData.forEach(agent => {
                             if (agent["title"] == "*") {
-                                let sitemapRows = agent["data"].filter(row => row.toLowerCase().includes("sitemap"));
+                                let sitemapRows = agent["data"].filter(row => row.toLowerCase().includes("sitemap:"));
                                 if (sitemapRows.length) {
-                                    sitemapLinks = sitemapRows.map(row => row.replace("Sitemap:", "").trim())
+                                    sitemapLinks = sitemapRows.map(row => row.toLowerCase().replace("sitemap:", "").trim())
                                 }
                             }
 
                             if (agent["title"].toLowerCase() == "yandex" || agent["title"].toLowerCase() == "googlebot" || agent["title"] == "*") {
                                 // TODO: добавить проверку запрета обхода страницы
-                                robotsHtml += `<li>User-agent: ${agent["title"]} — OK</li>`;
+                                robotsHtml += `<li><span class="status-dot"></span> User-agent: ${agent["title"]}</li>`;
                             }
                         });
 

@@ -108,6 +108,12 @@
         display: flex;
         column-gap: 2px;
     }
+
+    &__alert {
+        margin-left: auto;
+        color: $text-l;
+        font-size: 13px;
+    }
 }
 
 .tool-icon {

@@ -98,6 +98,7 @@
         &.is-empty {
             font-style: italic;
             color: var(--text-l);
+            font-size: 13px;
 
             &::after {
                 content: "Содержимое отсуствует";
@@ -107,6 +108,7 @@
         &.is-missing {
             font-style: italic;
             color: var(--text-l);
+            font-size: 13px;
 
             &::after {
                 content: "Элемент не найден";
