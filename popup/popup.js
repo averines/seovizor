@@ -110,12 +110,12 @@ window.addEventListener('click', (e) => {
 
 // определение функциональных элементов попапа
 const tablistEl = document.getElementById("tablist");
-if (userOptions.options.tabcompact) {
+if (userOptions.hasOwnProperty("options") && userOptions.options.tabcompact) {
     tablistEl.classList.add("tablist--compact")
 }
 
 const bodyEl = document.querySelector("body");
-if (userOptions.options.theme) {
+if (userOptions.hasOwnProperty("options") && userOptions.options.theme) {
     bodyEl.classList.add(userOptions.options.theme)
 }
 
