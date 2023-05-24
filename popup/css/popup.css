@@ -1060,7 +1060,7 @@ label.tool:active .tool__content {
   padding: 7px;
   flex-shrink: 0;
   position: relative;
-  background-color: var(--bg-d);
+  background-color: var(--line);
 }
 .data-row__pic > img {
   display: block;

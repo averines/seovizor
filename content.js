@@ -21,6 +21,13 @@ chrome.runtime.onMessage.addListener(
             seodata['metarobots'] = Array.from(document.querySelectorAll('meta[name="robots"]')).map(i => i.content.trim());
             seodata['langs'] = Array.from(document.querySelectorAll('html')).map(i => i.getAttribute("lang"));
             seodata['links'] = Array.from(document.querySelectorAll('a')).map(i => i.getAttribute("href"));
+            
+
+            let ogdata = {}
+            let ogtags = document.querySelectorAll('meta[property^="og"]');
+            if (ogtags) {ogtags.forEach(t => ogdata[t.getAttribute("property")] = t.content.trim())}
+            seodata['ogdata'] = ogdata;
+
 
             let images = Array.from(document.querySelectorAll('img')).map(i => (
                 {
@@ -31,7 +38,6 @@ chrome.runtime.onMessage.addListener(
                     "height": i.naturalHeight
                 }
             ));
-
             images = images.filter(i => i.src);
             seodata['images'] = images
 

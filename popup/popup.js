@@ -90,6 +90,7 @@ function setFilter() {
 const userOptions = await chrome.storage.sync.get("options");
 console.log(userOptions);
 
+
 // отслеживание кликов через window
 window.addEventListener('click', (e) => {
     // отслеживаем клик по кнопке Копировать
@@ -192,13 +193,15 @@ const dataImagesEl = document.getElementById("data-images");
 const toolSchemePcEl = document.getElementById("tool-scheme-pc");
 const toolSchemeMobileEl = document.getElementById("tool-scheme-mobile");
 const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
+const ogTable = document.getElementById("og-table");
+const ogPreview = document.getElementById("og-preview");
 
 
 // получаем активную вкладку браузера
 (async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     const url = new URL(tab.url);
-    console.log(url);
+    // console.log(url);
 
     if (url.protocol == "http:" || url.protocol == "https:") {
         // заполняем некоторые данные в попапе на основании ссылки, полученной из вкладки браузера
@@ -244,8 +247,10 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
             })
         }
 
+
         // вкладка Page
         toolCacheGEl.href = `https://webcache.googleusercontent.com/search?q=cache:${encodeURIComponent(url.href)}`;
+
 
         // вкладка Tools
         toolSpeedEl.href = `https://pagespeed.web.dev/report?url=${url.href}`;
@@ -257,6 +262,7 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
         toolResponseEl.href = `https://www.bertal.ru/?url=${url.href}`;
         toolDuplicateEl.href = `https://be1.ru/dubli-stranic/?url=${url.hostname}`;
         toolTrustEl.href = `https://checktrust.ru/analyze/${url.hostname}`;
+
 
         // вкладка Scheme
         toolSchemePcEl.href = `https://search.google.com/test/rich-results?url=${url.href}&user_agent=2`;
@@ -402,6 +408,64 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
                 metaRobotsStatusEl.querySelector(".status__content").innerText = "Запрет индексации страницы не обнаружен, так как тег Robots не обнаружен.";
             }
 
+            // обработка og
+            if (Object.keys(seodata.ogdata).length) {
+                Object.entries(seodata.ogdata).forEach(([key, value]) => {
+                    let ogRow = document.createElement('tr');
+
+                    let ogDataTitle = document.createElement('td');
+                    ogDataTitle.classList.add("row-title");
+                    ogDataTitle.innerText = key
+                    ogRow.append(ogDataTitle)
+
+                    let ogDataContent = document.createElement('td');
+                    ogDataContent.classList.add("row-content");
+                    ogDataContent.innerText = value;
+                    ogRow.append(ogDataContent);
+
+                    ogTable.append(ogRow);
+                })
+
+                if (seodata.ogdata['og:image']) {
+                    let ogPic = document.createElement('div');
+                    ogPic.classList.add("og__pic");
+
+                    let ogImg = document.createElement('img');
+                    ogImg.src = seodata.ogdata['og:image'];
+                    ogPic.appendChild(ogImg);
+
+                    ogPreview.appendChild(ogPic);
+                }
+
+                let ogContent = document.createElement('div');
+                ogContent.classList.add("og__content");
+
+                if (seodata.ogdata['og:title']) {
+                    let ogTitle = document.createElement('div');
+                    ogTitle.classList.add("og__title");
+                    ogTitle.innerText = seodata.ogdata['og:title'];
+                    ogContent.appendChild(ogTitle);
+                }
+
+                if (seodata.ogdata['og:description']) {
+                    let ogSubtitle = document.createElement('div');
+                    ogSubtitle.classList.add("og__subtitle");
+                    ogSubtitle.innerText = seodata.ogdata['og:description'];
+                    ogContent.appendChild(ogSubtitle);
+                }
+
+                if (seodata.ogdata['og:site_name']) {
+                    let ogLink = document.createElement('div');
+                    ogLink.classList.add("og__link");
+                    ogLink.innerText = seodata.ogdata['og:site_name'];
+                    ogContent.appendChild(ogLink);
+                }
+
+                ogPreview.appendChild(ogContent);
+            } else {
+                ogTable.classList.add('is-hidden');
+            }
+
 
             // проверка наличия sitemap
             let isSitemapFileAviable = false;
@@ -528,7 +592,7 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
 
                 imagesAllCounterEl.innerText = seodata.images.length
                 imagesWithAltCounterEl.innerText = seodata.images.filter(i => i["alt"]).length;
-                imagesWithoutAltCounterEl.innerText = seodata.images.filter(i => i["alt"] == "").length;
+                imagesWithoutAltCounterEl.innerText = seodata.images.filter(i => !i["alt"]).length;
 
                 let dataImages = "";
                 seodata.images.forEach(i => {
@@ -540,7 +604,7 @@ const toolSchemeCheckEl = document.getElementById("tool-scheme-check");
                     if (!i.alt) { i.alt = ""; filterQuery = "alt-false"; altStatusClass = "data-info--inactive" };
                     if (i.src.length && i.src[0] != "h") { i.src = `${url.origin}${i.src}` };
 
-                    let description = ""
+                    let description = "";
                     if (i.width == 0 || i.height == 0) {
                         description = "lazy";
                     } else {
