@@ -86,9 +86,25 @@ function setFilter() {
     })
 };
 
-// получаем сохраненные настройки пользователя
-const userOptions = await chrome.storage.sync.get("options");
-console.log(userOptions);
+// создание основных seo-полей title, descr, h1
+function createField(id, content, title, isEmpty) {
+    let fieldEl = document.createElement("div");
+    let counter = content.trim().length;
+    let statusCssClass = "";
+
+    if (counter == 0) { statusCssClass = "is-empty" };
+    if (isEmpty) { statusCssClass = "is-missing" };
+
+    fieldEl.innerHTML = `<div class="field">
+                                        <div class="field__content ${statusCssClass}">${content}</div>
+                                        <div class="field__header">
+                                            <div class="field__title">${title}</div>
+                                            <div class="field__counter">${counter}</div>
+                                            <button class="field__copy">Copy</button>
+                                        </div>
+                                    </div>`
+    document.getElementById(id).appendChild(fieldEl);
+}
 
 
 // отслеживание кликов через window
@@ -108,29 +124,22 @@ window.addEventListener('click', (e) => {
     }
 })
 
+// получаем сохраненные настройки пользователя
+const storageOptions = await chrome.storage.sync.get("userOptions");
 
-// определение функциональных элементов попапа
-const tablistEl = document.getElementById("tablist");
-if (userOptions.hasOwnProperty("options") && userOptions.options.tabcompact) {
-    tablistEl.classList.add("tablist--compact")
+if (storageOptions.hasOwnProperty("userOptions")) {
+    let userOptions = storageOptions.userOptions;
+    if (userOptions.tabcompact) { document.getElementById("tablist").classList.add("tablist--compact") }
+    if (userOptions.theme) { document.querySelector("body").classList.add(userOptions.theme) }
 }
 
-const bodyEl = document.querySelector("body");
-if (userOptions.hasOwnProperty("options") && userOptions.options.theme) {
-    bodyEl.classList.add(userOptions.options.theme)
-}
 
 // вкладка Main
 const urlEl = document.getElementById("url");
-const titleEl = document.getElementById("title");
-const titleLengthEl = document.getElementById("title-length");
 const titleAlertEl = document.getElementById("title-alert");
-const descriptionEl = document.getElementById("description");
-const descriptionLengthEl = document.getElementById("description-length");
 const descriptionAlertEl = document.getElementById("description-alert");
-const h1El = document.getElementById("h1");
-const h1LengthEl = document.getElementById("h1-length");
 const h1AlertEl = document.getElementById("h1-alert");
+
 const canonicalEl = document.getElementById("canonical");
 const canonicalStatusEl = document.getElementById("canonical-status");
 const metaRobotsEl = document.getElementById("meta-robots");
@@ -278,36 +287,24 @@ const ogPreview = document.getElementById("og-preview");
 
         if (Object.keys(seodata).length) {
 
-            // обработка title
-            if (seodata.titles.length) {
-                if (seodata.titles.length > 1) { titleAlertEl.classList.add("is-active") }
-                titleLengthEl.innerText = seodata.titles[0].length;
 
-                if (seodata.titles[0].length) {
-                    titleEl.innerText = seodata.titles[0];
-                } else { titleEl.classList.add("is-empty") }
-            } else { titleEl.classList.add("is-missing") }
+            // обработка title
+            if (!seodata.titles.length) { createField("titles", "", "Title", true) };
+            if (seodata.titles.length) { seodata.titles.forEach(i => createField("titles", i, "Title")) }
+            if (seodata.titles.length > 1) { titleAlertEl.classList.add("is-active") };
 
 
             // обработка description
-            if (seodata.descriptions.length) {
-                if (seodata.descriptions.length > 1) { descriptionAlertEl.classList.add("is-active") }
-                descriptionLengthEl.innerText = seodata.descriptions[0].length;
-
-                if (seodata.descriptions[0].length) {
-                    descriptionEl.innerText = seodata.descriptions[0];
-                } else { descriptionEl.classList.add("is-empty") }
-            } else { descriptionEl.classList.add("is-missing") }
+            if (!seodata.descriptions.length) { createField("descriptions", "", "Descr.", true) };
+            if (seodata.descriptions.length) { seodata.descriptions.forEach(i => createField("descriptions", i, "Descr.")) }
+            if (seodata.descriptions.length > 1) { descriptionAlertEl.classList.add("is-active") };
 
 
             // обработка h1
-            if (seodata.h1s.length) {
-                if (seodata.h1s.length > 1) { h1AlertEl.classList.add("is-active") }
-                if (seodata.h1s[0].length) {
-                    h1El.innerText = seodata.h1s[0];
-                    h1LengthEl.innerText = seodata.h1s[0].length;
-                } else { h1El.classList.add("is-empty") }
-            } else { h1El.classList.add("is-missing") }
+            if (!seodata.h1s.length) { createField("h1s", "", "H1", true) };
+            if (seodata.h1s.length) { seodata.h1s.forEach(i => createField("h1s", i, "H1")) }
+            if (seodata.h1s.length > 1) { h1AlertEl.classList.add("is-active") };
+
 
 
             // обработка остальных заголовков
