@@ -2,3 +2,4 @@
 https://1000.menu/cooking/73552-sup-ramen-s-krevetkami - что-то с robots.txt
 https://atmosferika.ru/ - несколько дескрипшн
 https://www.roscosmos.ru/ - пустой дескрипшн
+https://store.google.com/gb/config/chromecast_google_tv - несколько h1
